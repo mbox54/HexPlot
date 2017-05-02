@@ -201,9 +201,6 @@ void CHexPlotDlg::OnMainClick()
 }
 
 
-
-
-
 BOOL CHexPlotDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
 	// TODO: Add your message handler code here and/or call default
@@ -218,7 +215,6 @@ BOOL CHexPlotDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 			MessageBeep(MB_OK);
 		}
 	}
-
 
 
 	// return to main event Proc
