@@ -57,6 +57,7 @@ END_MESSAGE_MAP()
 CHexPlotDlg::CHexPlotDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_HEXPLOT_DIALOG, pParent)
 {
+
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
@@ -76,6 +77,7 @@ BEGIN_MESSAGE_MAP(CHexPlotDlg, CDialogEx)
 	// intercept for Canvas
 	ON_WM_SETCURSOR()
 
+	ON_COMMAND(ID_MAIN_CLICK2, &CHexPlotDlg::OnMainClick2)
 END_MESSAGE_MAP()
 
 
@@ -220,24 +222,28 @@ void CHexPlotDlg::OnPaint()
 	}
 	else
 	{
-
+		
 		// Paint on DC
-		CPaintDC dcCanvas(&m_Canvas);
+//		CPaintDC dcCanvas(&m_Canvas);
 
 		// get DC
-		CDC memdcLogo;
-		memdcLogo.CreateCompatibleDC(&dcCanvas);
+//		CDC memdcLogo;
+//		memdcLogo.CreateCompatibleDC(&dcCanvas);
 
 		// Define Rect range
-		CRect rectCanvas;
-		m_Canvas.GetClientRect(&rectCanvas);
+//		CRect rectCanvas;
+//		m_Canvas.GetClientRect(&rectCanvas);
 
 		// test Draw
-		dcCanvas.MoveTo(0, 0);
-		dcCanvas.LineTo(100, 100);
+//		dcCanvas.MoveTo(0, 0);
+//		dcCanvas.LineTo(100, 100);
+
+//		m_Canvas.PaintGrid();
+
 
 		// return to Common event Proc
 		CDialogEx::OnPaint();
+		
 	}
 }
 
@@ -258,9 +264,30 @@ void CHexPlotDlg::OnMainExit()
 
 void CHexPlotDlg::OnMainClick()
 {
+	// > init vars
+	// HexPlot Grid
+	m_Canvas.PaintGrid();
 
+	// proceed this Dialog Paint Message
+//	CDialogEx::OnPaint();
+
+	//!debug
 	//MessageBox(_T("Clicked"));
 
+}
+
+
+void CHexPlotDlg::OnMainClick2()
+{
+	// > init vars
+	// HexPlot Grid
+	m_Canvas.PaintGrid2();
+
+	// proceed this Dialog Paint Message
+//	CDialogEx::OnPaint();
+
+	//!debug
+	//MessageBox(_T("Clicked"));
 
 }
 
@@ -302,3 +329,4 @@ BOOL CHexPlotDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	// return to main event Proc
 	return CDialogEx::OnSetCursor(pWnd, nHitTest, message);
 }
+

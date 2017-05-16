@@ -5,6 +5,7 @@
 #pragma once
 #include "afxwin.h"
 #include "HexAlgorithm.h"
+#include "StaticHP.h"
 
 // -------------------------------------------------------------------
 // CHexPlotDlg dialog
@@ -35,7 +36,7 @@ protected:
 	CStatusBar	m_statusBar;
 
 	// Picture field
-	CStatic m_Canvas;
+	CStaticHP m_Canvas;
 
 
 // Procs
@@ -61,4 +62,5 @@ public:
 
 	// For Canvas. Intercepters
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
+	afx_msg void OnMainClick2();
 };
