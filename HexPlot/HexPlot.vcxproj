@@ -185,6 +185,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\HexAlgorithm.h" />
     <ClInclude Include="HexPlot.h" />
     <ClInclude Include="HexPlotDlg.h" />
     <ClInclude Include="Resource.h" />
@@ -192,6 +193,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\HexAlgorithm.cpp" />
     <ClCompile Include="HexPlot.cpp" />
     <ClCompile Include="HexPlotDlg.cpp" />
     <ClCompile Include="stdafx.cpp">

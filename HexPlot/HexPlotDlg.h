@@ -4,6 +4,7 @@
 
 #pragma once
 #include "afxwin.h"
+#include "HexAlgorithm.h"
 
 // -------------------------------------------------------------------
 // CHexPlotDlg dialog
@@ -27,16 +28,33 @@ public:
 protected:
 	HICON m_hIcon;
 
+	// Menu main
 	CMenu m_MenuMain;
 
+	// Status bar
+	CStatusBar	m_statusBar;
+
+	// Picture field
 	CStatic m_Canvas;
+
+
+// Procs
+	// Status Bar
+	void InitStatusBar();
+
+	// Set the status bar text
+	void SetStatusText0(const CString& text);
+	void SetStatusText1(const CString& text);
+
 
 	// Generated message map functions
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
+
 	DECLARE_MESSAGE_MAP()
+
 public:
 	afx_msg void OnMainExit();
 	afx_msg void OnMainClick();

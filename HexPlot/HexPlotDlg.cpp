@@ -75,10 +75,68 @@ BEGIN_MESSAGE_MAP(CHexPlotDlg, CDialogEx)
 
 	// intercept for Canvas
 	ON_WM_SETCURSOR()
+
 END_MESSAGE_MAP()
 
 
+// Static Global Variables
+// Set status bar pane 0 and 1 indicators
+static UINT BASED_CODE StatusBarIndicators[] =
+{
+	ID_INDICATOR_COORDS,
+	ID_INDICATOR_STATUS
+};
+
+
+// ===================================================================
 // CHexPlotDlg message handlers
+// ===================================================================
+
+
+// -------------------------------------------------------------------
+// // Status Bar
+// -------------------------------------------------------------------
+// Initialize the status bar
+// - Create the status bar object
+// - Set number of panes to 2
+// - Make pane 0 a fixed width
+// - Make pane 1 fit the rest of the dialog
+// - Draw the status bar
+// - Set default status bar text to "" and ""
+void CHexPlotDlg::InitStatusBar()
+{
+	// Create the status bar
+	m_statusBar.Create(this);
+
+	// Set number of panes
+	m_statusBar.SetIndicators(StatusBarIndicators, sizeof(StatusBarIndicators) / sizeof(StatusBarIndicators[0]));
+
+	// Make the device pane a fixed width
+	m_statusBar.SetPaneInfo(0, ID_INDICATOR_COORDS, SBPS_NORMAL, 100);
+
+	// Make the status pane fit the rest of the status bar
+	m_statusBar.SetPaneInfo(1, ID_INDICATOR_STATUS, SBPS_STRETCH, 0);
+
+	// Draw the status bar
+	RepositionBars(AFX_IDW_CONTROLBAR_FIRST, AFX_IDW_CONTROLBAR_LAST, ID_INDICATOR_STATUS);
+
+	SetStatusText0(_T(""));
+	SetStatusText1(_T(""));
+}
+
+// Set status bar text for specified pane 0
+void CHexPlotDlg::SetStatusText0(const CString & text)
+{
+	// Set the status bar text
+	m_statusBar.SetPaneText(0, text);
+}
+
+// Set status bar text for specified pane 1
+void CHexPlotDlg::SetStatusText1(const CString & text)
+{
+	// Set the status bar text
+	m_statusBar.SetPaneText(1, text);
+}
 
 BOOL CHexPlotDlg::OnInitDialog()
 {
@@ -116,6 +174,10 @@ BOOL CHexPlotDlg::OnInitDialog()
 	// init Menu
 	m_MenuMain.LoadMenu(IDR_MENU_SYSTEM);
 	SetMenu(&m_MenuMain);
+
+	// init Status bar
+	InitStatusBar();
+
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -197,7 +259,9 @@ void CHexPlotDlg::OnMainExit()
 void CHexPlotDlg::OnMainClick()
 {
 
-	MessageBox(_T("Clicked"));
+	//MessageBox(_T("Clicked"));
+
+
 }
 
 
@@ -211,8 +275,26 @@ BOOL CHexPlotDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		// Canvas Object
 		if (pWnd->m_hWnd == ::GetDlgItem(m_hWnd, IDC_STATIC_CANVAS))
 		{
+			POINT aPoint;
+
+			// get cursor coords absolute
+			GetCursorPos(&aPoint);
+
+			// set coords local
+			ScreenToClient(&aPoint);
+
+			CString str_Coord;
+
+			// construct coord string
+			str_Coord.Format(L"%03d %s %03d", aPoint.x, "; ", aPoint.y);
+
+			// output in Status bar
+			SetStatusText0(str_Coord);
+
+			/* //!debug
 			MessageBox(_T("Clicked"));
 			MessageBeep(MB_OK);
+			*/
 		}
 	}
 
