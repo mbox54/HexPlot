@@ -48,6 +48,9 @@ void CStaticHP::OnPaint()
 	
 	CPaintDC dcCanvas(this);
 
+
+
+
 	// get DC // not used now
 	CDC memdc;
 	memdc.CreateCompatibleDC(&dcCanvas);
@@ -56,6 +59,17 @@ void CStaticHP::OnPaint()
 	CRect rectCanvas;
 	this->GetClientRect(&rectCanvas);
 
+	// define center of coord grid
+	WORD uiOX = rectCanvas.left + 50;
+	WORD uiOY = rectCanvas.bottom - 50;
+
+	// paint Border
+	dcCanvas.MoveTo(rectCanvas.left, rectCanvas.top);
+	dcCanvas.LineTo(rectCanvas.right, rectCanvas.top);
+	dcCanvas.LineTo(rectCanvas.right, rectCanvas.bottom);
+	dcCanvas.LineTo(rectCanvas.left, rectCanvas.bottom);
+	dcCanvas.LineTo(rectCanvas.left, rectCanvas.top);
+
 	switch (uiPaintMode)
 	{
 	case 0:
@@ -63,7 +77,19 @@ void CStaticHP::OnPaint()
 		break;
 
 	case 1:
-		// test Draw
+		// Draw Hex Grid
+
+		for (WORD i = 0; i < uiSize - 1; i++)
+		{
+			for (WORD j = 0; j < uiSize - 1; j++)
+			{
+				// paint line
+				dcCanvas.MoveTo(uiOX + i * HPGridImage.ucLength, uiOY - j * HPGridImage.ucLength * 1.732 / 2);
+				dcCanvas.LineTo(uiOX + (i + 1) * HPGridImage.ucLength, uiOY - (j + 1) * HPGridImage.ucLength * 1.732 / 2);
+			}
+		}
+
+
 		dcCanvas.MoveTo(0, 0);
 		dcCanvas.LineTo(100, 100);
 
@@ -87,6 +113,10 @@ void CStaticHP::InitTest()
 {
 	// > Test mode
 	uiSize = 10;
+
+	HPGridImage.ucLength = 20;
+	HPGridImage.ucWeigth = 1;
+
 	uiPaintMode = 0;
 
 }
@@ -147,6 +177,20 @@ void CStaticHP::PaintGrid2()
 //	OnPaint();
 
 */
+}
+
+// return current cursr position
+POINT CStaticHP::GetCursorCoords()
+{
+	POINT aPoint;
+
+	// get cursor coords absolute
+	GetCursorPos(&aPoint);
+
+	// set coords local
+	ScreenToClient(&aPoint);
+
+	return aPoint;
 }
 
 

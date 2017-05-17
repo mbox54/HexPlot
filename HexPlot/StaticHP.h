@@ -25,6 +25,12 @@
 #define OP_SUCCESS				0x00
 #define OP_FAILED				0x01
 
+typedef struct stGridImage
+{
+	BYTE ucLength;
+	BYTE ucWeigth;
+
+};
 
 // -------------------------------------------------------------------
 // class CStaticHP
@@ -40,6 +46,8 @@ public:
 	// properties
 	WORD uiSize;
 	WORD uiPaintMode;
+
+	stGridImage HPGridImage;
 
 	BYTE v_TestBase[10][10] = 
 	{
@@ -59,6 +67,8 @@ public:
 	void InitTest();
 	void PaintGrid();
 	void PaintGrid2();
+
+	POINT GetCursorCoords();
 
 	// events
 	DECLARE_MESSAGE_MAP()

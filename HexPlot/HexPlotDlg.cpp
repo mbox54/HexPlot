@@ -302,13 +302,7 @@ BOOL CHexPlotDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		// Canvas Object
 		if (pWnd->m_hWnd == ::GetDlgItem(m_hWnd, IDC_STATIC_CANVAS))
 		{
-			POINT aPoint;
-
-			// get cursor coords absolute
-			GetCursorPos(&aPoint);
-
-			// set coords local
-			ScreenToClient(&aPoint);
+			POINT aPoint = m_Canvas.GetCursorCoords();
 
 			CString str_Coord;
 
