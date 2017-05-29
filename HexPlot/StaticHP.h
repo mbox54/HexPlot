@@ -2,7 +2,7 @@
 
 // \ INFO
 // *******************************************************************
-// Class for HexPlot Graphical procedure
+// Class for HexPlot Graphic procedure
 // include structures and methods for picturing
 // based on CStatic
 // *******************************************************************
@@ -17,6 +17,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "afxwin.h"
+#include "PaintDCHP.h"
 
 //////////////////////////////////////////////////////////////////////
 // Definitions
@@ -25,12 +26,6 @@
 #define OP_SUCCESS				0x00
 #define OP_FAILED				0x01
 
-typedef struct stGridImage
-{
-	BYTE ucLength;
-	BYTE ucWeigth;
-
-};
 
 // -------------------------------------------------------------------
 // class CStaticHP

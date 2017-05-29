@@ -179,6 +179,7 @@ BOOL CHexPlotDlg::OnInitDialog()
 
 	// init Status bar
 	InitStatusBar();
+	m_GridHP.Init(&this->m_Canvas);
 
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
@@ -266,7 +267,9 @@ void CHexPlotDlg::OnMainClick()
 {
 	// > init vars
 	// HexPlot Grid
-	m_Canvas.PaintGrid();
+
+	//m_Canvas.PaintGrid();
+	m_GridHP.AddNode();
 
 	// proceed this Dialog Paint Message
 //	CDialogEx::OnPaint();

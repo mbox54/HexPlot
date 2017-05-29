@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\HexPlot Logic">
+      <UniqueIdentifier>{12eadebd-3456-41cc-ba49-19114e8a190e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HexPlot Logic">
+      <UniqueIdentifier>{220a48bb-e865-4a2e-a43c-9268c5d51e6d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -39,6 +45,15 @@
     <ClInclude Include="StaticHP.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="NodeHP.h">
+      <Filter>Header Files\HexPlot Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="GridHP.h">
+      <Filter>Header Files\HexPlot Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="PaintDCHP.h">
+      <Filter>Header Files\HexPlot Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HexPlot.cpp">
@@ -55,6 +70,15 @@
     </ClCompile>
     <ClCompile Include="StaticHP.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PaintDCHP.cpp">
+      <Filter>Source Files\HexPlot Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeHP.cpp">
+      <Filter>Source Files\HexPlot Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="GridHP.cpp">
+      <Filter>Source Files\HexPlot Logic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

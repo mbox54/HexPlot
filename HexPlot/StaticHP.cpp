@@ -2,7 +2,7 @@
 
 // \ INFO
 // *******************************************************************
-// Class for HexPlot Graphical procedure
+// Class for HexPlot Graphic procedure
 // include structures and methods for picturing
 // based on CStatic
 // *******************************************************************
@@ -46,10 +46,8 @@ void CStaticHP::OnPaint()
 					   // Do not call CStatic::OnPaint() for painting messages
 					   // Paint on this DC
 	
-	CPaintDC dcCanvas(this);
-
-
-
+	// Define HexPlot Paint object
+	CPaintDCHP dcCanvas(this, this->HPGridImage);
 
 	// get DC // not used now
 	CDC memdc;
@@ -77,8 +75,24 @@ void CStaticHP::OnPaint()
 		break;
 
 	case 1:
-		// Draw Hex Grid
+		// > Draw Hex Grid
 
+		// Draw Nodes
+
+
+		for (WORD i = 0; i < uiSize - 1; i++)
+		{
+			for (WORD j = 0; j < uiSize - 1; j++)
+			{
+				WORD x0 = uiOX + i * HPGridImage.ucLength;
+				WORD y0 = uiOY - j * HPGridImage.ucLength * 1.732 / 2;
+				
+				dcCanvas.Node(x0, y0);
+			}
+		}
+
+		// Draw Lines
+		
 		for (WORD i = 0; i < uiSize - 1; i++)
 		{
 			for (WORD j = 0; j < uiSize - 1; j++)
@@ -90,8 +104,9 @@ void CStaticHP::OnPaint()
 		}
 
 
-		dcCanvas.MoveTo(0, 0);
-		dcCanvas.LineTo(100, 100);
+		//dcCanvas.MoveTo(0, 0);
+		//dcCanvas.LineTo(100, 100);
+	
 
 		break;
 
@@ -114,8 +129,9 @@ void CStaticHP::InitTest()
 	// > Test mode
 	uiSize = 10;
 
+	// Set Paint config
 	HPGridImage.ucLength = 20;
-	HPGridImage.ucWeigth = 1;
+	HPGridImage.ucWeigth = 6;
 
 	uiPaintMode = 0;
 

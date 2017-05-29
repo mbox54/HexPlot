@@ -6,6 +6,7 @@
 #include "afxwin.h"
 #include "HexAlgorithm.h"
 #include "StaticHP.h"
+#include "GridHP.h"
 
 // -------------------------------------------------------------------
 // CHexPlotDlg dialog
@@ -37,6 +38,9 @@ protected:
 
 	// Picture field
 	CStaticHP m_Canvas;
+
+	// Hex Plot Object
+	CGridHP m_GridHP;
 
 
 // Procs
