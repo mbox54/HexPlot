@@ -28,19 +28,23 @@ public:
 
 // Implementation
 protected:
+
+	// > Properties
+	// System
 	HICON m_hIcon;
 
-	// Menu main
+	// // Menu main
 	CMenu m_MenuMain;
 
-	// Status bar
+	// // Status bar
 	CStatusBar	m_statusBar;
 
-	// Picture field
+	// HP Main / Additional
+	// // Picture field
 	CStaticHP m_Canvas;
 
-	// Hex Plot Object
-	CGridHP m_GridHP;
+	// // Hex Plot Object
+	CGridHP m_GridHP; 
 
 
 // Procs

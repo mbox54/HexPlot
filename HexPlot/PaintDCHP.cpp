@@ -23,13 +23,12 @@
 CPaintDCHP::CPaintDCHP(CWnd* pWnd) : CPaintDC(pWnd) // using parent constructor
 {
 	// defaults
-	this->HPGridImage.ucLength = 1;
-	this->HPGridImage.ucWeigth = 1;
+
 }
 
-CPaintDCHP::CPaintDCHP(CWnd* pWnd, stGridImage HPGridImage) : CPaintDC(pWnd) // using parent constructor
+CPaintDCHP::CPaintDCHP(CWnd* pWnd, stHPCanvasParams * pHPGridImage) : CPaintDC(pWnd) // using parent constructor
 {
-	this->HPGridImage = HPGridImage;
+	this->pHPCanvasParams = pHPGridImage;
 }
 
 
@@ -37,23 +36,28 @@ CPaintDCHP::~CPaintDCHP()
 {
 }
 
-void CPaintDCHP::SetGridImageStruc(stGridImage HPGridImage)
+void CPaintDCHP::SetGridImageStruc(stHPCanvasParams * pHPGridImage)
 {
-	this->HPGridImage.ucLength = HPGridImage.ucLength;
-	this->HPGridImage.ucWeigth = HPGridImage.ucWeigth;
+	this->pHPCanvasParams = pHPGridImage;
+
 }
 
 
 void CPaintDCHP::Circle(int x, int y)
 {
 	// Paint
-	WORD uiThick = this->HPGridImage.ucWeigth / 2;
+	WORD uiThick = this->pHPCanvasParams->HPNodeParams.ucWeigth / 2;
 
 	this->Ellipse(x - uiThick, y + uiThick, x + uiThick, y - uiThick);
 
 }
 
-void CPaintDCHP::Node(int x, int y)
+void CPaintDCHP::Node(POINT Coord)
+{
+	this->Node(Coord.x, Coord.y);
+}
+
+void CPaintDCHP::Node(int x, int y) //!!!! Replace int -> WORD
 {
 	// Save Pen prev
 	CPen * Pen_Prev(GetCurrentPen());
@@ -64,7 +68,11 @@ void CPaintDCHP::Node(int x, int y)
 
 	this->SelectObject(Pen_Act);
 
-	// Paint
+	// > Paint
+	// calc Canvas Coords
+//	WORD canv_x = 50 + x * this->
+
+	// paint
 	this->Circle(x, y);
 
 	// Restore Pen prev

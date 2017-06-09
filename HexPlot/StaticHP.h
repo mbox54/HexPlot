@@ -17,6 +17,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "afxwin.h"
+#include "HPTypeDefs.h"
 #include "PaintDCHP.h"
 
 //////////////////////////////////////////////////////////////////////
@@ -39,10 +40,11 @@ public:
 	~CStaticHP();
 
 	// properties
-	WORD uiSize;
-	WORD uiPaintMode;
+	BYTE uiSize;
+	BYTE uiPaintMode;
 
-	stGridImage HPGridImage;
+	stHPCanvasParams HPCanvasParams;
+
 
 	BYTE v_TestBase[10][10] = 
 	{

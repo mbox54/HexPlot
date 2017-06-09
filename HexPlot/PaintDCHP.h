@@ -17,20 +17,13 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "afxwin.h"
-
+#include "HPTypeDefs.h"
 
 //////////////////////////////////////////////////////////////////////
 // Definitions
 //////////////////////////////////////////////////////////////////////
 
-
-
-typedef struct stGridImage
-{
-	BYTE ucLength;
-	BYTE ucWeigth;
-
-};
+//
 
 // -------------------------------------------------------------------
 // class CPaintDCHP
@@ -41,20 +34,21 @@ public:
 	// standard constructor
 	CPaintDCHP(CWnd* pWnd);
 
-	CPaintDCHP(CWnd* pWnd, stGridImage HPGridImage);
+	CPaintDCHP(CWnd* pWnd, 	stHPCanvasParams * pHPCanvasParams);
 
 	~CPaintDCHP();
 
 
 	// properties
-	stGridImage HPGridImage;
+	stHPCanvasParams * pHPCanvasParams;
 
 	// events
-	void SetGridImageStruc(stGridImage HPGridImage);
+	void SetGridImageStruc(stHPCanvasParams * pHPGridImage);
 
 	void Circle(int x, int y);
 	
 	// node
+	void Node(POINT Coord);
 	void Node(int x, int y);
 
 	// line

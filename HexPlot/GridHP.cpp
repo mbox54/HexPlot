@@ -16,11 +16,21 @@
 #include "GridHP.h"
 
 
+
 // -------------------------------------------------------------------
 // class CGridHP
 // -------------------------------------------------------------------
 CGridHP::CGridHP()
 {
+	// Init
+	Init();
+}
+
+CGridHP::CGridHP(CStaticHP * p_CanvasHP)
+	: p_CanvasHP(p_CanvasHP)
+{
+	// 
+	Init();
 }
 
 
@@ -29,17 +39,47 @@ void CGridHP::SetCanvas(CStaticHP * p_CanvasHP)
 	this->p_CanvasHP = p_CanvasHP;
 }
 
-void CGridHP::Init(CStaticHP * p_CanvasHP)
+void CGridHP::Init()
 {
-	// set canvas address
-	SetCanvas(p_CanvasHP);
+	// init Grid Vector
+	POINT CoordGrid;
 
-	// other
+	for (WORD uiCoorX = 0; uiCoorX < 20; uiCoorX++)
+	{
+		for (WORD uiCoorY = 0; uiCoorY < 20; uiCoorY++)
+		{
+			// > Fill
+			// Create new Node
+			CoordGrid.x = uiCoorX;
+			CoordGrid.y = uiCoorY;
+
+			this->AddNode(CoordGrid);
+		}
+	}
+
 }
+
 
 void CGridHP::AddNode()
 {
-	p_CanvasHP->PaintGrid();
+	CNodeHP NodeHP;
+}
+
+
+void CGridHP::AddNode(POINT gridPos)
+{
+	// > Create Node
+	CNodeHP NodeHP(gridPos);
+
+	// set Node
+	this->v_Nodes[gridPos.x][gridPos.y] = NodeHP;
+
+	// > Paint Node
+	// calc Coords
+	// // get Graph parameters
+	//p_CanvasHP->
+
+	//p_CanvasHP->PaintGrid();
 }
 
 CGridHP::~CGridHP()

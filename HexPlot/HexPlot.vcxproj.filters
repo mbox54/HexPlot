@@ -54,6 +54,9 @@
     <ClInclude Include="PaintDCHP.h">
       <Filter>Header Files\HexPlot Logic</Filter>
     </ClInclude>
+    <ClInclude Include="HPTypeDefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HexPlot.cpp">

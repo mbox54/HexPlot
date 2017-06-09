@@ -47,7 +47,7 @@ void CStaticHP::OnPaint()
 					   // Paint on this DC
 	
 	// Define HexPlot Paint object
-	CPaintDCHP dcCanvas(this, this->HPGridImage);
+	CPaintDCHP dcCanvas(this, &this->HPCanvasParams);
 
 	// get DC // not used now
 	CDC memdc;
@@ -84,8 +84,8 @@ void CStaticHP::OnPaint()
 		{
 			for (WORD j = 0; j < uiSize - 1; j++)
 			{
-				WORD x0 = uiOX + i * HPGridImage.ucLength;
-				WORD y0 = uiOY - j * HPGridImage.ucLength * 1.732 / 2;
+				WORD x0 = uiOX + i * HPCanvasParams.HPNodeParams.ucLength;
+				WORD y0 = uiOY - j * HPCanvasParams.HPNodeParams.ucLength * 1.732 / 2;
 				
 				dcCanvas.Node(x0, y0);
 			}
@@ -98,8 +98,8 @@ void CStaticHP::OnPaint()
 			for (WORD j = 0; j < uiSize - 1; j++)
 			{
 				// paint line
-				dcCanvas.MoveTo(uiOX + i * HPGridImage.ucLength, uiOY - j * HPGridImage.ucLength * 1.732 / 2);
-				dcCanvas.LineTo(uiOX + (i + 1) * HPGridImage.ucLength, uiOY - (j + 1) * HPGridImage.ucLength * 1.732 / 2);
+				dcCanvas.MoveTo(uiOX + i * HPCanvasParams.HPNodeParams.ucLength, uiOY - j * HPCanvasParams.HPNodeParams.ucLength * 1.732 / 2);
+				dcCanvas.LineTo(uiOX + (i + 1) * HPCanvasParams.HPNodeParams.ucLength, uiOY - (j + 1) * HPCanvasParams.HPNodeParams.ucLength * 1.732 / 2);
 			}
 		}
 
@@ -130,8 +130,8 @@ void CStaticHP::InitTest()
 	uiSize = 10;
 
 	// Set Paint config
-	HPGridImage.ucLength = 20;
-	HPGridImage.ucWeigth = 6;
+	HPCanvasParams.HPNodeParams.ucLength = 20;
+	HPCanvasParams.HPNodeParams.ucWeigth = 6;
 
 	uiPaintMode = 0;
 
@@ -169,7 +169,7 @@ void CStaticHP::PaintGrid()
 void CStaticHP::PaintGrid2()
 {
 	uiPaintMode = 2;
-	OnPaint();
+	// OnPaint();
 
 	Invalidate();
 
