@@ -80,3 +80,13 @@ void CPaintDCHP::Node(int x, int y) //!!!! Replace int -> WORD
 
 }
 
+void CPaintDCHP::LinePO(int x, int y)
+{
+
+}
+
+void CPaintDCHP::Grid()
+{
+
+}
+

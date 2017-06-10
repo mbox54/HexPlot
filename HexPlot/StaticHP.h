@@ -39,7 +39,7 @@ public:
 
 	~CStaticHP();
 
-	// properties
+	// > Properties
 	BYTE uiSize;
 	BYTE uiPaintMode;
 
@@ -60,14 +60,14 @@ public:
 		{ 0,0,0,0,0,0,0,0,0,0 },	// 9
 	};
 
-	// methods
+	// > Methods
 	void InitTest();
 	void PaintGrid();
 	void PaintGrid2();
 
 	POINT GetCursorCoords();
 
-	// events
+	// > Events
 	DECLARE_MESSAGE_MAP()
 	afx_msg void OnPaint();
 };

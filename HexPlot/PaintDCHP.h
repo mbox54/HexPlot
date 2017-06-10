@@ -47,15 +47,17 @@ public:
 
 	void Circle(int x, int y);
 	
-	// node
+	// Node
 	void Node(POINT Coord);
 	void Node(int x, int y);
 
-	// line
+	// Line
 	// NOTE: FORMAT: Line to XY / 0 = O, 1 = P(os), -1 = N(eg)
 	// NOTE: HexPlot relations: [+1 0], [-1 0], [0 +1], [0 -1], [+1 -1], [-1 +1].  
 	void LinePO(int x, int y);
 
+	// Grid
+	void Grid();
 
 };
 

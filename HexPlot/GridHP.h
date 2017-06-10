@@ -37,26 +37,32 @@ public:
 
 
 	// > Properties
-	std::vector < std::vector<CNodeHP> > v_Nodes;
+	POINT gridSize;
 
-	//std::vector<std::vector<CNodeHP>> v_Nodes(std::vector<CNodeHP>, std::vector<CNodeHP>(2, 1));
-	//CNodeHP v_Nodes[20][20];
+	// Node Container
+	std::vector < std::vector< CNodeHP > > v_Nodes;
+
 
 	//  Canvas source
 	CStaticHP * p_CanvasHP;
 
-	// > Events
+	// > Methods
 	// Init
 	void Init();
 
 	// InProc
+	void SetGridSize(POINT gridSize);
 	void SetCanvas(CStaticHP * p_CanvasHP);
 
 
 	// Logic
 	// // Node OP
 	void AddNode();
-	void AddNode(POINT gridPos);
+	void LoadNode(POINT gridPos);
+
+
+	// Graphic
+	void PaintGrid();
 
 	~CGridHP();
 };

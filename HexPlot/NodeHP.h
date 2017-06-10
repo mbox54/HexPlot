@@ -32,7 +32,7 @@ public:
 	~CNodeHP();
 
 
-	// properties
+	// > Properties
 	POINT m_position;		// graphic /unused
 
 	// // net
@@ -42,7 +42,15 @@ public:
 	// // plot
 
 
-	// events
+	// > Methods
+	// Init
+	void Init(POINT gridPos);
+	void SetInit(POINT gridPos);
+
+	// 
+	void Load();
+
+
 
 
 };

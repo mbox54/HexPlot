@@ -139,9 +139,12 @@ void CStaticHP::InitTest()
 
 void CStaticHP::PaintGrid()
 {
-	uiPaintMode = 1;
-	OnPaint();
+	// Set Parameters
 
+	uiPaintMode = 1;
+	//OnPaint();
+
+	// Paint
 	Invalidate();
 	/*
 
