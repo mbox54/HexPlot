@@ -34,9 +34,59 @@ CGridHP::CGridHP(CStaticHP * p_CanvasHP)
 }
 
 
+// Prepare Information for Grid -> Graphic Picture Controller
+void CGridHP::FormGraphInfo(POINT * p_grph_Size, std::vector < std::vector< stHPNodeGraphInfo > > * p_NodesGraphInfo)
+{
+	// NOTE: use GraphTrasm struc DataType
+
+	// define Grid size
+	POINT grph_Size = this->m_gridSize;
+
+	// construct Graph Grid-Net Info
+	// (set 2nd parameter)
+	POINT CoordGrid;
+
+	for (WORD uiCoorX = 0; uiCoorX < grph_Size.x; uiCoorX++)
+	{
+		// allocate memory: Vector for Row /in NodeGraphInfo struc container
+		p_NodesGraphInfo->push_back(std::vector<stHPNodeGraphInfo>());
+
+		// Fill Cols
+		for (WORD uiCoorY = 0; uiCoorY < grph_Size.y; uiCoorY++)
+		{
+			// define Coord to set
+			CoordGrid.x = uiCoorX;
+			CoordGrid.y = uiCoorY;
+
+			// create NodeGraphInfo instance
+			stHPNodeGraphInfo HPNodeGraphInfo;
+
+			// Form Node Info-Value for Graph OPs
+			HPNodeGraphInfo.Value = 5;
+
+			// allocate memory: NodeGraphInfo in 2x Cell /in NodeGraphInfo struc Vector container
+			// fill with Value
+			p_NodesGraphInfo->at(uiCoorX).push_back(HPNodeGraphInfo);
+		}
+	}//for (WORD uiCoorX / WORD uiCoorX)
+
+	// (set 1st parameter)
+	*p_grph_Size = grph_Size;
+
+}
+
+
 void CGridHP::PaintGrid()
 {
 	// Set Graph Parameters
+
+	// > Define Grid_Net Set-of-Nodes
+	// use Temp instance vars for TRASM parameters
+	POINT grph_Size;
+	std::vector < std::vector< stHPNodeGraphInfo > > v_NodesGraphInfo;
+
+	// forming Node Graph Info
+	this->FormGraphInfo(&grph_Size, &v_NodesGraphInfo);
 
 	this->p_CanvasHP->v_TestBase[9][9] = 5;
 
@@ -53,7 +103,7 @@ CGridHP::~CGridHP()
 
 void CGridHP::SetGridSize(POINT gridSize)
 {
-	this->gridSize = gridSize;
+	this->m_gridSize = gridSize;
 }
 
 
@@ -64,17 +114,24 @@ void CGridHP::SetCanvas(CStaticHP * p_CanvasHP)
 
 void CGridHP::Init()
 {
-	// init Grid Vector
+	// > Init Grid Vector
+	POINT Point_temp;
+	Point_temp.x = 20;
+	Point_temp.y = 20;
+
+	this->m_gridSize = Point_temp;
+	//
+
+	// > Fill Rows
 	POINT CoordGrid;
 
-	// Fill Rows
-	for (WORD uiCoorX = 0; uiCoorX < 20; uiCoorX++)
+	for (WORD uiCoorX = 0; uiCoorX < this->m_gridSize.x; uiCoorX++)
 	{
 		// allocate memory: Vector for Row /in Node Vector container
 		this->v_Nodes.push_back( std::vector<CNodeHP>() );
 
 		// Fill Cols
-		for (WORD uiCoorY = 0; uiCoorY < 20; uiCoorY++)
+		for (WORD uiCoorY = 0; uiCoorY < this->m_gridSize.y; uiCoorY++)
 		{
 			// define Coord to set
 			CoordGrid.x = uiCoorX;
@@ -90,6 +147,9 @@ void CGridHP::Init()
 			this->LoadNode(CoordGrid);
 		}
 	}
+
+	// !debug
+	PaintGrid();
 
 }
 

@@ -52,3 +52,9 @@ typedef struct stHPCanvasParams
 	stHPNodeParams		HPNodeParams;
 	stHPSectorParams	HPSectorParams;
 };
+
+typedef struct stHPNodeGraphInfo
+{
+	BYTE Value;
+
+};

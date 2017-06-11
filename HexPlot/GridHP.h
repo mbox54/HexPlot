@@ -37,7 +37,7 @@ public:
 
 
 	// > Properties
-	POINT gridSize;
+	POINT m_gridSize;
 
 	// Node Container
 	std::vector < std::vector< CNodeHP > > v_Nodes;
@@ -62,6 +62,7 @@ public:
 
 
 	// Graphic
+	void FormGraphInfo(POINT * p_grph_Size, std::vector < std::vector< stHPNodeGraphInfo > > * p_NodesGraphInfo);
 	void PaintGrid();
 
 	~CGridHP();
