@@ -1,10 +1,10 @@
-// NodeHP.h
+// Anlage.h
 
 // \ INFO
 // *******************************************************************
-// Class for Hex_Plot Node representation
-// define Node common logic
-// Container Unit
+// ['Anlage' = 'Consruction/Building']
+// Class for define 'Building' instance
+// Struc Unit
 // *******************************************************************
 
 // interface file
@@ -16,43 +16,21 @@
 // Includes
 //////////////////////////////////////////////////////////////////////
 
-//
-
 
 // -------------------------------------------------------------------
-// class CNodeHP
+// class CAnlage
 // -------------------------------------------------------------------
-class CNodeHP
+class CAnlage
 {
-
 public:
 	// standard constructor
-	CNodeHP();
-	CNodeHP(POINT gridPos);
+	CAnlage();
 
-	~CNodeHP();
-
+	~CAnlage();
 
 	// > Properties
-	POINT m_position;		// graphic /unused
-
-	// BORDER: Allow directions
-	BYTE v_incidence[6];
-
-
-	// // plot
-
 
 	// > Methods
-	// Init
-	void Init(POINT gridPos);
-	void SetInit(POINT gridPos);
-
-	// 
-	void Load();
-
-
-
 
 };
 

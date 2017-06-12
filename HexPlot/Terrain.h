@@ -1,10 +1,10 @@
-// NodeHP.h
+// Terrain.h
 
 // \ INFO
 // *******************************************************************
-// Class for Hex_Plot Node representation
-// define Node common logic
-// Container Unit
+// ['Terrain' = 'Ground/nature type']
+// Class for define 'Nature type' instance
+// Struc Unit
 // *******************************************************************
 
 // interface file
@@ -16,42 +16,24 @@
 // Includes
 //////////////////////////////////////////////////////////////////////
 
-//
-
 
 // -------------------------------------------------------------------
-// class CNodeHP
+// class CTerrain
 // -------------------------------------------------------------------
-class CNodeHP
+class CTerrain
 {
-
 public:
 	// standard constructor
-	CNodeHP();
-	CNodeHP(POINT gridPos);
+	CTerrain();
 
-	~CNodeHP();
-
+	~CTerrain();
 
 	// > Properties
-	POINT m_position;		// graphic /unused
-
-	// BORDER: Allow directions
-	BYTE v_incidence[6];
-
-
-	// // plot
-
-
+	BYTE m_TerrainType;
+	
 	// > Methods
 	// Init
-	void Init(POINT gridPos);
-	void SetInit(POINT gridPos);
-
-	// 
-	void Load();
-
-
+	void Init();
 
 
 };

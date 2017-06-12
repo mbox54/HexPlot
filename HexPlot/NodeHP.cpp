@@ -39,7 +39,12 @@ CNodeHP::CNodeHP(POINT gridPos)
 
 void CNodeHP::Init(POINT gridPos)
 {
-	//
+	// > Default Values
+	// incidence /all/
+	for (BYTE k = 0; k < 6; k++)
+	{
+		this->v_incidence[k] = 1;
+	}
 
 }
 
@@ -55,6 +60,7 @@ void CNodeHP::SetInit(POINT gridPos)
 void CNodeHP::Load()
 {
 	// Using [m_position] to define DB Cell to Load
+
 
 }
 
