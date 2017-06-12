@@ -16,7 +16,7 @@
 // Includes
 //////////////////////////////////////////////////////////////////////
 
-//
+#include "Terrain.h"
 
 
 // -------------------------------------------------------------------
@@ -39,17 +39,23 @@ public:
 	// BORDER: Allow directions
 	BYTE v_incidence[6];
 
+	// Terrain
+	CTerrain m_terrain;
 
-	// // plot
+	// Anlage
+	
 
 
 	// > Methods
 	// Init
-	void Init(POINT gridPos);
+	void Init();
 	void SetInit(POINT gridPos);
 
 	// 
 	void Load();
+
+	// Get Graph output Data
+	void FormGraphInfo(BYTE * ucValue);
 
 
 

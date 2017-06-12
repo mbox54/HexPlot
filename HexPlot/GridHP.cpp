@@ -62,7 +62,10 @@ void CGridHP::FormGraphInfo(POINT * p_grph_Size, std::vector < std::vector< stHP
 			stHPNodeGraphInfo HPNodeGraphInfo;
 
 			// Form Node Info-Value for Graph OPs
-			HPNodeGraphInfo.Value = 5;
+			BYTE ucNodeValue;
+			this->v_Nodes[uiCoorX][uiCoorY].FormGraphInfo(&ucNodeValue);
+			HPNodeGraphInfo.Value = ucNodeValue;
+
 
 			// allocate memory: NodeGraphInfo in 2x Cell /in NodeGraphInfo struc Vector container
 			// fill with Value
@@ -88,10 +91,10 @@ void CGridHP::PaintGrid()
 	// forming Node Graph Info
 	this->FormGraphInfo(&grph_Size, &v_NodesGraphInfo);
 
-	this->p_CanvasHP->v_TestBase[9][9] = 5;
+//	this->p_CanvasHP->v_TestBase[9][9] = 5;
 
 	// call subordinate
-	this->p_CanvasHP->PaintGrid();
+//	this->p_CanvasHP->PaintGrid();
 }
 
 

@@ -19,6 +19,23 @@
 // -------------------------------------------------------------------
 CNodeHP::CNodeHP()
 {
+	// init
+	Init();
+
+}
+
+CNodeHP::CNodeHP(POINT gridPos)
+{
+	Init();
+
+	this->m_position = gridPos;
+}
+
+
+void CNodeHP::Init()
+{
+	// > Default Values
+
 	// init properties
 	// default
 	POINT initCoord;
@@ -26,20 +43,9 @@ CNodeHP::CNodeHP()
 	initCoord.y = 0;
 
 	m_position = initCoord;
-	
+
 	// [addition]
 
-}
-
-CNodeHP::CNodeHP(POINT gridPos)
-{
-	this->m_position = gridPos;
-}
-
-
-void CNodeHP::Init(POINT gridPos)
-{
-	// > Default Values
 	// incidence /all/
 	for (BYTE k = 0; k < 6; k++)
 	{
@@ -64,7 +70,13 @@ void CNodeHP::Load()
 
 }
 
+void CNodeHP::FormGraphInfo(BYTE * ucValue)
+{
+	*ucValue = this->m_terrain.m_TerrainType;
+}
+
 
 CNodeHP::~CNodeHP()
 {
+
 }
