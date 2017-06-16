@@ -35,21 +35,20 @@ CGridHP::CGridHP(CStaticHP * p_CanvasHP)
 
 
 // Prepare Information for Grid -> Graphic Picture Controller
-void CGridHP::FormGraphInfo(POINT * p_grph_Size, std::vector < std::vector< stHPNodeGraphInfo > > * p_NodesGraphInfo)
+void CGridHP::FormGraphInfo()
 {
 	// NOTE: use GraphTrasm struc DataType
 
-	// define Grid size
+	// localize Grid size
 	POINT grph_Size = this->m_gridSize;
 
 	// construct Graph Grid-Net Info
-	// (set 2nd parameter)
 	POINT CoordGrid;
 
 	for (WORD uiCoorX = 0; uiCoorX < grph_Size.x; uiCoorX++)
 	{
 		// allocate memory: Vector for Row /in NodeGraphInfo struc container
-		p_NodesGraphInfo->push_back(std::vector<stHPNodeGraphInfo>());
+		this->p_GridGraphInfo->push_back(std::vector<stHPNodeGraphInfo>());
 
 		// Fill Cols
 		for (WORD uiCoorY = 0; uiCoorY < grph_Size.y; uiCoorY++)
@@ -69,12 +68,9 @@ void CGridHP::FormGraphInfo(POINT * p_grph_Size, std::vector < std::vector< stHP
 
 			// allocate memory: NodeGraphInfo in 2x Cell /in NodeGraphInfo struc Vector container
 			// fill with Value
-			p_NodesGraphInfo->at(uiCoorX).push_back(HPNodeGraphInfo);
+			this->p_GridGraphInfo->at(uiCoorX).push_back(HPNodeGraphInfo);
 		}
 	}//for (WORD uiCoorX / WORD uiCoorX)
-
-	// (set 1st parameter)
-	*p_grph_Size = grph_Size;
 
 }
 
@@ -89,12 +85,12 @@ void CGridHP::PaintGrid()
 	std::vector < std::vector< stHPNodeGraphInfo > > v_NodesGraphInfo;
 
 	// forming Node Graph Info
-	this->FormGraphInfo(&grph_Size, &v_NodesGraphInfo);
+	this->FormGraphInfo();
 
 //	this->p_CanvasHP->v_TestBase[9][9] = 5;
 
 	// call subordinate
-//	this->p_CanvasHP->PaintGrid();
+	//this->p_CanvasHP->PaintGrid();
 }
 
 
@@ -112,8 +108,23 @@ void CGridHP::SetGridSize(POINT gridSize)
 
 void CGridHP::SetCanvas(CStaticHP * p_CanvasHP)
 {
+	// Set Canvas source
 	this->p_CanvasHP = p_CanvasHP;
+
+	// Set Graph Info source from Canvas
+	SetGridGraphInfo();
 }
+
+void CGridHP::SetGridGraphInfo()
+{
+	// set Pointer /v_GridGraphInfo/ to Variable MemAddr [INPUT]
+	this->p_GridGraphInfo = &this->p_CanvasHP->v_GridGraphInfo;
+
+	// set Pointer /GridSize/ to Variable MemAddr [OUTPUT]
+	this->p_CanvasHP->p_gridSize = &this->m_gridSize;
+
+}
+
 
 void CGridHP::Init()
 {
@@ -152,7 +163,6 @@ void CGridHP::Init()
 	}
 
 	// !debug
-	PaintGrid();
 
 }
 

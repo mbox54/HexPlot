@@ -279,6 +279,8 @@ void CHexPlotDlg::OnMainClick()
 	//!debug
 	//MessageBox(_T("Clicked"));
 
+	this->m_GridHP.PaintGrid();
+
 }
 
 

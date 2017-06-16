@@ -46,6 +46,10 @@ public:
 	//  Canvas source
 	CStaticHP * p_CanvasHP;
 
+	// localize Variable usage
+	vectGraphGridInfo * p_GridGraphInfo;	// pointer to /set of Nodes Info/ from Canvas	
+
+
 	// > Methods
 	// Init
 	void Init();
@@ -53,6 +57,7 @@ public:
 	// InProc
 	void SetGridSize(POINT gridSize);
 	void SetCanvas(CStaticHP * p_CanvasHP);
+	void SetGridGraphInfo();
 
 
 	// Logic
@@ -62,7 +67,7 @@ public:
 
 
 	// Graphic
-	void FormGraphInfo(POINT * p_grph_Size, std::vector < std::vector< stHPNodeGraphInfo > > * p_NodesGraphInfo);
+	void FormGraphInfo();
 	void PaintGrid();
 
 	~CGridHP();

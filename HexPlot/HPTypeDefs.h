@@ -9,7 +9,7 @@
 
 #pragma once
 
-
+#include <vector>
 //////////////////////////////////////////////////////////////////////
 // TypeDef
 //////////////////////////////////////////////////////////////////////
@@ -58,3 +58,5 @@ typedef struct stHPNodeGraphInfo
 	BYTE Value;
 
 };
+
+typedef std::vector < std::vector< stHPNodeGraphInfo > > vectGraphGridInfo;

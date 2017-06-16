@@ -19,6 +19,8 @@
 #include "afxwin.h"
 #include "HPTypeDefs.h"
 #include "PaintDCHP.h"
+#include <vector>
+
 
 //////////////////////////////////////////////////////////////////////
 // Definitions
@@ -43,7 +45,12 @@ public:
 	BYTE uiSize;
 	BYTE uiPaintMode;
 
+	// FROM Logic 
+	POINT * p_gridSize;
+
+	// Graph params
 	stHPCanvasParams HPCanvasParams;
+	vectGraphGridInfo v_GridGraphInfo;		// set of Nodes Info
 
 
 	BYTE v_TestBase[10][10] = 
