@@ -137,6 +137,9 @@ void CStaticHP::InitTest()
 
 }
 
+// NOTE:
+// Paining/ReDraw occured by OnPaint() PROC exclusivly, 
+// so Setting Parameters for OnPaint() case is needed.
 void CStaticHP::PaintGrid()
 {
 	// Set Parameters
@@ -144,7 +147,7 @@ void CStaticHP::PaintGrid()
 	uiPaintMode = 1;
 	//OnPaint();
 
-	// Paint
+	// Paint / Update
 	Invalidate();
 	/*
 

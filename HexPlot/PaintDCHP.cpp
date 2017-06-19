@@ -85,6 +85,38 @@ void CPaintDCHP::LinePO(int x, int y)
 
 }
 
+// NOTE: 
+// FORMAT: 
+// HexPlot Line Types : 
+// 0 = [+1 0], 
+// 1 = [-1 0], 
+// 2 = [0 +1], 
+// 3 = [0 -1], 
+// 4 = [+1 -1], 
+// 5 = [-1 +1].
+void CPaintDCHP::Line(int x, int y, BYTE LineType)
+{
+	// Move Pen Pointer to Node Center
+	MoveTo(x, y);
+
+	// Line to define direction
+	switch (LineType)
+	{
+	case 0:
+
+
+		break;
+
+
+
+	default:
+
+		// err case
+		break;
+	}
+}
+
+
 void CPaintDCHP::Grid()
 {
 

@@ -56,6 +56,7 @@ public:
 	// NOTE: FORMAT: Line to XY / 0 = O, 1 = P(os), -1 = N(eg)
 	// NOTE: HexPlot relations: [+1 0], [-1 0], [0 +1], [0 -1], [+1 -1], [-1 +1].  
 	void LinePO(int x, int y);
+	void Line(int x, int y, BYTE LineType);
 
 	// Grid
 	void Grid();

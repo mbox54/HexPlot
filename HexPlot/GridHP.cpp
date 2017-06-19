@@ -74,23 +74,16 @@ void CGridHP::FormGraphInfo()
 
 }
 
-
+// Paint Grid on Graphic Control
+// NOTE: use Canvas vars for PROC Graph parameters, TRASM to Paint
 void CGridHP::PaintGrid()
 {
-	// Set Graph Parameters
-
 	// > Define Grid_Net Set-of-Nodes
-	// use Temp instance vars for TRASM parameters
-	POINT grph_Size;
-	std::vector < std::vector< stHPNodeGraphInfo > > v_NodesGraphInfo;
-
 	// forming Node Graph Info
 	this->FormGraphInfo();
 
-//	this->p_CanvasHP->v_TestBase[9][9] = 5;
-
-	// call subordinate
-	//this->p_CanvasHP->PaintGrid();
+	// > Call subordinate: Paint PROC
+	this->p_CanvasHP->PaintGrid();
 }
 
 
@@ -105,7 +98,7 @@ void CGridHP::SetGridSize(POINT gridSize)
 	this->m_gridSize = gridSize;
 }
 
-
+// Set control /Canvas/
 void CGridHP::SetCanvas(CStaticHP * p_CanvasHP)
 {
 	// Set Canvas source
@@ -115,6 +108,7 @@ void CGridHP::SetCanvas(CStaticHP * p_CanvasHP)
 	SetGridGraphInfo();
 }
 
+// Set struc /Values: size, Nodes/
 void CGridHP::SetGridGraphInfo()
 {
 	// set Pointer /v_GridGraphInfo/ to Variable MemAddr [INPUT]
@@ -125,7 +119,7 @@ void CGridHP::SetGridGraphInfo()
 
 }
 
-
+// Construct & Fill v_Nodes
 void CGridHP::Init()
 {
 	// > Init Grid Vector
@@ -172,7 +166,7 @@ void CGridHP::AddNode()
 	CNodeHP NodeHP;
 }
 
-
+// Load Grid: Size, v_Nodes From File/Base
 void CGridHP::LoadNode(POINT gridPos)
 {
 	this->v_Nodes[gridPos.x][gridPos.y].Load();
