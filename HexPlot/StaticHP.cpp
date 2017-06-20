@@ -47,7 +47,7 @@ void CStaticHP::OnPaint()
 					   // Paint on this DC
 	
 	// Define HexPlot Paint object
-	CPaintDCHP dcCanvas(this, &this->HPCanvasParams);
+	CPaintDCHP dcCanvas(this, this->p_gridSize, &this->HPCanvasParams);
 
 	// get DC // not used now
 	CDC memdc;
@@ -76,10 +76,11 @@ void CStaticHP::OnPaint()
 
 	case 1:
 		// > Draw Hex Grid
+		dcCanvas.Grid();
 
 		// Draw Nodes
 
-
+		/*
 		for (WORD i = 0; i < uiSize - 1; i++)
 		{
 			for (WORD j = 0; j < uiSize - 1; j++)
@@ -102,7 +103,7 @@ void CStaticHP::OnPaint()
 				dcCanvas.LineTo(uiOX + (i + 1) * HPCanvasParams.HPNodeParams.ucLength, uiOY - (j + 1) * HPCanvasParams.HPNodeParams.ucLength * 1.732 / 2);
 			}
 		}
-
+		*/
 
 		//dcCanvas.MoveTo(0, 0);
 		//dcCanvas.LineTo(100, 100);
@@ -130,8 +131,8 @@ void CStaticHP::InitTest()
 	uiSize = 10;
 
 	// Set Paint config
-	HPCanvasParams.HPNodeParams.ucLength = 20;
-	HPCanvasParams.HPNodeParams.ucWeigth = 6;
+	HPCanvasParams.HPGridParams.ucLength = 20;
+	HPCanvasParams.HPGridParams.ucWeigth = 6;
 
 	uiPaintMode = 0;
 

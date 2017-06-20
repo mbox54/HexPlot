@@ -47,6 +47,8 @@ public:
 
 	// FROM Logic 
 	POINT * p_gridSize;
+	POINT * p_plotSize;
+	POINT * p_nodeSize;
 
 	// Graph params
 	stHPCanvasParams HPCanvasParams;
