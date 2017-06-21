@@ -117,8 +117,8 @@ void CPaintDCHP::Line(int x, int y, BYTE LineType)
 	BYTE ucLineLength = this->pHPCanvasParams->HPGridParams.ucLength;
 
 	// Define Canvas Coord
-	ProcCoor.x = 100 + x * ucLineLength;
-	ProcCoor.y = 600 - y * ucLineLength * 1.732;
+	ProcCoor.x = 100 + x * ucLineLength + y * ucLineLength / 2;
+	ProcCoor.y = 600 - y * ucLineLength * 1.732 / 2;
 
 	// Move Pen Pointer to Node Center
 	MoveTo(ProcCoor);
@@ -127,8 +127,8 @@ void CPaintDCHP::Line(int x, int y, BYTE LineType)
 	switch (LineType)
 	{
 	case 0:
-		// ProcCoor.x  NONE
-		ProcCoor.y -= ucLineLength * 1.732 / 2;
+		ProcCoor.x += ucLineLength / 4;
+		ProcCoor.y -= ucLineLength * 1.732 / 4;
 
 		break;
 
@@ -139,14 +139,14 @@ void CPaintDCHP::Line(int x, int y, BYTE LineType)
 		break;
 
 	case 2:
-		// ProcCoor.x  NONE
-		ProcCoor.y += ucLineLength * 1.732 / 2;
+		ProcCoor.x += ucLineLength / 4;
+		ProcCoor.y += ucLineLength * 1.732 / 4;
 
 		break;
 
 	case 3:
-		ProcCoor.x += ucLineLength / 2;
-		ProcCoor.y += ucLineLength * 1.732 / 2;
+		ProcCoor.x -= ucLineLength / 4;
+		ProcCoor.y += ucLineLength * 1.732 / 4;
 
 		break;
 
@@ -157,8 +157,8 @@ void CPaintDCHP::Line(int x, int y, BYTE LineType)
 		break;
 
 	case 5:
-		ProcCoor.x -= ucLineLength / 2;
-		ProcCoor.y -= ucLineLength * 1.732 / 2;
+		ProcCoor.x -= ucLineLength / 4;
+		ProcCoor.y -= ucLineLength * 1.732 / 4;
 
 		break;
 
