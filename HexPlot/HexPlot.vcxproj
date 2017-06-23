@@ -198,6 +198,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Terrain.h" />
+    <ClInclude Include="Trasse.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Anlage.cpp" />
@@ -215,6 +216,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="Trasse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HexPlot.rc" />

@@ -42,13 +42,16 @@ public:
 	~CStaticHP();
 
 	// > Properties
-	BYTE uiSize;
+	//BYTE uiSize;
 	BYTE uiPaintMode;
 
 	// FROM Logic 
 	POINT * p_gridSize;
 	POINT * p_plotSize;
 	POINT * p_nodeSize;
+
+	// Grid Params
+	CRect m_CanvasRect;
 
 	// Graph params
 	stHPCanvasParams HPCanvasParams;
@@ -71,6 +74,7 @@ public:
 
 	// > Methods
 	void InitTest();
+	void SetCanvasRect();
 	void PaintGrid();
 	void PaintGrid2();
 

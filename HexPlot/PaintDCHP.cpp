@@ -54,7 +54,7 @@ void CPaintDCHP::Circle(POINT Coord)
 void CPaintDCHP::Circle(int x, int y)
 {
 	// Localize Vars	
-	WORD uiThick = this->pHPCanvasParams->HPNodeParams.ucWeigth;
+	WORD uiThick = this->pHPCanvasParams->HPGridParams.ucWeigth;
 
 	uiThick /= 2;
 
@@ -85,8 +85,8 @@ void CPaintDCHP::Node(int x, int y) //!!!! Replace int -> WORD //? POINT has int
 	BYTE ucLineLength = this->pHPCanvasParams->HPGridParams.ucLength;
 
 	// Define Canvas Coord
-	ProcCoor.x = 100 + x * ucLineLength;
-	ProcCoor.y = 600 - y * ucLineLength * 1.732;
+	ProcCoor.x = this->pHPCanvasParams->HPGridParams.uiOXPadding + x * ucLineLength + y * ucLineLength / 2;
+	ProcCoor.y = this->pHPCanvasParams->HPGridParams.uiOYPadding - y * ucLineLength * 1.732 / 2;
 
 	// > Paint
 	this->Circle(ProcCoor);
@@ -117,8 +117,8 @@ void CPaintDCHP::Line(int x, int y, BYTE LineType)
 	BYTE ucLineLength = this->pHPCanvasParams->HPGridParams.ucLength;
 
 	// Define Canvas Coord
-	ProcCoor.x = 100 + x * ucLineLength + y * ucLineLength / 2;
-	ProcCoor.y = 600 - y * ucLineLength * 1.732 / 2;
+	ProcCoor.x = this->pHPCanvasParams->HPGridParams.uiOXPadding + x * ucLineLength + y * ucLineLength / 2;
+	ProcCoor.y = this->pHPCanvasParams->HPGridParams.uiOYPadding - y * ucLineLength * 1.732 / 2;
 
 	// Move Pen Pointer to Node Center
 	MoveTo(ProcCoor);

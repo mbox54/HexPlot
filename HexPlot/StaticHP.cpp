@@ -128,15 +128,24 @@ void CStaticHP::OnPaint()
 void CStaticHP::InitTest()
 {
 	// > Test mode
-	uiSize = 10;
+	//uiSize = 10;
 
 	// Set Paint config
-	HPCanvasParams.HPGridParams.ucLength = 20;
+	HPCanvasParams.HPGridParams.ucLength = 30;
 	HPCanvasParams.HPGridParams.ucWeigth = 6;
 
 	uiPaintMode = 0;
 
 }
+
+void CStaticHP::SetCanvasRect()
+{
+	// > Define Canvas size	
+	this->GetClientRect(&this->m_CanvasRect);
+	HPCanvasParams.HPGridParams.uiOXPadding = m_CanvasRect.left + 100;
+	HPCanvasParams.HPGridParams.uiOYPadding = m_CanvasRect.bottom - 100;
+}
+
 
 // NOTE:
 // Paining/ReDraw occured by OnPaint() PROC exclusivly, 

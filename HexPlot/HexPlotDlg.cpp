@@ -180,8 +180,10 @@ BOOL CHexPlotDlg::OnInitDialog()
 	// init Status bar
 	InitStatusBar();
 
-	// init HP
+	// init Canvas controls
+	// NOTE: !can be implemented only after creation Canvas instance.
 	m_GridHP.SetCanvas(&this->m_Canvas);
+	this->m_Canvas.SetCanvasRect();
 	
 	
 	return TRUE;  // return TRUE  unless you set the focus to a control

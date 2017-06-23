@@ -124,8 +124,8 @@ void CGridHP::Init()
 {
 	// > Init Grid Vector
 	POINT Point_temp;
-	Point_temp.x = 20;
-	Point_temp.y = 20;
+	Point_temp.x = 12;
+	Point_temp.y = 12;
 
 	this->m_gridSize = Point_temp;
 	//

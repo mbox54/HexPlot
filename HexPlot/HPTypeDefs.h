@@ -21,6 +21,8 @@ typedef struct stHPGridParams
 	BYTE ucLength;
 	BYTE ucWeigth;
 
+	WORD uiOXPadding;
+	WORD uiOYPadding;
 };
 
 
