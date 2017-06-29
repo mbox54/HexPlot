@@ -158,6 +158,26 @@ void CGridHP::Init()
 
 	// !debug
 
+	// create Node path
+	CWeg nodeWeg;
+
+	// fill weg
+	for (BYTE k = 0; k < 5; k++)
+	{
+		// form wegKnot
+		stWegKnot wegKnot;
+
+		wegKnot.xyCoord.x = k;
+		wegKnot.xyCoord.y = k;
+
+		wegKnot.uiNumber = k;
+
+		// set el
+		nodeWeg.Add(wegKnot);
+	}
+
+	//m_Trasse.Add
+
 }
 
 

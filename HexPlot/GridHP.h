@@ -17,8 +17,11 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "NodeHP.h"
-#include <vector>
 #include "StaticHP.h"
+
+#include "Trasse.h"
+
+#include <vector>
 //
 
 // side size Parameter
@@ -42,6 +45,8 @@ public:
 	// Node Container
 	std::vector < std::vector< CNodeHP > > v_Nodes;
 
+	// Trasse of Nodes
+	CTrasse m_Trasse;
 
 	//  Canvas source
 	CStaticHP * p_CanvasHP;

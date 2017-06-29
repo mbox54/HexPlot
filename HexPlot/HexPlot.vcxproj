@@ -199,6 +199,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="Trasse.h" />
+    <ClInclude Include="Weg.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Anlage.cpp" />
@@ -217,6 +218,7 @@
     </ClCompile>
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="Trasse.cpp" />
+    <ClCompile Include="Weg.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HexPlot.rc" />

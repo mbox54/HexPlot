@@ -1,20 +1,21 @@
-// Trasse.h
+// Weg.h
 
 // \ INFO
 // *******************************************************************
-// ['Trasse' = 'Route/Path/Way']
-// Class for define set of Path's 
+// ['Weg' = 'Channel/Track']
+// Class for define one Path/Way 
 // Struc Unit
 // Logic
 // *******************************************************************
 
 // NOTE:
-// L2 Container
-// 1 Trasse = N Weg's
+// L1 Container
+// 1 Weg = N stHPWeg
 // CTrasse <- CWeg <- stHPWeg
 
 
 // interface file
+
 
 #pragma once
 
@@ -22,28 +23,38 @@
 // Includes
 //////////////////////////////////////////////////////////////////////
 
-#include "Weg.h"
 #include <list>
 
+//////////////////////////////////////////////////////////////////////
+// Typedefs
+//////////////////////////////////////////////////////////////////////
+
+// Weg Waypoint Knot
+typedef struct stWegKnot
+{
+	POINT xyCoord;
+
+	WORD uiNumber;
+};
+
 
 // -------------------------------------------------------------------
-// class CTrasse
+// class CWeg
 // -------------------------------------------------------------------
-class CTrasse
+class CWeg
 {
 public:
 	// standard constructor
-	CTrasse();
+	CWeg();
 
 	// > Properties
-	// Trasse
-	std::list<CWeg> l_Trasse;
-
+	// Weg, the set of WegKnots
+	std::list<stWegKnot> l_Weg;
 
 	// > Methods
-	void Add(CWeg wegPath);
+	void Add(stWegKnot wegKnot);
 
+	~CWeg();
 
-	~CTrasse();
 };
 

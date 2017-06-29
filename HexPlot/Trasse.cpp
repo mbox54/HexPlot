@@ -21,9 +21,18 @@
 // -------------------------------------------------------------------
 CTrasse::CTrasse()
 {
+
+}
+
+
+// Add new element /weg path/
+void CTrasse::Add(CWeg wegPath)
+{
+	l_Trasse.emplace_back(wegPath);
 }
 
 
 CTrasse::~CTrasse()
 {
+
 }

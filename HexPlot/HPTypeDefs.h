@@ -14,8 +14,10 @@
 // TypeDef
 //////////////////////////////////////////////////////////////////////
 
+// service
 typedef unsigned char BYTE;
 
+// Graph
 typedef struct stHPGridParams
 {
 	BYTE ucLength;
@@ -62,3 +64,4 @@ typedef struct stHPNodeGraphInfo
 };
 
 typedef std::vector < std::vector< stHPNodeGraphInfo > > vectGraphGridInfo;
+
