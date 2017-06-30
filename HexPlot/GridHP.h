@@ -70,6 +70,8 @@ public:
 	void AddNode();
 	void LoadNode(POINT gridPos);
 
+	void AddWeg();
+	void EstimateWegCost(POINT nodeFirst, POINT nodeLast);
 
 	// Graphic
 	void FormGraphInfo();

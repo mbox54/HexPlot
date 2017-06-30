@@ -177,9 +177,10 @@ void CGridHP::Init()
 	}
 
 	//m_Trasse.Add
+	m_Trasse.Add(nodeWeg);
 
 }
-
+ 
 
 void CGridHP::AddNode()
 {
@@ -202,6 +203,14 @@ void CGridHP::LoadNode(POINT gridPos)
 	//p_CanvasHP->
 
 	//p_CanvasHP->PaintGrid();
+}
+
+// Estimate minimal cost to complete path [nodeFirst -> nodeLast]
+// Stor WegKnot sequence of best WegPath
+void CGridHP::EstimateWegCost(POINT nodeFirst, POINT nodeLast)
+{
+
+
 }
 
 
