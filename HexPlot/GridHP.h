@@ -71,6 +71,7 @@ public:
 	void LoadNode(POINT gridPos);
 
 	void AddWeg();
+	void StraightWeg(POINT nodeFirst, POINT nodeLast);
 	void EstimateWegCost(POINT nodeFirst, POINT nodeLast);
 
 	// Graphic

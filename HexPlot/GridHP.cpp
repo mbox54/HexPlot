@@ -205,8 +205,152 @@ void CGridHP::LoadNode(POINT gridPos)
 	//p_CanvasHP->PaintGrid();
 }
 
-// Estimate minimal cost to complete path [nodeFirst -> nodeLast]
+
+
+// Stor WegKnot sequence of Straight WegPath
+// NOTE:
+// *******************************************
+// [#] HexPlot Line Types : 
+// 0 = [0  +1], 
+// C = [+1  0], 
+// 2 = [+1 -1], 
+// 3 = [0  -1], 
+// 4 = [-1  0], 
+// 5 = [-1 +1].
+//
+//
+// [#] exist N direction cases:
+// direct:	case |1|, |3| = X-coord; case |0|, |3| = Y-coord
+// combine: case |2|, |5| = Z-coord
+// 
+//
+// [#] /dX/ | /dY/  defines:
+// dX > 0 & dY < 0, dX < 0 & dY > 0 = Z-coord
+// other = X-, Y-coord.
+//
+// [#] algorithm with Dijkstra method
+// *******************************************
+void CGridHP::StraightWeg(POINT nodeFirst, POINT nodeLast)
+{
+	// define vars, init
+	POINT aPos = nodeFirst;		// start
+	POINT zPos = nodeLast;		// finish
+
+	int dX;						// delta
+	int dY;						// delta
+
+	// repeat sequentially for each StraightWeg WegKnot needed
+	// Step by step
+	BYTE act = 1;
+	while (act)
+	{
+		// > Define dX | dY
+		dX = zPos.x - aPos.x;	// delta
+		dY = zPos.y - aPos.y;	// delta
+
+		// > Check end cycle
+		if ((dX == 0) && (dY == 0))
+		{
+			// [FINAL NODE HAS BEING ARRIVED]
+
+			act = 0;
+		}
+		else
+		{
+			// [WAY PROCEED]
+
+			// > Check OZ inclusion: combine case
+			if ( ( (dX < 0) && (dY > 0) ) || ( (dX > 0) && (dY < 0) ) )
+			{
+				// [INCLUDE OZ]
+
+				// check direction
+				if (dX > 0)
+				{
+					// [POS]: HPDir = 2
+
+					// move to new Pos
+					aPos.x++;
+					aPos.y--;
+				}
+				else
+				{
+					// [NEG]: HPDir = 5
+
+					// move to new Pos
+					aPos.x--;
+					aPos.y++;
+				}
+			}//then: [INCLUDE OZ]/ Check OZ inclusion: combine case
+			else
+			{
+				// [NOT INCLUDE OZ]
+				// simple case
+
+				// > Check OX POS Dir
+				if (dX > 0)
+				{
+					// [POS]: HPDir = 1
+
+					// move to new Pos
+					aPos.x++;
+				}
+				else
+				{
+					// > Check OX NEG Dir
+					if (dX < 0)
+					{					
+						// [NEG]: HPDir = 4
+
+						// move to new Pos
+						aPos.x--;
+					}
+					else
+					{
+						// [NOT INCLUDE OX]
+
+						// > Check OY POS Dir
+						if (dY > 0)
+						{
+							// [POS]: HPDir = 0
+
+							// move to new Pos
+							aPos.y++;
+						}
+						else
+						{
+							// > Check OY NEG Dir
+							if (dY < 0)
+							{
+								// [NEG]: HPDir = 3
+
+								// move to new Pos
+								aPos.y--;
+							}
+							else
+							{
+								// [NOT INCLUDE OY]
+
+								// strange condition:
+								// no OZ, no OX, no OY. MUST dX = dY = 0.
+
+								act = 0;
+							}// > Check OY NEG Dir
+						}// > Check OY POS Dir
+					}// > Check OX NEG Dir
+				}// > Check OX POS Dir
+			}//else/ > Check OZ inclusion: combine case
+
+			// > Add WegKnot
+			//
+
+		}// > Check end cycle, if ((dX == 0) && (dY == 0))
+
+	}//while (act)
+}
+
 // Stor WegKnot sequence of best WegPath
+// Estimate minimal cost to complete path [nodeFirst -> nodeLast]
 void CGridHP::EstimateWegCost(POINT nodeFirst, POINT nodeLast)
 {
 

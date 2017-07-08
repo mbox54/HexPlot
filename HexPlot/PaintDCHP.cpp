@@ -106,8 +106,8 @@ void CPaintDCHP::LinePO(int x, int y)
 // HexPlot Line Types : 
 // 0 = [0  +1], 
 // 1 = [+1  0], 
-// 2 = [0  -1], 
-// 3 = [+1 -1], 
+// 2 = [+1 -1], 
+// 3 = [0  -1], 
 // 4 = [-1  0], 
 // 5 = [-1 +1].
 void CPaintDCHP::Line(int x, int y, BYTE LineType)
@@ -139,13 +139,13 @@ void CPaintDCHP::Line(int x, int y, BYTE LineType)
 		break;
 
 	case 2:
-		ProcCoor.x += ucLineLength / 4;
+		ProcCoor.x -= ucLineLength / 4;
 		ProcCoor.y += ucLineLength * 1.732 / 4;
 
 		break;
 
 	case 3:
-		ProcCoor.x -= ucLineLength / 4;
+		ProcCoor.x += ucLineLength / 4;
 		ProcCoor.y += ucLineLength * 1.732 / 4;
 
 		break;
