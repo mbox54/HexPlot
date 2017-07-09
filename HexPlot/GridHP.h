@@ -71,12 +71,16 @@ public:
 	void LoadNode(POINT gridPos);
 
 	void AddWeg();
-	void StraightWeg(POINT nodeFirst, POINT nodeLast);
+	void StraightWeg(POINT nodeFirst, POINT nodeLast, CWeg * p_wegOutput);
 	void EstimateWegCost(POINT nodeFirst, POINT nodeLast);
 
 	// Graphic
 	void FormGraphInfo();
 	void PaintGrid();
+
+	// Test
+	void Test();
+
 
 	~CGridHP();
 };

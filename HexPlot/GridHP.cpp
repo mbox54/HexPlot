@@ -86,6 +86,24 @@ void CGridHP::PaintGrid()
 	this->p_CanvasHP->PaintGrid();
 }
 
+// Test functionality
+void CGridHP::Test()
+{
+	// test StraightWeg PROC
+	POINT coorFirs;
+	POINT coorLast;
+
+	coorFirs.x = 5;
+	coorFirs.y = 5;
+
+	coorLast.x = 10;
+	coorLast.y = 10;
+
+	CWeg weg_tmp;
+
+	this->StraightWeg(coorFirs, coorLast, &weg_tmp);
+}
+
 
 CGridHP::~CGridHP()
 {
@@ -230,7 +248,7 @@ void CGridHP::LoadNode(POINT gridPos)
 //
 // [#] algorithm with Dijkstra method
 // *******************************************
-void CGridHP::StraightWeg(POINT nodeFirst, POINT nodeLast)
+void CGridHP::StraightWeg(POINT nodeFirst, POINT nodeLast, CWeg * p_wegOutput)
 {
 	// define vars, init
 	POINT aPos = nodeFirst;		// start
@@ -238,6 +256,19 @@ void CGridHP::StraightWeg(POINT nodeFirst, POINT nodeLast)
 
 	int dX;						// delta
 	int dY;						// delta
+
+	stWegKnot wegKnot;			// temp struc for WegKnot fill OP
+	WORD k = 0;					// cycle increment
+
+	// > Add init First Node
+	// fill Knot struc
+	wegKnot.uiNumber = k;
+	wegKnot.xyCoord = aPos;
+
+	// add to OutputVar
+	p_wegOutput->Add(wegKnot);
+
+	k++;
 
 	// repeat sequentially for each StraightWeg WegKnot needed
 	// Step by step
@@ -342,7 +373,14 @@ void CGridHP::StraightWeg(POINT nodeFirst, POINT nodeLast)
 			}//else/ > Check OZ inclusion: combine case
 
 			// > Add WegKnot
-			//
+			// fill Knot struc
+			wegKnot.uiNumber = k;
+			wegKnot.xyCoord = aPos;
+
+			// add to OutputVar
+			p_wegOutput->Add(wegKnot);
+
+			k++;
 
 		}// > Check end cycle, if ((dX == 0) && (dY == 0))
 

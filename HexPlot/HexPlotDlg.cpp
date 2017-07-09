@@ -266,7 +266,7 @@ void CHexPlotDlg::OnMainExit()
 	this->OnOK();	
 }
 
-
+// Main menu Option1
 void CHexPlotDlg::OnMainClick()
 {
 	// > init vars
@@ -285,12 +285,16 @@ void CHexPlotDlg::OnMainClick()
 
 }
 
-
+// Main menu Option2
 void CHexPlotDlg::OnMainClick2()
 {
+	// test Straight Weg forming
+	this->m_GridHP.Test();
+
 	// > init vars
+	// test Paint mode
 	// HexPlot Grid
-	m_Canvas.PaintGrid2();
+	//m_Canvas.PaintGrid2();
 
 	// proceed this Dialog Paint Message
 //	CDialogEx::OnPaint();
