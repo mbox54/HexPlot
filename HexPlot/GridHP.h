@@ -5,6 +5,7 @@
 // Class for Hex_Plot Grid representation
 // define Grid common logic
 // Grid include Nodes
+// CGridHP <- CPlotHP <- CNodeHP <- CSector
 // *******************************************************************
 
 // interface file

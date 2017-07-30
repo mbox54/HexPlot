@@ -1,12 +1,12 @@
-// NodeHP.h
+// Sector.h
 
 // \ INFO
 // *******************************************************************
-// Class for Hex_Plot Node representation
-// define Node common logic
-// Container Unit
+// Class for Hex_Plot Sector representation
+// define Coord point in Node
 // CGridHP <- CPlotHP <- CNodeHP <- CSector
 // *******************************************************************
+
 
 // interface file
 
@@ -17,49 +17,15 @@
 // Includes
 //////////////////////////////////////////////////////////////////////
 
-#include "Terrain.h"
 
 
 // -------------------------------------------------------------------
-// class CNodeHP
+// class CSector
 // -------------------------------------------------------------------
-class CNodeHP
+class CSector
 {
-
 public:
-	// standard constructor
-	CNodeHP();
-	CNodeHP(POINT gridPos);
-
-	~CNodeHP();
-
-
-	// > Properties
-	POINT m_position;		// graphic /unused
-
-	// BORDER: Allow directions
-	BYTE v_incidence[6];
-
-	// Terrain
-	CTerrain m_terrain;
-
-	// Anlage
-	
-
-
-	// > Methods
-	// Init
-	void Init();
-	void SetInit(POINT gridPos);
-
-	// 
-	void Load();
-
-	// Get Graph output Data
-	void FormGraphInfo(BYTE * ucValue);
-
-
-
-
+	CSector();
+	~CSector();
 };
 
