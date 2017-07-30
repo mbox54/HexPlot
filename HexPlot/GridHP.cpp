@@ -141,7 +141,7 @@ void CGridHP::SetGridGraphInfo()
 // Construct & Fill v_Nodes
 void CGridHP::Init()
 {
-	// > Init Grid Vector
+	// Set Grid Size
 	POINT Point_temp;
 	Point_temp.x = 12;
 	Point_temp.y = 12;

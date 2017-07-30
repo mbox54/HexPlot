@@ -28,9 +28,9 @@
 // side size Parameter
 #define SIDESIZE 20
 
-// -------------------------------------------------------------------
+// ===================================================================
 // class CGridHP
-// -------------------------------------------------------------------
+// ===================================================================
 
 class CGridHP
 {
@@ -41,15 +41,15 @@ public:
 
 
 	// > Properties
+	// > > Node Container
 	POINT m_gridSize;
-
-	// Node Container
 	std::vector < std::vector< CNodeHP > > v_Nodes;
 
 	// Trasse of Nodes
 	CTrasse m_Trasse;
 
-	//  Canvas source
+	// > > Graphics
+	// Canvas sourse
 	CStaticHP * p_CanvasHP;
 
 	// localize Variable usage
@@ -66,8 +66,8 @@ public:
 	void SetGridGraphInfo();
 
 
-	// Logic
-	// // Node OP
+	// > > Logic
+	// Node OP
 	void AddNode();
 	void LoadNode(POINT gridPos);
 
@@ -75,7 +75,7 @@ public:
 	void StraightWeg(POINT nodeFirst, POINT nodeLast, CWeg * p_wegOutput);
 	void EstimateWegCost(POINT nodeFirst, POINT nodeLast);
 
-	// Graphic
+	// > > Graphic
 	void FormGraphInfo();
 	void PaintGrid();
 

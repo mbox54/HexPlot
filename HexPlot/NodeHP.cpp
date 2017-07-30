@@ -16,9 +16,9 @@
 #include "stdafx.h"
 #include "NodeHP.h"
 
-// -------------------------------------------------------------------
+// ===================================================================
 // class CNodeHP
-// -------------------------------------------------------------------
+// ===================================================================
 CNodeHP::CNodeHP()
 {
 	// init
@@ -54,6 +54,9 @@ void CNodeHP::Init()
 		this->v_incidence[k] = 1;
 	}
 
+	// > Fill Sectors
+	FillSectors();
+
 }
 
 
@@ -69,6 +72,96 @@ void CNodeHP::Load()
 {
 	// Using [m_position] to define DB Cell to Load
 
+
+}
+
+// -------------------------------------------------------------------
+// Sector
+// -------------------------------------------------------------------
+void CNodeHP::FillSectors()
+{
+	// FORMAT:
+	// Hex Grid positioning
+	// y: 0 - i - N/2, x: 0 - i - N/2 = NULL, x: N/2 - i - N = VALL
+	// y: N/2 - i - N, x: 0 - i - N/2 = VALL, x: N/2 - i - N = NULL
+	// STRUC: v_Sectors[Y][X]
+
+	// > Set Grid Size
+	POINT pt_Size;
+	pt_Size.x = SIDESIZE;
+	pt_Size.y = SIDESIZE;
+
+	this->m_gridSize = pt_Size;
+
+	// > Fill
+	// Define HexCoords
+	POINT pt_CoordHex;
+
+	BYTE ucXFirst = pt_Size.x / 2;
+	BYTE ucXLength = pt_Size.x / 2;
+
+	BYTE act = 1;
+	char sign = 1;
+
+	// > Proceed Coords
+	while (act != 0)
+	{		
+		// Proc mode
+		// Note: 2 modes: 1 = 0--N/2; 2 = N/2--N. 
+		if (act == 1)
+		{
+			// [MODE 1]
+
+			// check mode change
+			if (pt_CoordHex.y > pt_Size.y / 2)
+			{
+				// [CHANGE]
+
+				sign = -1;
+
+				act = 2;
+			}
+		}//then /if (act == 1)
+		else
+		{
+			if (act == 2)
+			{
+				// [MODE 2]
+
+				// check mode change
+				if (pt_CoordHex.y > pt_Size.y - 1)
+				{
+					// [EXIT]
+
+					act = 0;
+				}
+			}//if (act == 2)			
+		}//else /if (act == 1)
+
+		// Allocate memory: Vector for Row /in Sector Vector container
+		this->v_Sectors.push_back(std::vector<CSector>());
+
+		// Proceed Row: iterate Cols
+		BYTE ucXLast = ucXFirst + ucXLength;
+		while (pt_CoordHex.x < ucXLast)
+		{
+			// > Proc Coord
+			// Create Sector instance / init with Hex Coord
+			CSector Sector(pt_CoordHex);
+
+			// allocate memory: Node in 2x Cell /in Sector Vector container
+			this->v_Sectors[pt_CoordHex.y].push_back(Sector);
+
+			pt_CoordHex.x++;
+		}
+
+		// Correct Col
+		ucXFirst -= sign;
+		ucXLength += sign;
+
+		pt_CoordHex.y++;
+
+	}//while (act != 0)
 
 }
 

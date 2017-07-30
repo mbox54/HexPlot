@@ -18,14 +18,39 @@
 #include "Sector.h"
 
 
-// -------------------------------------------------------------------
+// ===================================================================
 // class CSector
-// -------------------------------------------------------------------
+// ===================================================================
 CSector::CSector()
 {
+	Init();
+
+}
+
+CSector::CSector(POINT gridPos)
+{
+	Init();
+
+	m_position = gridPos;
 }
 
 
 CSector::~CSector()
 {
+}
+
+void CSector::Init()
+{
+	// > Default Values
+
+	// init properties
+	// default
+	POINT initCoord;
+	initCoord.x = 0;
+	initCoord.y = 0;
+
+	m_position = initCoord;
+
+	// [addition]
+
 }

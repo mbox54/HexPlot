@@ -18,6 +18,13 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "Terrain.h"
+#include "Sector.h"
+
+#include <vector>
+
+
+// side size Parameter
+#define SIDESIZE 48				// NOTE: HexGrid Size: x12 = dozens
 
 
 // -------------------------------------------------------------------
@@ -35,11 +42,18 @@ public:
 
 
 	// > Properties
+	// > > Net Position
 	POINT m_position;		// graphic /unused
 
-	// BORDER: Allow directions
+	// Borders: Allowed directions
 	BYTE v_incidence[6];
 
+	// > > Sector Container
+	// > Properties
+	POINT m_gridSize;
+	std::vector < std::vector< CSector > > v_Sectors;
+
+	// > > Node Logic
 	// Terrain
 	CTerrain m_terrain;
 
@@ -54,6 +68,9 @@ public:
 
 	// 
 	void Load();
+
+	// Sector
+	void FillSectors();
 
 	// Get Graph output Data
 	void FormGraphInfo(BYTE * ucValue);
