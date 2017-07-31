@@ -96,6 +96,8 @@ void CNodeHP::FillSectors()
 	// > Fill
 	// Define HexCoords
 	POINT pt_CoordHex;
+	
+	
 
 	BYTE ucXFirst = pt_Size.x / 2;
 	BYTE ucXLength = pt_Size.x / 2;
@@ -104,6 +106,7 @@ void CNodeHP::FillSectors()
 	char sign = 1;
 
 	// > Proceed Coords
+	pt_CoordHex.y = 0;
 	while (act != 0)
 	{		
 		// Proc mode
@@ -113,7 +116,7 @@ void CNodeHP::FillSectors()
 			// [MODE 1]
 
 			// check mode change
-			if (pt_CoordHex.y > pt_Size.y / 2)
+			if (pt_CoordHex.y > pt_Size.y / 2 - 1)
 			{
 				// [CHANGE]
 
@@ -143,13 +146,15 @@ void CNodeHP::FillSectors()
 
 		// Proceed Row: iterate Cols
 		BYTE ucXLast = ucXFirst + ucXLength;
+
+		pt_CoordHex.x = ucXFirst;
 		while (pt_CoordHex.x < ucXLast)
 		{
 			// > Proc Coord
 			// Create Sector instance / init with Hex Coord
 			CSector Sector(pt_CoordHex);
 
-			// allocate memory: Node in 2x Cell /in Sector Vector container
+			// allocate memory: Sector in 2x Cell /in Vector container
 			this->v_Sectors[pt_CoordHex.y].push_back(Sector);
 
 			pt_CoordHex.x++;
@@ -164,6 +169,41 @@ void CNodeHP::FillSectors()
 	}//while (act != 0)
 
 }
+
+
+void CNodeHP::HexToMem(POINT pt_Input, POINT * pt_Output)
+{
+	if (pt_Input.y < this->m_gridSize.y / 2)
+	{
+		// [SECTOR 4]
+
+		pt_Output->x = pt_Input.x - (this->m_gridSize.y / 2 - pt_Input.y);
+	}
+	else
+	{
+		pt_Output->x = pt_Input.x;
+	}
+
+	pt_Output->y = pt_Input.y;
+}
+
+
+void CNodeHP::MemToHex(POINT pt_Input, POINT * pt_Output)
+{
+	if (pt_Input.y < this->m_gridSize.y / 2)
+	{
+		// [SECTOR 4]
+
+		pt_Output->x = pt_Input.x + (this->m_gridSize.y / 2 - pt_Input.y);
+	}
+	else
+	{
+		pt_Output->x = pt_Input.x;
+	}
+
+	pt_Output->y = pt_Input.y;
+}
+
 
 void CNodeHP::FormGraphInfo(BYTE * ucValue)
 {

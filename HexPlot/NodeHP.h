@@ -71,6 +71,8 @@ public:
 
 	// Sector
 	void FillSectors();
+	void HexToMem(POINT pt_Input, POINT * pt_Output);
+	void MemToHex(POINT pt_Input, POINT * pt_Output);
 
 	// Get Graph output Data
 	void FormGraphInfo(BYTE * ucValue);
