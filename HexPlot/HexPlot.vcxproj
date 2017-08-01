@@ -193,6 +193,7 @@
     <ClInclude Include="HPTypeDefs.h" />
     <ClInclude Include="NodeHP.h" />
     <ClInclude Include="PaintDCHP.h" />
+    <ClInclude Include="PaintNode.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Sector.h" />
     <ClInclude Include="StaticHP.h" />
@@ -210,6 +211,7 @@
     <ClCompile Include="HexPlotDlg.cpp" />
     <ClCompile Include="NodeHP.cpp" />
     <ClCompile Include="PaintDCHP.cpp" />
+    <ClCompile Include="PaintNode.cpp" />
     <ClCompile Include="Sector.cpp" />
     <ClCompile Include="StaticHP.cpp" />
     <ClCompile Include="stdafx.cpp">

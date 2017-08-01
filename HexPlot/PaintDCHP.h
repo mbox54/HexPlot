@@ -3,7 +3,7 @@
 // \ INFO
 // *******************************************************************
 // Class for PaintDC HexPlot Graphics
-// include additional procedures for HexPlot graphics
+// include additional procedures for HexPlot Grid graphics
 // based on CPaintDC
 // *******************************************************************
 
@@ -26,9 +26,9 @@
 
 //
 
-// -------------------------------------------------------------------
+// ===================================================================
 // class CPaintDCHP
-// -------------------------------------------------------------------
+// ===================================================================
 class CPaintDCHP : public CPaintDC
 {
 public:
@@ -56,8 +56,8 @@ public:
 	void Circle(POINT Coord);
 	
 	// Node
-	void Node(POINT Coord);
 	void Node(int x, int y);
+	void Node(POINT Coord);
 
 	// Line
 	// NOTE: FORMAT: Line to XY / 0 = O, 1 = P(os), -1 = N(eg)

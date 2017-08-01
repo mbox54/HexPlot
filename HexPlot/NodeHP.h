@@ -24,7 +24,7 @@
 
 
 // side size Parameter
-#define SIDESIZE 48				// NOTE: HexGrid Size: x12 = dozens
+#define SIDESIZE 12				// NOTE: HexGrid Size: x12 = dozens
 
 
 // -------------------------------------------------------------------

@@ -93,6 +93,9 @@
     <ClInclude Include="Sector.h">
       <Filter>Header Files\HexPlot Logic</Filter>
     </ClInclude>
+    <ClInclude Include="PaintNode.h">
+      <Filter>Header Files\HexPlot Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HexPlot.cpp">
@@ -132,6 +135,9 @@
       <Filter>Source Files\Routing</Filter>
     </ClCompile>
     <ClCompile Include="Sector.cpp">
+      <Filter>Source Files\HexPlot Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="PaintNode.cpp">
       <Filter>Source Files\HexPlot Logic</Filter>
     </ClCompile>
   </ItemGroup>

@@ -96,6 +96,7 @@ void CPaintDCHP::Node(int x, int y) //!!!! Replace int -> WORD //? POINT has int
 
 }
 
+
 void CPaintDCHP::LinePO(int x, int y)
 {
 
