@@ -40,6 +40,8 @@ typedef struct stHPNodeParams
 	BYTE ucLength;
 	BYTE ucWeigth;
 
+	WORD uiOXPadding;
+	WORD uiOYPadding;
 };
 
 typedef struct stHPSectorParams

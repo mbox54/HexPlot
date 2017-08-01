@@ -35,7 +35,7 @@ public:
 	// standard constructor
 	CPaintDCHP(CWnd* pWnd);
 
-	CPaintDCHP(CWnd* pWnd, POINT * p_gridSize, stHPCanvasParams * pHPCanvasParams);
+	CPaintDCHP(CWnd* pWnd, POINT * p_gridSize, stHPCanvasParams * pHPGridImage);
 
 	~CPaintDCHP();
 
@@ -53,11 +53,11 @@ public:
 
 	// Figures
 	void Circle(int x, int y);
-	void Circle(POINT Coord);
+	void Circle(POINT Coord);		// clause
 	
 	// Node
 	void Node(int x, int y);
-	void Node(POINT Coord);
+	void Node(POINT Coord);			// clause
 
 	// Line
 	// NOTE: FORMAT: Line to XY / 0 = O, 1 = P(os), -1 = N(eg)

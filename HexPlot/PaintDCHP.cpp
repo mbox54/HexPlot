@@ -26,7 +26,8 @@ CPaintDCHP::CPaintDCHP(CWnd* pWnd) : CPaintDC(pWnd) // using parent constructor
 
 }
 
-CPaintDCHP::CPaintDCHP(CWnd* pWnd, POINT * p_gridSize, stHPCanvasParams * pHPGridImage) : CPaintDC(pWnd) // using parent constructor
+CPaintDCHP::CPaintDCHP(CWnd* pWnd, POINT * p_gridSize, stHPCanvasParams * pHPGridImage) 
+	: CPaintDC(pWnd) // using parent constructor
 {
 	this->p_gridSize = p_gridSize;
 	this->pHPCanvasParams = pHPGridImage;
@@ -43,14 +44,6 @@ void CPaintDCHP::SetGridImageStruc(stHPCanvasParams * pHPGridImage)
 
 }
 
-// clause
-void CPaintDCHP::Circle(POINT Coord)
-{
-	Circle(Coord.x, Coord.y);
-	
-}
-
-
 void CPaintDCHP::Circle(int x, int y)
 {
 	// Localize Vars	
@@ -64,9 +57,10 @@ void CPaintDCHP::Circle(int x, int y)
 }
 
 // clause
-void CPaintDCHP::Node(POINT Coord)
+void CPaintDCHP::Circle(POINT Coord)
 {
-	this->Node(Coord.x, Coord.y);
+	Circle(Coord.x, Coord.y);
+	
 }
 
 
@@ -94,6 +88,13 @@ void CPaintDCHP::Node(int x, int y) //!!!! Replace int -> WORD //? POINT has int
 	// Restore Pen prev
 	this->SelectObject(Pen_Prev);
 
+}
+
+
+// clause
+void CPaintDCHP::Node(POINT Coord)
+{
+	this->Node(Coord.x, Coord.y);
 }
 
 
@@ -181,7 +182,7 @@ void CPaintDCHP::Line(POINT Coord, BYTE LineType)
 }
 
 
-// Paint Grid
+// Paint Grid content
 void CPaintDCHP::Grid()
 {
 	// each Node of Grid
