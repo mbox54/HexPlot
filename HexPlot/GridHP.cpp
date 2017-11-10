@@ -15,7 +15,7 @@
 #include "stdafx.h"
 #include "GridHP.h"
 
-
+//#include "external\tinyxml2.h"	// XML-file Save/Load
 
 // -------------------------------------------------------------------
 // class CGridHP
@@ -84,6 +84,59 @@ void CGridHP::PaintGrid()
 
 	// > Call subordinate: Paint PROC
 	this->p_CanvasHP->PaintGrid();
+}
+
+void CGridHP::Save()
+{
+	// > Init Doc Params
+	// NOTE: TITLE specific Data
+
+	// > Form XML structure
+	//XMLDocument doc();
+	//doc
+
+	//XMLDeclaration * decl = new XMLDeclaration("1.0", "", "");
+	//char * str_xmlPreambule = "<?xml version="1.0" encoding="windows - 1251"?>"
+
+
+	//// > Save File
+	//char * str_filename = "C:\\wast\\test0.xml";
+
+	XMLDocument doc;
+	doc.LoadFile("C:\\wast\\test0.xml");
+
+	XMLElement* el_root = doc.FirstChildElement("doc1");
+	XMLElement* titleElement = el_root->FirstChildElement("title");
+	const char* title = titleElement->GetText();
+
+	XMLElement* bodyElement = doc.NewElement("body");
+	el_root->InsertAfterChild(titleElement, bodyElement);
+
+	XMLElement* element1 = doc.NewElement("Element");
+	element1->SetText(1);
+	bodyElement->InsertEndChild(element1);
+
+	XMLElement* element2 = doc.NewElement("Element");
+	element2->SetText(2);
+	bodyElement->InsertEndChild(element2);
+
+
+	for (BYTE k = 0; k < 10; k++)
+	{
+		XMLElement* element3 = doc.NewElement("Element");
+		element3->SetText(3);
+		bodyElement->InsertEndChild(element3);
+	}
+
+
+	doc.SaveFile("C:\\wast\\test2.xml");
+
+}
+
+
+void CGridHP::Load()
+{
+
 }
 
 

@@ -16,12 +16,16 @@
 // Includes
 //////////////////////////////////////////////////////////////////////
 
-#include "NodeHP.h"
-#include "StaticHP.h"
+#include "NodeHP.h"				// Elements of Grid Container
+#include "StaticHP.h"			// Graphic Control
 
-#include "Trasse.h"
+#include "Trasse.h"				// Ways Routing
 
-#include <vector>
+//#include "external\tinyxml2.h"	// XML-file Save/Load
+
+#include "tinyxml2.h"	// XML-file Save/Load
+
+#include <vector>				// Vector-class support
 //
 
 // side size Parameter
@@ -76,6 +80,11 @@ public:
 	// Graphic
 	void FormGraphInfo();
 	void PaintGrid();
+
+	// File Procs
+	void Save();
+	void Load();
+
 
 	~CGridHP();
 };

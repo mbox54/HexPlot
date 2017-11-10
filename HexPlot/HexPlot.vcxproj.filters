@@ -28,6 +28,12 @@
     <Filter Include="Header Files\Project">
       <UniqueIdentifier>{497a5bb7-549e-471b-abad-f296a276e1ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\external">
+      <UniqueIdentifier>{58c9723d-2e21-4ae0-97a1-e08986fd20e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\external">
+      <UniqueIdentifier>{1f877f3d-5969-4fcb-b482-17a4734df5ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -78,6 +84,12 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files\Project</Filter>
     </ClInclude>
+    <ClInclude Include="external\tinyxml2.h">
+      <Filter>Header Files\external</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HexPlot.cpp">
@@ -114,6 +126,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Weg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="external\tinyxml2.cpp">
+      <Filter>Source Files\external</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
