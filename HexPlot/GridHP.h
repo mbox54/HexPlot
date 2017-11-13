@@ -17,12 +17,12 @@
 // Includes
 //////////////////////////////////////////////////////////////////////
 
-#include "NodeHP.h"
-#include "StaticHP.h"
+#include "NodeHP.h"						// interface
+#include "StaticHP.h"					// Graphics
+#include "Trasse.h"						// Routing
 
-#include "Trasse.h"
-
-#include <vector>
+#include "tinyxml2.h"					// File OPs
+#include <vector>						// Sys: Support
 //
 
 // side size Parameter
@@ -57,6 +57,7 @@ public:
 
 
 	// > Methods
+	// -------------------------------------------------------
 	// Init
 	void Init();
 
@@ -76,12 +77,17 @@ public:
 	void EstimateWegCost(POINT nodeFirst, POINT nodeLast);
 
 	// > > Graphic
+	// Native
 	void FormGraphInfo();
 	void PaintGrid();
 
+	// File OPs
+	void Save();
+	void Load();
+
 	// Test
 	void Test();
-
+	// -------------------------------------------------------
 
 	~CGridHP();
 };
