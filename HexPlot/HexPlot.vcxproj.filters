@@ -40,6 +40,12 @@
     <Filter Include="Source Files\Routing">
       <UniqueIdentifier>{7af7d257-073f-404f-bc54-24846207f558}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\extern">
+      <UniqueIdentifier>{4637a6a8-f568-41c6-8148-aab127344f8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\extern">
+      <UniqueIdentifier>{d1207c0b-775d-451a-8715-7624d4b419e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -96,6 +102,9 @@
     <ClInclude Include="PaintNode.h">
       <Filter>Header Files\HexPlot Logic</Filter>
     </ClInclude>
+    <ClInclude Include="external\tinyxml2.h">
+      <Filter>Header Files\extern</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HexPlot.cpp">
@@ -139,6 +148,9 @@
     </ClCompile>
     <ClCompile Include="PaintNode.cpp">
       <Filter>Source Files\HexPlot Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="external\tinyxml2.cpp">
+      <Filter>Source Files\extern</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
