@@ -5,6 +5,7 @@
 // Class for Hex_Plot Grid representation
 // define Grid common logic
 // Grid include Nodes
+// CGridHP <- CPlotHP <- CNodeHP <- CSector
 // *******************************************************************
 
 // interface file
@@ -16,24 +17,20 @@
 // Includes
 //////////////////////////////////////////////////////////////////////
 
-#include "NodeHP.h"				// Elements of Grid Container
-#include "StaticHP.h"			// Graphic Control
+#include "NodeHP.h"
+#include "StaticHP.h"
 
-#include "Trasse.h"				// Ways Routing
+#include "Trasse.h"
 
-//#include "external\tinyxml2.h"	// XML-file Save/Load
-
-#include "tinyxml2.h"	// XML-file Save/Load
-
-#include <vector>				// Vector-class support
+#include <vector>
 //
 
 // side size Parameter
 #define SIDESIZE 20
 
-// -------------------------------------------------------------------
+// ===================================================================
 // class CGridHP
-// -------------------------------------------------------------------
+// ===================================================================
 
 class CGridHP
 {
@@ -44,15 +41,15 @@ public:
 
 
 	// > Properties
+	// > > Node Container
 	POINT m_gridSize;
-
-	// Node Container
 	std::vector < std::vector< CNodeHP > > v_Nodes;
 
 	// Trasse of Nodes
 	CTrasse m_Trasse;
 
-	//  Canvas source
+	// > > Graphics
+	// Canvas sourse
 	CStaticHP * p_CanvasHP;
 
 	// localize Variable usage
@@ -69,21 +66,21 @@ public:
 	void SetGridGraphInfo();
 
 
-	// Logic
-	// // Node OP
+	// > > Logic
+	// Node OP
 	void AddNode();
 	void LoadNode(POINT gridPos);
 
 	void AddWeg();
+	void StraightWeg(POINT nodeFirst, POINT nodeLast, CWeg * p_wegOutput);
 	void EstimateWegCost(POINT nodeFirst, POINT nodeLast);
 
-	// Graphic
+	// > > Graphic
 	void FormGraphInfo();
 	void PaintGrid();
 
-	// File Procs
-	void Save();
-	void Load();
+	// Test
+	void Test();
 
 
 	~CGridHP();

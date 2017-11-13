@@ -27,7 +27,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #define OP_SUCCESS				0x00
-#define OP_FAILED				0x01
+#define OP_FAILURE				0x01
 
 
 // -------------------------------------------------------------------
@@ -46,7 +46,7 @@ public:
 	BYTE uiPaintMode;
 
 	// FROM Logic 
-	POINT * p_gridSize;
+	POINT * p_gridSize;		// p_ptGridSize
 	POINT * p_plotSize;
 	POINT * p_nodeSize;
 

@@ -28,11 +28,17 @@
     <Filter Include="Header Files\Project">
       <UniqueIdentifier>{497a5bb7-549e-471b-abad-f296a276e1ef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\external">
-      <UniqueIdentifier>{58c9723d-2e21-4ae0-97a1-e08986fd20e9}</UniqueIdentifier>
+    <Filter Include="Header Files\Graphic">
+      <UniqueIdentifier>{81707fe8-4fc3-4db1-91ee-d71a9b2fd8e2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\external">
-      <UniqueIdentifier>{1f877f3d-5969-4fcb-b482-17a4734df5ae}</UniqueIdentifier>
+    <Filter Include="Source Files\Graphic">
+      <UniqueIdentifier>{7412e46b-ae63-4dff-bb93-9f550ad1e67d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Routing">
+      <UniqueIdentifier>{64a8c5f9-b172-42ef-b45e-fb6939e464f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Routing">
+      <UniqueIdentifier>{7af7d257-073f-404f-bc54-24846207f558}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -42,13 +48,7 @@
     <ClInclude Include="HexPlot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HexPlotDlg.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="HexAlgorithm.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StaticHP.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NodeHP.h">
@@ -69,12 +69,6 @@
     <ClInclude Include="Anlage.h">
       <Filter>Header Files\Concept Node</Filter>
     </ClInclude>
-    <ClInclude Include="Trasse.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Weg.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>Header Files\Project</Filter>
     </ClInclude>
@@ -84,27 +78,33 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files\Project</Filter>
     </ClInclude>
-    <ClInclude Include="external\tinyxml2.h">
-      <Filter>Header Files\external</Filter>
+    <ClInclude Include="StaticHP.h">
+      <Filter>Header Files\Graphic</Filter>
     </ClInclude>
-    <ClInclude Include="tinyxml2.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="HexPlotDlg.h">
+      <Filter>Header Files\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Weg.h">
+      <Filter>Header Files\Routing</Filter>
+    </ClInclude>
+    <ClInclude Include="Trasse.h">
+      <Filter>Header Files\Routing</Filter>
+    </ClInclude>
+    <ClInclude Include="Sector.h">
+      <Filter>Header Files\HexPlot Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="PaintNode.h">
+      <Filter>Header Files\HexPlot Logic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HexPlot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HexPlotDlg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HexAlgorithm.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StaticHP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PaintDCHP.cpp">
@@ -122,17 +122,23 @@
     <ClCompile Include="Anlage.cpp">
       <Filter>Source Files\Concept Node</Filter>
     </ClCompile>
-    <ClCompile Include="Trasse.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="HexPlotDlg.cpp">
+      <Filter>Source Files\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticHP.cpp">
+      <Filter>Source Files\Graphic</Filter>
     </ClCompile>
     <ClCompile Include="Weg.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Routing</Filter>
     </ClCompile>
-    <ClCompile Include="external\tinyxml2.cpp">
-      <Filter>Source Files\external</Filter>
+    <ClCompile Include="Trasse.cpp">
+      <Filter>Source Files\Routing</Filter>
     </ClCompile>
-    <ClCompile Include="tinyxml2.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Sector.cpp">
+      <Filter>Source Files\HexPlot Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="PaintNode.cpp">
+      <Filter>Source Files\HexPlot Logic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-// GridHP.h
+// GridHP.cpp
 
 // \ INFO
 // *******************************************************************
@@ -6,6 +6,8 @@
 // define Grid common logic
 // Grid include Nodes
 // *******************************************************************
+
+// implementation file
 
 
 //////////////////////////////////////////////////////////////////////
@@ -15,7 +17,6 @@
 #include "stdafx.h"
 #include "GridHP.h"
 
-//#include "external\tinyxml2.h"	// XML-file Save/Load
 
 // -------------------------------------------------------------------
 // class CGridHP
@@ -86,57 +87,22 @@ void CGridHP::PaintGrid()
 	this->p_CanvasHP->PaintGrid();
 }
 
-void CGridHP::Save()
+// Test functionality
+void CGridHP::Test()
 {
-	// > Init Doc Params
-	// NOTE: TITLE specific Data
+	// test StraightWeg PROC
+	POINT coorFirs;
+	POINT coorLast;
 
-	// > Form XML structure
-	//XMLDocument doc();
-	//doc
+	coorFirs.x = 5;
+	coorFirs.y = 5;
 
-	//XMLDeclaration * decl = new XMLDeclaration("1.0", "", "");
-	//char * str_xmlPreambule = "<?xml version="1.0" encoding="windows - 1251"?>"
+	coorLast.x = 10;
+	coorLast.y = 10;
 
+	CWeg weg_tmp;
 
-	//// > Save File
-	//char * str_filename = "C:\\wast\\test0.xml";
-
-	XMLDocument doc;
-	doc.LoadFile("C:\\wast\\test0.xml");
-
-	XMLElement* el_root = doc.FirstChildElement("doc1");
-	XMLElement* titleElement = el_root->FirstChildElement("title");
-	const char* title = titleElement->GetText();
-
-	XMLElement* bodyElement = doc.NewElement("body");
-	el_root->InsertAfterChild(titleElement, bodyElement);
-
-	XMLElement* element1 = doc.NewElement("Element");
-	element1->SetText(1);
-	bodyElement->InsertEndChild(element1);
-
-	XMLElement* element2 = doc.NewElement("Element");
-	element2->SetText(2);
-	bodyElement->InsertEndChild(element2);
-
-
-	for (BYTE k = 0; k < 10; k++)
-	{
-		XMLElement* element3 = doc.NewElement("Element");
-		element3->SetText(3);
-		bodyElement->InsertEndChild(element3);
-	}
-
-
-	doc.SaveFile("C:\\wast\\test2.xml");
-
-}
-
-
-void CGridHP::Load()
-{
-
+	this->StraightWeg(coorFirs, coorLast, &weg_tmp);
 }
 
 
@@ -175,7 +141,7 @@ void CGridHP::SetGridGraphInfo()
 // Construct & Fill v_Nodes
 void CGridHP::Init()
 {
-	// > Init Grid Vector
+	// Set Grid Size
 	POINT Point_temp;
 	Point_temp.x = 12;
 	Point_temp.y = 12;
@@ -258,8 +224,172 @@ void CGridHP::LoadNode(POINT gridPos)
 	//p_CanvasHP->PaintGrid();
 }
 
-// Estimate minimal cost to complete path [nodeFirst -> nodeLast]
+
+
+// Stor WegKnot sequence of Straight WegPath
+// NOTE:
+// *******************************************
+// [#] HexPlot Line Types : 
+// 0 = [0  +1], 
+// C = [+1  0], 
+// 2 = [+1 -1], 
+// 3 = [0  -1], 
+// 4 = [-1  0], 
+// 5 = [-1 +1].
+//
+//
+// [#] exist N direction cases:
+// direct:	case |1|, |3| = X-coord; case |0|, |3| = Y-coord
+// combine: case |2|, |5| = Z-coord
+// 
+//
+// [#] /dX/ | /dY/  defines:
+// dX > 0 & dY < 0, dX < 0 & dY > 0 = Z-coord
+// other = X-, Y-coord.
+//
+// [#] algorithm with Dijkstra method
+// *******************************************
+void CGridHP::StraightWeg(POINT nodeFirst, POINT nodeLast, CWeg * p_wegOutput)
+{
+	// define vars, init
+	POINT aPos = nodeFirst;		// start
+	POINT zPos = nodeLast;		// finish
+
+	int dX;						// delta
+	int dY;						// delta
+
+	stWegKnot wegKnot;			// temp struc for WegKnot fill OP
+	WORD k = 0;					// cycle increment
+
+	// > Add init First Node
+	// fill Knot struc
+	wegKnot.uiNumber = k;
+	wegKnot.xyCoord = aPos;
+
+	// add to OutputVar
+	p_wegOutput->Add(wegKnot);
+
+	k++;
+
+	// repeat sequentially for each StraightWeg WegKnot needed
+	// Step by step
+	BYTE act = 1;
+	while (act)
+	{
+		// > Define dX | dY
+		dX = zPos.x - aPos.x;	// delta
+		dY = zPos.y - aPos.y;	// delta
+
+		// > Check end cycle
+		if ((dX == 0) && (dY == 0))
+		{
+			// [FINAL NODE HAS BEING ARRIVED]
+
+			act = 0;
+		}
+		else
+		{
+			// [WAY PROCEED]
+
+			// > Check OZ inclusion: combine case
+			if ( ( (dX < 0) && (dY > 0) ) || ( (dX > 0) && (dY < 0) ) )
+			{
+				// [INCLUDE OZ]
+
+				// check direction
+				if (dX > 0)
+				{
+					// [POS]: HPDir = 2
+
+					// move to new Pos
+					aPos.x++;
+					aPos.y--;
+				}
+				else
+				{
+					// [NEG]: HPDir = 5
+
+					// move to new Pos
+					aPos.x--;
+					aPos.y++;
+				}
+			}//then: [INCLUDE OZ]/ Check OZ inclusion: combine case
+			else
+			{
+				// [NOT INCLUDE OZ]
+				// simple case
+
+				// > Check OX POS Dir
+				if (dX > 0)
+				{
+					// [POS]: HPDir = 1
+
+					// move to new Pos
+					aPos.x++;
+				}
+				else
+				{
+					// > Check OX NEG Dir
+					if (dX < 0)
+					{					
+						// [NEG]: HPDir = 4
+
+						// move to new Pos
+						aPos.x--;
+					}
+					else
+					{
+						// [NOT INCLUDE OX]
+
+						// > Check OY POS Dir
+						if (dY > 0)
+						{
+							// [POS]: HPDir = 0
+
+							// move to new Pos
+							aPos.y++;
+						}
+						else
+						{
+							// > Check OY NEG Dir
+							if (dY < 0)
+							{
+								// [NEG]: HPDir = 3
+
+								// move to new Pos
+								aPos.y--;
+							}
+							else
+							{
+								// [NOT INCLUDE OY]
+
+								// strange condition:
+								// no OZ, no OX, no OY. MUST dX = dY = 0.
+
+								act = 0;
+							}// > Check OY NEG Dir
+						}// > Check OY POS Dir
+					}// > Check OX NEG Dir
+				}// > Check OX POS Dir
+			}//else/ > Check OZ inclusion: combine case
+
+			// > Add WegKnot
+			// fill Knot struc
+			wegKnot.uiNumber = k;
+			wegKnot.xyCoord = aPos;
+
+			// add to OutputVar
+			p_wegOutput->Add(wegKnot);
+
+			k++;
+
+		}// > Check end cycle, if ((dX == 0) && (dY == 0))
+
+	}//while (act)
+}
+
 // Stor WegKnot sequence of best WegPath
+// Estimate minimal cost to complete path [nodeFirst -> nodeLast]
 void CGridHP::EstimateWegCost(POINT nodeFirst, POINT nodeLast)
 {
 

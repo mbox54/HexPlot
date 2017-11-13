@@ -1,9 +1,9 @@
-// PaintDCHP.h
+// PaintNode.h
 
 // \ INFO
 // *******************************************************************
 // Class for PaintDC HexPlot Graphics
-// include additional procedures for HexPlot Grid graphics
+// include additional procedures for HexPlot Node graphics
 // based on CPaintDC
 // *******************************************************************
 
@@ -27,26 +27,25 @@
 //
 
 // ===================================================================
-// class CPaintDCHP
+// class CPaintNode
 // ===================================================================
-class CPaintDCHP : public CPaintDC
+class CPaintNode : public CPaintDC
 {
 public:
 	// standard constructor
-	CPaintDCHP(CWnd* pWnd);
+	CPaintNode(CWnd* pWnd);
 
-	CPaintDCHP(CWnd* pWnd, POINT * p_gridSize, stHPCanvasParams * pHPGridImage);
+	CPaintNode(CWnd* pWnd, POINT * p_gridSize, stHPCanvasParams * pHPCanvasParams);
 
-	~CPaintDCHP();
+	~CPaintNode();
 
 
 	// > Properties
 	// size
-	POINT * p_gridSize;
+	POINT * p_ptNodeSize;
 
 	// Graph Params
 	stHPCanvasParams * pHPCanvasParams;
-
 
 	// > Events
 	void SetGridImageStruc(stHPCanvasParams * pHPGridImage);
@@ -54,10 +53,10 @@ public:
 	// Figures
 	void Circle(int x, int y);
 	void Circle(POINT Coord);		// clause
-	
+
 	// Node
-	void Node(int x, int y);
-	void Node(POINT Coord);			// clause
+	void Sector(int x, int y);
+	void Sector(POINT Coord);		// clause
 
 	// Line
 	// NOTE: FORMAT: Line to XY / 0 = O, 1 = P(os), -1 = N(eg)
@@ -68,7 +67,8 @@ public:
 	void LinePO(int x, int y);
 
 	// Grid
-	void Grid();
+	void Node();
+
 
 };
 

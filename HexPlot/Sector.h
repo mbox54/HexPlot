@@ -1,38 +1,42 @@
-// Trasse.cpp
+// Sector.h
 
 // \ INFO
 // *******************************************************************
-// ['Trasse' = 'Route/Path/Way']
-// Class [LOGIC] for define set of Path's 
-// Struc Unit
+// Class for Hex_Plot Sector representation
+// define Coord point in Node
+// CGridHP <- CPlotHP <- CNodeHP <- CSector
 // *******************************************************************
 
-// implementation file
+
+// interface file
+
+
+#pragma once
 
 //////////////////////////////////////////////////////////////////////
 // Includes
 //////////////////////////////////////////////////////////////////////
 
-#include "stdafx.h"
-#include "Trasse.h"
+
 
 // ===================================================================
-// class CTrasse
+// class CSector
 // ===================================================================
-CTrasse::CTrasse()
+class CSector
 {
+public:
+	// standard constructor
+	CSector();
+	CSector(POINT gridPos);
 
-}
+	~CSector();
+
+	// > Properties
+	POINT m_position;		// graphic /unused
 
 
-// Add new element /weg path/
-void CTrasse::Add(CWeg wegPath)
-{
-	l_Trasse.emplace_back(wegPath);
-}
+	// > Methods
+	// Init
+	void Init();
+};
 
-
-CTrasse::~CTrasse()
-{
-
-}

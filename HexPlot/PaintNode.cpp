@@ -1,53 +1,51 @@
-// PaintDCHP.cpp
+// PaintNode.h
 
 // \ INFO
 // *******************************************************************
 // Class for PaintDC HexPlot Graphics
-// include additional procedures for HexPlot graphics
+// include additional procedures for HexPlot Node graphics
 // based on CPaintDC
 // *******************************************************************
 
 // implementation file
+
 
 //////////////////////////////////////////////////////////////////////
 // Includes
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
-#include "PaintDCHP.h"
+#include "PaintNode.h"
 
 
-// -------------------------------------------------------------------
-// class CPaintDCHP
-// -------------------------------------------------------------------
-CPaintDCHP::CPaintDCHP(CWnd* pWnd) : CPaintDC(pWnd) // using parent constructor
+// ===================================================================
+// class CPaintNode
+// ===================================================================
+
+CPaintNode::CPaintNode(CWnd* pWnd) : CPaintDC(pWnd) // using parent constructor
 {
-	// defaults
 
 }
 
-CPaintDCHP::CPaintDCHP(CWnd* pWnd, POINT * p_gridSize, stHPCanvasParams * pHPGridImage) 
+
+CPaintNode::CPaintNode(CWnd * pWnd, POINT * p_gridSize, stHPCanvasParams * pHPGridImage)
 	: CPaintDC(pWnd) // using parent constructor
 {
-	this->p_gridSize = p_gridSize;
+	this->p_ptNodeSize = p_gridSize;
 	this->pHPCanvasParams = pHPGridImage;
 }
 
 
-CPaintDCHP::~CPaintDCHP()
-{
-}
-
-void CPaintDCHP::SetGridImageStruc(stHPCanvasParams * pHPGridImage)
+void CPaintNode::SetGridImageStruc(stHPCanvasParams * pHPGridImage)
 {
 	this->pHPCanvasParams = pHPGridImage;
-
 }
 
-void CPaintDCHP::Circle(int x, int y)
+
+void CPaintNode::Circle(int x, int y)
 {
 	// Localize Vars	
-	WORD uiThick = this->pHPCanvasParams->HPGridParams.ucWeigth;
+	WORD uiThick = this->pHPCanvasParams->HPNodeParams.ucWeigth;
 
 	uiThick /= 2;
 
@@ -57,18 +55,17 @@ void CPaintDCHP::Circle(int x, int y)
 }
 
 // clause
-void CPaintDCHP::Circle(POINT Coord)
+void CPaintNode::Circle(POINT Coord)
 {
 	Circle(Coord.x, Coord.y);
-	
 }
 
 
-void CPaintDCHP::Node(int x, int y) //!!!! Replace int -> WORD //? POINT has int
+void CPaintNode::Sector(int x, int y)
 {
 	// Save Pen prev
 	CPen * Pen_Prev(GetCurrentPen());
-	
+
 	// Set Pen style
 	CPen Pen_Act(PS_SOLID, 4, RGB(50, 100, 200));
 
@@ -76,11 +73,11 @@ void CPaintDCHP::Node(int x, int y) //!!!! Replace int -> WORD //? POINT has int
 
 	// Localize Vars
 	POINT ProcCoor;
-	BYTE ucLineLength = this->pHPCanvasParams->HPGridParams.ucLength;
+	BYTE ucLineLength = this->pHPCanvasParams->HPNodeParams.ucLength;
 
 	// Define Canvas Coord
-	ProcCoor.x = this->pHPCanvasParams->HPGridParams.uiOXPadding + x * ucLineLength + y * ucLineLength / 2;
-	ProcCoor.y = this->pHPCanvasParams->HPGridParams.uiOYPadding - y * ucLineLength * 1.732 / 2;
+	ProcCoor.x = this->pHPCanvasParams->HPNodeParams.uiOXPadding + x * ucLineLength + y * ucLineLength / 2;
+	ProcCoor.y = this->pHPCanvasParams->HPNodeParams.uiOYPadding - y * ucLineLength * 1.732 / 2;
 
 	// > Paint
 	this->Circle(ProcCoor);
@@ -90,18 +87,12 @@ void CPaintDCHP::Node(int x, int y) //!!!! Replace int -> WORD //? POINT has int
 
 }
 
-
 // clause
-void CPaintDCHP::Node(POINT Coord)
+void CPaintNode::Sector(POINT Coord)
 {
-	this->Node(Coord.x, Coord.y);
+	this->Sector(Coord.x, Coord.y);
 }
 
-
-void CPaintDCHP::LinePO(int x, int y)
-{
-
-}
 
 // NOTE: 
 // FORMAT: 
@@ -112,7 +103,7 @@ void CPaintDCHP::LinePO(int x, int y)
 // 3 = [0  -1], 
 // 4 = [-1  0], 
 // 5 = [-1 +1].
-void CPaintDCHP::Line(int x, int y, BYTE LineType)
+void CPaintNode::Line(int x, int y, BYTE LineType)
 {
 	// Localize Vars
 	POINT ProcCoor;
@@ -175,20 +166,19 @@ void CPaintDCHP::Line(int x, int y, BYTE LineType)
 }
 
 // clause
-void CPaintDCHP::Line(POINT Coord, BYTE LineType)
+void CPaintNode::Line(POINT Coord, BYTE LineType)
 {
 	Line(Coord.x, Coord.y, LineType);
 
 }
 
-
-// Paint Grid content
-void CPaintDCHP::Grid()
+// Paint Node content
+void CPaintNode::Node()
 {
-	// each Node of Grid
-	for (WORD k_x = 0; k_x < this->p_gridSize->x; k_x ++)
+	// each Sector of Node
+	for (WORD k_x = 0; k_x < this->p_ptNodeSize->x; k_x++)
 	{
-		for (BYTE k_y = 0; k_y < this->p_gridSize->y; k_y ++)
+		for (BYTE k_y = 0; k_y < this->p_ptNodeSize->y; k_y++)
 		{
 			// Lines
 			for (BYTE k_line = 0; k_line < 6; k_line++)
@@ -197,10 +187,15 @@ void CPaintDCHP::Grid()
 				this->Line(k_x, k_y, k_line);
 			}
 
-			// Node
-			this->Node(k_x, k_y);
+			// Sector
+			this->Sector(k_x, k_y);
 		}
 	}
 
 }
 
+
+CPaintNode::~CPaintNode()
+{
+
+}
