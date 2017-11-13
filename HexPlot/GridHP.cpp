@@ -87,9 +87,14 @@ void CGridHP::PaintGrid()
 	this->p_CanvasHP->PaintGrid();
 }
 
+
 // Test functionality
 void CGridHP::Test()
 {
+	// test FILE OPs
+	Save();
+
+
 	// test StraightWeg PROC
 	POINT coorFirs;
 	POINT coorLast;
@@ -225,6 +230,11 @@ void CGridHP::LoadNode(POINT gridPos)
 }
 
 
+
+void CGridHP::AddWeg()
+{
+
+}
 
 // Stor WegKnot sequence of Straight WegPath
 // NOTE:
@@ -396,4 +406,49 @@ void CGridHP::EstimateWegCost(POINT nodeFirst, POINT nodeLast)
 
 }
 
+
+
+void CGridHP::Save()
+{
+
+	// !test
+	tinyxml2::XMLDocument doc;
+
+	doc.LoadFile("C:\\wast\\test0.xml");
+
+	tinyxml2::XMLElement* el_root = doc.FirstChildElement("doc1");
+	tinyxml2::XMLElement* titleElement = el_root->FirstChildElement("title");
+	const char* title = titleElement->GetText();
+
+	tinyxml2::XMLElement* bodyElement = doc.NewElement("body");
+	el_root->InsertAfterChild(titleElement, bodyElement);
+
+	tinyxml2::XMLElement* element1 = doc.NewElement("Element");
+	element1->SetText(1);
+	bodyElement->InsertEndChild(element1);
+
+	tinyxml2::XMLElement* element2 = doc.NewElement("Element");
+	element2->SetText(2);
+	bodyElement->InsertEndChild(element2);
+
+
+	for (BYTE k = 0; k < 10; k++)
+	{
+		tinyxml2::XMLElement* element3 = doc.NewElement("Element");
+		element3->SetText(3);
+		bodyElement->InsertEndChild(element3);
+	}
+
+
+	doc.SaveFile("C:\\wast\\test2.xml");
+
+
+}
+
+
+void CGridHP::Load()
+{
+
+
+}
 
