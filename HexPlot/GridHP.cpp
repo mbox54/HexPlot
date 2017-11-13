@@ -410,10 +410,42 @@ void CGridHP::EstimateWegCost(POINT nodeFirst, POINT nodeLast)
 
 void CGridHP::Save()
 {
+	// > Form Document
+	tinyxml2::XMLDocument WDocument;
 
+	// > Form XML Header
+	char * str_XMLSpec = "xml version=\"1.0\" encoding=\"windows - 1251\" standalone=\"yes\"";
+	tinyxml2::XMLDeclaration* WDeclaration = WDocument.NewDeclaration(str_XMLSpec);
+	WDocument.LinkEndChild(WDeclaration);
+
+	tinyxml2::XMLComment* WCmntDeclaration = WDocument.NewComment("WAST Grid file structure");
+	WDocument.LinkEndChild(WCmntDeclaration);
+
+	// > Form Title Part
+	tinyxml2::XMLElement* WEl_Root = WDocument.NewElement("WAST");
+	WDocument.LinkEndChild(WEl_Root);
+
+	tinyxml2::XMLComment* WCmntTitle = WDocument.NewComment("Part: Title");
+	WEl_Root->InsertEndChild(WCmntTitle);
+
+	tinyxml2::XMLElement* WEl_Title = WDocument.NewElement("TITLE");
+	WEl_Root->InsertEndChild(WEl_Title);
+
+	// > Form Body
+
+
+	// > > Node Container
+	//POINT m_gridSize;
+	//std::vector < std::vector< CNodeHP > > v_Nodes;
+
+
+	
+	// > save Document
+	WDocument.SaveFile("C:\\wast\\WastData.xml");
+
+
+/*
 	// !test
-	tinyxml2::XMLDocument doc;
-
 	doc.LoadFile("C:\\wast\\test0.xml");
 
 	tinyxml2::XMLElement* el_root = doc.FirstChildElement("doc1");
@@ -441,7 +473,7 @@ void CGridHP::Save()
 
 
 	doc.SaveFile("C:\\wast\\test2.xml");
-
+*/
 
 }
 
