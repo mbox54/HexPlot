@@ -122,7 +122,18 @@ void CNodeHP::Save()
 	El_Root->InsertEndChild(El_Body);
 
 	// > Body Content
-	// Node
+	// Terrain
+	tinyxml2::XMLElement* El_Body_Terrain = WDocument.NewElement("Terrain");
+	El_Body->InsertEndChild(El_Body_Terrain);
+
+	tinyxml2::XMLElement* El_Body_Terrain_Type = WDocument.NewElement("TerrainType");
+	El_Body_Terrain_Type->SetText(m_terrain.m_TerrainType);
+	El_Body_Terrain->InsertEndChild(El_Body_Terrain_Type);
+
+	// Sector
+	tinyxml2::XMLElement* El_Body_Sectors = WDocument.NewElement("Sectors");
+	El_Body->InsertEndChild(El_Body_Sectors);
+
 	for (BYTE ky = 0; ky < m_gridSize.y; ky++)
 	{
 		for (BYTE kx = 0; kx < m_gridSize.x; kx++)
@@ -130,13 +141,16 @@ void CNodeHP::Save()
 			tinyxml2::XMLElement* El_Sector = WDocument.NewElement("Sector");
 			El_Sector->SetAttribute("Y", ky);
 			El_Sector->SetAttribute("X", kx);
-			El_Sector->SetText(200);
-			El_Sector->InsertEndChild(El_Sector);
-		}
+			El_Body_Sectors->InsertEndChild(El_Sector);
 
+			tinyxml2::XMLElement* El_Body_Sector_altitude = WDocument.NewElement("altitude");
+			El_Body_Sector_altitude->SetText(this->v_Sectors[ky][kx].m_altitude);
+			El_Sector->InsertEndChild(El_Body_Sector_altitude);	
+		}
 	}
 
 	// > Save Document
+	// !!! Form specific Filename (NodeY05X08)
 	WDocument.SaveFile("C:\\wast\\WastNode.xml");
 }
 

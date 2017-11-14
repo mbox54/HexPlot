@@ -34,6 +34,8 @@ public:
 	// > Properties
 	POINT m_position;		// graphic /unused
 
+	BYTE m_altitude;
+
 
 	// > Methods
 	// Init

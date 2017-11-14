@@ -478,7 +478,7 @@ void CGridHP::Save()
 			tinyxml2::XMLElement* El_Node = WDocument.NewElement("Node");
 			El_Node->SetAttribute("Y", ky);
 			El_Node->SetAttribute("X", kx);
-			//El_Node->SetText(100);
+			El_Node->SetText(100);
 			El_Body->InsertEndChild(El_Node);
 		}
 		
