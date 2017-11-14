@@ -418,20 +418,58 @@ void CGridHP::Save()
 	tinyxml2::XMLDeclaration* WDeclaration = WDocument.NewDeclaration(str_XMLSpec);
 	WDocument.LinkEndChild(WDeclaration);
 
-	tinyxml2::XMLComment* WCmntDeclaration = WDocument.NewComment("WAST Grid file structure");
-	WDocument.LinkEndChild(WCmntDeclaration);
+	tinyxml2::XMLComment* CmntDeclaration = WDocument.NewComment("WAST Grid file structure");
+	WDocument.LinkEndChild(CmntDeclaration);
 
 	// > Form Title Part
-	tinyxml2::XMLElement* WEl_Root = WDocument.NewElement("WAST");
-	WDocument.LinkEndChild(WEl_Root);
+	tinyxml2::XMLElement* El_Root = WDocument.NewElement("WAST");
+	WDocument.LinkEndChild(El_Root);
 
-	tinyxml2::XMLComment* WCmntTitle = WDocument.NewComment("Part: Title");
-	WEl_Root->InsertEndChild(WCmntTitle);
+	tinyxml2::XMLComment* CmntTitle = WDocument.NewComment("Part: Title");
+	El_Root->InsertEndChild(CmntTitle);
 
-	tinyxml2::XMLElement* WEl_Title = WDocument.NewElement("TITLE");
-	WEl_Root->InsertEndChild(WEl_Title);
+	tinyxml2::XMLElement* El_Title = WDocument.NewElement("TITLE");
+	El_Root->InsertEndChild(El_Title);
+
+	// > Title Content
+	// Description
+	tinyxml2::XMLElement* El_Tit_Desc = WDocument.NewElement("Descr");
+	El_Tit_Desc->SetText("Wast File, contained Grid structure filled with data");
+	El_Title->InsertEndChild(El_Tit_Desc);
+
+	// Date
+	tinyxml2::XMLElement* El_Tit_Date = WDocument.NewElement("Date");
+	El_Tit_Date->SetText("Save PROC Date: 141117 10.00");
+	El_Title->InsertEndChild(El_Tit_Date);
+
+	// Nodes
+	tinyxml2::XMLElement* El_Tit_Nodes = WDocument.NewElement("Nodes");
+	El_Title->InsertEndChild(El_Tit_Nodes);
+
+	tinyxml2::XMLElement* El_Tit_Nodes_X = WDocument.NewElement("X");
+	El_Tit_Nodes_X->SetText(20);
+	El_Tit_Nodes->InsertEndChild(El_Tit_Nodes_X);
+
+	tinyxml2::XMLElement* El_Tit_Nodes_Y = WDocument.NewElement("Y");
+	El_Tit_Nodes_Y->SetText(20);
+	El_Tit_Nodes->InsertEndChild(El_Tit_Nodes_Y);
+
 
 	// > Form Body
+	tinyxml2::XMLComment* CmntBody = WDocument.NewComment("Part: Body");
+	El_Root->InsertEndChild(CmntBody);
+
+	tinyxml2::XMLElement* El_Body = WDocument.NewElement("BODY");
+	El_Root->InsertEndChild(El_Body);
+
+	// > Body Content
+	// Node
+	for (BYTE k = 0; k < 20; k++)
+	{
+		tinyxml2::XMLElement* El_Node = WDocument.NewElement("Node");
+		El_Node->SetText(100);
+		El_Body->InsertEndChild(El_Node);
+	}
 
 
 	// > > Node Container
