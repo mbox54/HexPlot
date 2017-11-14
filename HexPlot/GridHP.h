@@ -63,6 +63,7 @@ public:
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Init
 	void Init();
+	void PlaceNet();
 
 	// InProc
 	void SetGridSize(POINT gridSize);

@@ -204,6 +204,13 @@ void CGridHP::Init()
 	m_Trasse.Add(nodeWeg);
 
 }
+
+// Place Defined Node-Unit Net in Memory
+void CGridHP::PlaceNet()
+{
+
+
+}
  
 
 void CGridHP::AddNode()
@@ -407,7 +414,7 @@ void CGridHP::EstimateWegCost(POINT nodeFirst, POINT nodeLast)
 }
 
 
-
+// FILE XML OPs
 void CGridHP::Save()
 {
 	// > Form Document
@@ -447,11 +454,11 @@ void CGridHP::Save()
 	El_Title->InsertEndChild(El_Tit_Nodes);
 
 	tinyxml2::XMLElement* El_Tit_Nodes_X = WDocument.NewElement("X");
-	El_Tit_Nodes_X->SetText(20);
+	El_Tit_Nodes_X->SetText(m_gridSize.x);
 	El_Tit_Nodes->InsertEndChild(El_Tit_Nodes_X);
 
 	tinyxml2::XMLElement* El_Tit_Nodes_Y = WDocument.NewElement("Y");
-	El_Tit_Nodes_Y->SetText(20);
+	El_Tit_Nodes_Y->SetText(m_gridSize.y);
 	El_Tit_Nodes->InsertEndChild(El_Tit_Nodes_Y);
 
 
@@ -464,22 +471,21 @@ void CGridHP::Save()
 
 	// > Body Content
 	// Node
-	for (BYTE k = 0; k < 20; k++)
+	for (BYTE ky = 0; ky < m_gridSize.y; ky++)
 	{
-		tinyxml2::XMLElement* El_Node = WDocument.NewElement("Node");
-		El_Node->SetText(100);
-		El_Body->InsertEndChild(El_Node);
+		for (BYTE kx = 0; kx < m_gridSize.x; kx++)
+		{
+			tinyxml2::XMLElement* El_Node = WDocument.NewElement("Node");
+			El_Node->SetAttribute("Y", ky);
+			El_Node->SetAttribute("X", kx);
+			//El_Node->SetText(100);
+			El_Body->InsertEndChild(El_Node);
+		}
+		
 	}
-
-
-	// > > Node Container
-	//POINT m_gridSize;
-	//std::vector < std::vector< CNodeHP > > v_Nodes;
-
-
 	
-	// > save Document
-	WDocument.SaveFile("C:\\wast\\WastData.xml");
+	// > Save Document
+	WDocument.SaveFile("C:\\wast\\WastGrid.xml");
 
 
 /*

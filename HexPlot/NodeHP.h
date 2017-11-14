@@ -20,6 +20,8 @@
 #include "Terrain.h"
 #include "Sector.h"
 
+#include "external\tinyxml2.h"
+
 #include <vector>
 
 
@@ -66,8 +68,6 @@ public:
 	void Init();
 	void SetInit(POINT gridPos);
 
-	// 
-	void Load();
 
 	// Sector
 	void FillSectors();
@@ -78,7 +78,9 @@ public:
 	void FormGraphInfo(BYTE * ucValue);
 
 
-
+	// File OPs
+	void Save();
+	void Load();
 
 };
 

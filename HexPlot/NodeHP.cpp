@@ -67,6 +67,79 @@ void CNodeHP::SetInit(POINT gridPos)
 	m_position = gridPos;
 }
 
+void CNodeHP::Save()
+{
+	// > Form Document
+	tinyxml2::XMLDocument WDocument;
+
+	// > Form XML Header
+	char * str_XMLSpec = "xml version=\"1.0\" encoding=\"windows - 1251\" standalone=\"yes\"";
+	tinyxml2::XMLDeclaration* WDeclaration = WDocument.NewDeclaration(str_XMLSpec);
+	WDocument.LinkEndChild(WDeclaration);
+
+	tinyxml2::XMLComment* CmntDeclaration = WDocument.NewComment("WAST Node file structure");
+	WDocument.LinkEndChild(CmntDeclaration);
+
+	// > Form Title Part
+	tinyxml2::XMLElement* El_Root = WDocument.NewElement("WAST");
+	WDocument.LinkEndChild(El_Root);
+
+	tinyxml2::XMLComment* CmntTitle = WDocument.NewComment("Part: Title");
+	El_Root->InsertEndChild(CmntTitle);
+
+	tinyxml2::XMLElement* El_Title = WDocument.NewElement("TITLE");
+	El_Root->InsertEndChild(El_Title);
+
+	// > Title Content
+	// Description
+	tinyxml2::XMLElement* El_Tit_Desc = WDocument.NewElement("Descr");
+	El_Tit_Desc->SetText("Wast File, contained Node structure filled with data");
+	El_Title->InsertEndChild(El_Tit_Desc);
+
+	// Date
+	tinyxml2::XMLElement* El_Tit_Date = WDocument.NewElement("Date");
+	El_Tit_Date->SetText("Save PROC Date: 141117 15.14");
+	El_Title->InsertEndChild(El_Tit_Date);
+
+	// Sectors
+	tinyxml2::XMLElement* El_Tit_Sectors = WDocument.NewElement("Nodes");
+	El_Title->InsertEndChild(El_Tit_Sectors);
+
+	tinyxml2::XMLElement* El_Tit_Sectors_X = WDocument.NewElement("X");
+	El_Tit_Sectors_X->SetText(m_gridSize.x);
+	El_Tit_Sectors->InsertEndChild(El_Tit_Sectors_X);
+
+	tinyxml2::XMLElement* El_Tit_Sectors_Y = WDocument.NewElement("Y");
+	El_Tit_Sectors_Y->SetText(m_gridSize.y);
+	El_Tit_Sectors->InsertEndChild(El_Tit_Sectors_Y);
+
+
+	// > Form Body
+	tinyxml2::XMLComment* CmntBody = WDocument.NewComment("Part: Body");
+	El_Root->InsertEndChild(CmntBody);
+
+	tinyxml2::XMLElement* El_Body = WDocument.NewElement("BODY");
+	El_Root->InsertEndChild(El_Body);
+
+	// > Body Content
+	// Node
+	for (BYTE ky = 0; ky < m_gridSize.y; ky++)
+	{
+		for (BYTE kx = 0; kx < m_gridSize.x; kx++)
+		{
+			tinyxml2::XMLElement* El_Sector = WDocument.NewElement("Sector");
+			El_Sector->SetAttribute("Y", ky);
+			El_Sector->SetAttribute("X", kx);
+			El_Sector->SetText(200);
+			El_Sector->InsertEndChild(El_Sector);
+		}
+
+	}
+
+	// > Save Document
+	WDocument.SaveFile("C:\\wast\\WastNode.xml");
+}
+
 // Load Values from DataBase
 void CNodeHP::Load()
 {
