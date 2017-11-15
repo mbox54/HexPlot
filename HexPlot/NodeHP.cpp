@@ -54,8 +54,8 @@ void CNodeHP::Init()
 		this->v_incidence[k] = 1;
 	}
 
-	// > Fill Sectors
-	FillSectors();
+	// > Place Net /Sectors
+	PlaceNet();
 
 }
 
@@ -150,8 +150,28 @@ void CNodeHP::Save()
 	}
 
 	// > Save Document
-	// !!! Form specific Filename (NodeY05X08)
-	WDocument.SaveFile("C:\\wast\\WastNode.xml");
+	// Form specific Filename (NodeY05X08)
+	CString str_Filename;
+	str_Filename.Append(_T("C:\\wast\\WastNode"));	
+
+	str_Filename.AppendChar('Y');
+	str_Filename.AppendFormat(_T("%03d"), m_position.y);
+
+	str_Filename.AppendChar('X');
+	str_Filename.AppendFormat(_T("%03d"), m_position.x);
+
+	str_Filename.Append(_T(".xml"));
+
+	char v_chFilename[64];
+	BYTE str_Length = str_Filename.GetLength();
+	for (BYTE k = 0; k < str_Length; k++)
+	{
+		v_chFilename[k] = str_Filename[k];
+	}
+
+	v_chFilename[str_Length] = '\0';
+	WDocument.SaveFile(v_chFilename);
+
 }
 
 // Load Values from DataBase
@@ -162,6 +182,29 @@ void CNodeHP::Load()
 
 }
 
+// Place Defined Node-Unit Net in Memory
+// NOTE:
+// FORMAT:
+// Y = RowNumber, X = ColNumber
+//
+// vector structure v_Nodes has specific:
+// Allocate Row ---> Allocate Col, Allocate Col, Allocate Col,
+// Allocate Row ---> Allocate Col, Allocate Col, Allocate Col,
+// Allocate Row ---> Allocate Col, Allocate Col, Allocate Col,
+// ...
+// so v_Nodes[Y][X] has (Y, X) placement order
+//
+// NOTE:
+// FORMAT:
+// Hex Grid positioning
+// y: 0 - i - N/2, x: 0 - i - N/2 = NULL, x: N/2 - i - N = VALL
+// y: N/2 - i - N, x: 0 - i - N/2 = VALL, x: N/2 - i - N = NULL
+// so HexFormat Net is Set in Hexagonal form
+//	..###..
+//	.#####.
+//	#######
+//	.#####.
+//	..###..
 void CNodeHP::PlaceNet()
 {
 	// > Set Grid Size

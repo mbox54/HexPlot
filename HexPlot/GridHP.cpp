@@ -94,6 +94,7 @@ void CGridHP::Test()
 	// test FILE OPs
 	Save();
 
+	this->v_Nodes[1][2].Save();
 
 	// test StraightWeg PROC
 	POINT coorFirs;
