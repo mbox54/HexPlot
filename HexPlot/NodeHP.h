@@ -40,8 +40,6 @@ public:
 	CNodeHP();
 	CNodeHP(POINT gridPos);
 
-	~CNodeHP();
-
 
 	// > Properties
 	// > > Net Position
@@ -70,6 +68,7 @@ public:
 
 
 	// Sector
+	void PlaceNet();
 	void FillSectors();
 	void HexToMem(POINT pt_Input, POINT * pt_Output);
 	void MemToHex(POINT pt_Input, POINT * pt_Output);
@@ -81,6 +80,9 @@ public:
 	// File OPs
 	void Save();
 	void Load();
+
+
+	~CNodeHP();
 
 };
 

@@ -162,6 +162,48 @@ void CNodeHP::Load()
 
 }
 
+void CNodeHP::PlaceNet()
+{
+	// > Set Grid Size
+	POINT pt_Size;
+	pt_Size.x = SIDESIZE;
+	pt_Size.y = SIDESIZE;
+
+	this->m_gridSize = pt_Size;
+
+	// > Fill Rows
+	POINT CoordGrid;
+
+	for (WORD uiCoorY = 0; uiCoorY < this->m_gridSize.y; uiCoorY++)
+	{
+		// Allocate memory: Vector for Row /in Sector Vector container
+		this->v_Sectors.push_back(std::vector<CSector>());
+
+		// Fill Cols
+		for (WORD uiCoorX = 0; uiCoorX < this->m_gridSize.x; uiCoorX++)
+		{
+			// define Coord to set
+			POINT CoordMem;
+			CoordMem.y = uiCoorY;
+			CoordMem.x = uiCoorX;
+
+			this->MemToHex(CoordMem, &CoordGrid);
+
+			// create Sector instance
+			CSector Sector(CoordGrid);
+
+			// allocate memory: Sector in 2x Cell /in Vector container
+			this->v_Sectors[uiCoorY].push_back(Sector);
+
+			// Load Node Values
+			//this->LoadNode(CoordGrid);
+
+		}//for (WORD uiCoorX
+	}//for (WORD uiCoorY
+
+}
+
+
 // -------------------------------------------------------------------
 // Sector
 // -------------------------------------------------------------------

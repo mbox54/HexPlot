@@ -146,69 +146,86 @@ void CGridHP::SetGridGraphInfo()
 // Construct & Fill v_Nodes
 void CGridHP::Init()
 {
-	// Set Grid Size
-	POINT Point_temp;
-	Point_temp.x = 12;
-	Point_temp.y = 12;
-
-	this->m_gridSize = Point_temp;
+	/////////////////////////////////////////////////////
+	// NO FILE INITIATION CASE
+	//// Set Grid Size
+	//POINT Point_temp;
+	//Point_temp.x = 12;
+	//Point_temp.y = 12;
 	//
+	//this->m_gridSize = Point_temp;
+	/////////////////////////////////////////////////////
 
-	// > Fill Rows
-	POINT CoordGrid;
+	// > Load Grid
+	// XML FILE OP
+	Load();
 
-	for (WORD uiCoorX = 0; uiCoorX < this->m_gridSize.x; uiCoorX++)
-	{
-		// allocate memory: Vector for Row /in Node Vector container
-		this->v_Nodes.push_back( std::vector<CNodeHP>() );
-
-		// Fill Cols
-		for (WORD uiCoorY = 0; uiCoorY < this->m_gridSize.y; uiCoorY++)
-		{
-			// define Coord to set
-			CoordGrid.x = uiCoorX;
-			CoordGrid.y = uiCoorY;
-
-			// create Node instance
-			CNodeHP NodeHP(CoordGrid);
-
-			// allocate memory: Node in 2x Cell /in Node Vector container
-			this->v_Nodes[uiCoorX].push_back( NodeHP );
-
-			// Load Node Values
-			this->LoadNode(CoordGrid);
-		}
-	}
+	// > Place Grid Nodes
+	PlaceNet();
 
 	// !debug
 
-	// create Node path
-	CWeg nodeWeg;
+	//// create Node path
+	//CWeg nodeWeg;
 
-	// fill weg
-	for (BYTE k = 0; k < 5; k++)
-	{
-		// form wegKnot
-		stWegKnot wegKnot;
+	//// fill weg
+	//for (BYTE k = 0; k < 5; k++)
+	//{
+	//	// form wegKnot
+	//	stWegKnot wegKnot;
 
-		wegKnot.xyCoord.x = k;
-		wegKnot.xyCoord.y = k;
+	//	wegKnot.xyCoord.x = k;
+	//	wegKnot.xyCoord.y = k;
 
-		wegKnot.uiNumber = k;
+	//	wegKnot.uiNumber = k;
 
-		// set el
-		nodeWeg.Add(wegKnot);
-	}
+	//	// set el
+	//	nodeWeg.Add(wegKnot);
+	//}
 
-	//m_Trasse.Add
-	m_Trasse.Add(nodeWeg);
+	////m_Trasse.Add
+	//m_Trasse.Add(nodeWeg);
 
 }
 
 // Place Defined Node-Unit Net in Memory
+// NOTE:
+// FORMAT:
+// Y = RowNumber, X = ColNumber
+//
+// vector structure v_Nodes has specific:
+// Allocate Row ---> Allocate Col, Allocate Col, Allocate Col,
+// Allocate Row ---> Allocate Col, Allocate Col, Allocate Col,
+// Allocate Row ---> Allocate Col, Allocate Col, Allocate Col,
+// ...
+// so v_Nodes[Y][X] has (Y, X) placement order
 void CGridHP::PlaceNet()
 {
+	// > Fill Rows
+	POINT CoordGrid;
 
+	for (WORD uiCoorY = 0; uiCoorY < this->m_gridSize.y; uiCoorY++)
+	{
+		// allocate memory: Vector for Row /in Node Vector container
+		this->v_Nodes.push_back(std::vector<CNodeHP>());
+
+		// Fill Cols
+		for (WORD uiCoorX = 0; uiCoorX < this->m_gridSize.x; uiCoorX++)
+		{
+			// define Coord to set
+			CoordGrid.y = uiCoorY;
+			CoordGrid.x = uiCoorX;
+			
+			// create Node instance
+			CNodeHP NodeHP(CoordGrid);
+
+			// allocate memory: Node in 2x Cell /in Node Vector container
+			this->v_Nodes[uiCoorY].push_back(NodeHP);
+
+			// Load Node Values
+			this->LoadNode(CoordGrid);
+		}//for (WORD uiCoorX
+	}//for (WORD uiCoorY
 
 }
  
@@ -221,7 +238,7 @@ void CGridHP::AddNode()
 // Load Grid: Size, v_Nodes From File/Base
 void CGridHP::LoadNode(POINT gridPos)
 {
-	this->v_Nodes[gridPos.x][gridPos.y].Load();
+	this->v_Nodes[gridPos.y][gridPos.x].Load();
 
 	// set Node
 	//v_Nodes
@@ -524,7 +541,28 @@ void CGridHP::Save()
 
 void CGridHP::Load()
 {
+	// > Form Document
+	tinyxml2::XMLDocument WDocument;
 
+	// > Load Document
+	WDocument.LoadFile("C:\\wast\\WastGrid.xml");
+
+	// > Parse Title Part
+	tinyxml2::XMLElement* El_Root = WDocument.FirstChildElement("WAST");
+	tinyxml2::XMLElement* El_Title = El_Root->FirstChildElement("TITLE");
+
+	// > Title Content
+	// Nodes
+	tinyxml2::XMLElement* El_Tit_Nodes = El_Title->FirstChildElement("Nodes");
+
+	tinyxml2::XMLElement* El_Tit_Nodes_X = El_Tit_Nodes->FirstChildElement("X");
+	int iVal = 0;
+	El_Tit_Nodes_X->QueryIntText(&iVal);
+	m_gridSize.x = iVal;
+
+	tinyxml2::XMLElement* El_Tit_Nodes_Y = El_Tit_Nodes->FirstChildElement("Y");
+	El_Tit_Nodes_Y->QueryIntText(&iVal);
+	m_gridSize.y = iVal;
 
 }
 
