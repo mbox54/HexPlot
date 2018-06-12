@@ -105,6 +105,9 @@
     <ClInclude Include="external\tinyxml2.h">
       <Filter>Header Files\extern</Filter>
     </ClInclude>
+    <ClInclude Include="Schatze.h">
+      <Filter>Header Files\Concept Node</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HexPlot.cpp">
@@ -151,6 +154,9 @@
     </ClCompile>
     <ClCompile Include="external\tinyxml2.cpp">
       <Filter>Source Files\extern</Filter>
+    </ClCompile>
+    <ClCompile Include="Schatze.cpp">
+      <Filter>Source Files\Concept Node</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

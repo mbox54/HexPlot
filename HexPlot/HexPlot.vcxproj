@@ -196,6 +196,7 @@
     <ClInclude Include="PaintDCHP.h" />
     <ClInclude Include="PaintNode.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Schatze.h" />
     <ClInclude Include="Sector.h" />
     <ClInclude Include="StaticHP.h" />
     <ClInclude Include="stdafx.h" />
@@ -214,6 +215,7 @@
     <ClCompile Include="NodeHP.cpp" />
     <ClCompile Include="PaintDCHP.cpp" />
     <ClCompile Include="PaintNode.cpp" />
+    <ClCompile Include="Schatze.cpp" />
     <ClCompile Include="Sector.cpp" />
     <ClCompile Include="StaticHP.cpp" />
     <ClCompile Include="stdafx.cpp">

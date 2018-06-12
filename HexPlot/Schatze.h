@@ -1,18 +1,11 @@
-// Weg.h
+// Schatze.h
 
 // \ INFO
 // *******************************************************************
-// ['Weg' = 'Channel/Track']
-// Class for define one Path/Way 
-// Struc Unit
-// Logic
+// ['Schatze' = 'Resource']
+// Class for define 'Resource' instance
+// Have automatization metods for member Unit
 // *******************************************************************
-
-// NOTE:
-// L1 Container
-// 1 Weg = N stHPWeg
-// CTrasse <- CWeg <- stHPWeg
-
 
 // interface file
 
@@ -23,39 +16,52 @@
 // Includes
 //////////////////////////////////////////////////////////////////////
 
-#include <list>
-
+#include <vector>
 
 //////////////////////////////////////////////////////////////////////
 // Typedefs
 //////////////////////////////////////////////////////////////////////
 
-// Weg Waypoint Knot
-typedef struct stWegKnot
+// Linienzug Knot
+// ['Linienzug' = 'Kontur']
+//
+// NOTE:
+// FORMAT:
+// # 'Pos' Values: 
+// - UP			1
+// - LEFT		2
+// - DOWN		3
+// - RIGHT		4
+typedef struct stLinienzugKnot
 {
-	POINT xyCoord;
+	POINT xyCoord;	
 
-	WORD uiNumber;
+	BYTE ucPos;
 };
 
 
 // -------------------------------------------------------------------
-// class CWeg
+// class CSchatze
 // -------------------------------------------------------------------
-class CWeg
+class CSchatze
 {
 public:
 	// standard constructor
-	CWeg();
+	CSchatze();
+
+	~CSchatze();
 
 	// > Properties
-	// Weg, the set of WegKnots
-	std::list<stWegKnot> l_Weg;
+	BYTE m_ucResouceType;
+
+	std::vector<stLinienzugKnot> v_Linienzug;
 
 	// > Methods
-	void Add(stWegKnot wegKnot);
+	// starter initialization, define Pos Values 
+	void InitLinienzugPositions();
 
-	~CWeg();
+	// define State of 'Point' crossing 'Kontur' on demand
+	BYTE DefineLinienzugCrossing();
 
 };
 

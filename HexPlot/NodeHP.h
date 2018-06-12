@@ -18,6 +18,8 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "Terrain.h"
+#include "Schatze.h"
+
 #include "Sector.h"
 
 #include "external\tinyxml2.h"
