@@ -28,14 +28,17 @@
 // NOTE:
 // FORMAT:
 // # 'Pos' Values: 
+// - noinit		0
 // - UP			1
 // - LEFT		2
 // - DOWN		3
 // - RIGHT		4
 typedef struct stLinienzugKnot
 {
+	// grid position
 	POINT xyCoord;	
 
+	// markers
 	BYTE ucPos;
 };
 
@@ -57,6 +60,12 @@ public:
 	std::vector<stLinienzugKnot> v_Linienzug;
 
 	// > Methods
+	// common 
+	void AddLinienzugKnot(stLinienzugKnot strucLinienzugKnot);	
+	WORD GetLinienzugSize();
+
+	void TestInit();
+
 	// starter initialization, define Pos Values 
 	void InitLinienzugPositions();
 

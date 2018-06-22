@@ -268,8 +268,7 @@ void CNodeHP::FillSectors()
 	// > Fill
 	// Define HexCoords
 	POINT pt_CoordHex;
-	
-	
+		
 
 	BYTE ucXFirst = pt_Size.x / 2;
 	BYTE ucXLength = pt_Size.x / 2;
