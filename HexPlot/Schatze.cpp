@@ -69,8 +69,91 @@ void CSchatze::TestInit()
 }
 
 
+// INFO:
+// algorithm description:
+// 1. use as FIRST knot the top left knot
+// 2. define position direction relate on next knot
+// 3. proceed to the next knot in sequence until the end
 void CSchatze::InitLinienzugPositions()
 {
+	// knots iterator
+	// NOTE: MAX knots count = 65535
+	WORD usSI = 0;
+
+	// position direction
+	// init Value = RIGHT
+	BYTE ucP = RIGHT;
+
+	// set init knot:
+	// SI = 0, P(0) = Right
+	this->v_Linienzug[0].ucPos = RIGHT;
+
+	// proc knot sequence
+	WORD usCount = this->v_Linienzug.capacity();
+
+	POINT xyCoordDiff;
+
+	while (usSI < usCount)
+	{
+		// go to the next knot
+		usSI++;
+
+		// define direction difference
+		xyCoordDiff.x = this->v_Linienzug[usSI].xyCoord.x - this->v_Linienzug[usSI - 1].xyCoord.x;
+		xyCoordDiff.y = this->v_Linienzug[usSI].xyCoord.y - this->v_Linienzug[usSI - 1].xyCoord.y;
+
+		// define Position direction
+		// INFO:
+		// knot sequence has adjacent knot with MAX difference = 1
+		switch (ucP)
+		{
+		case NOINIT:
+			// err case
+			break;
+
+
+		case UP:
+			if (xyCoordDiff.x = 1)
+			{
+				// [ X+ ]
+
+
+
+			}
+			else if (xyCoordDiff.x = -1)
+			{
+				// [ X- ]
+
+
+			}
+			
+			
+
+			break;
+
+
+		case LEFT:
+
+			break;
+
+
+		case DOWN:
+
+			break;
+
+
+		case RIGHT:
+
+			break;
+
+
+		default:
+			break;
+		}
+
+	}
+
+
 
 }
 
