@@ -107,43 +107,102 @@ void CSchatze::InitLinienzugPositions()
 		// knot sequence has adjacent knot with MAX difference = 1
 		switch (ucP)
 		{
-		case NOINIT:
+		case P_NOINIT:
 			// err case
 			break;
 
 
-		case UP:
-			if (xyCoordDiff.x = 1)
+		case P_UP:
+			if (xyCoordDiff.x == 1)
 			{
 				// [ X+ ]
 
+				if (xyCoordDiff.y == 1)
+				{
+					// [ Y+ ]
 
+					this->v_Linienzug[usSI].ucPos = P_LEFT;
+					this->v_Linienzug[usSI - 1].ucPos = P_LEFT;
+				}
+				else if (xyCoordDiff.y == -1)
+				{
+					// [ Y- ]
+
+					this->v_Linienzug[usSI].ucPos = P_RIGHT;
+				}
 
 			}
-			else if (xyCoordDiff.x = -1)
+			else if (xyCoordDiff.x == -1)
 			{
 				// [ X- ]
 
+				if (xyCoordDiff.y == 1)
+				{
+					// [ Y+ ]
+
+					this->v_Linienzug[usSI].ucPos = P_RIGHT;
+					this->v_Linienzug[usSI - 1].ucPos = P_RIGHT;
+				}
+				else if (xyCoordDiff.y == -1)
+				{
+					// [ Y- ]
+
+					this->v_Linienzug[usSI].ucPos = P_LEFT;
+				}
+			}						
+
+			break;
+
+
+		case P_LEFT:
+
+			break;
+
+
+		case P_DOWN:
+
+			break;
+
+
+		case P_RIGHT:
+			if (xyCoordDiff.x == 1)
+			{
+				// [ X+ ]
+
+				if (xyCoordDiff.y == 1)
+				{
+					// [ Y+ ]
+
+					this->v_Linienzug[usSI].ucPos = P_RIGHT;
+				}
+				else if (xyCoordDiff.y == -1)
+				{
+					// [ Y- ]
+
+					this->v_Linienzug[usSI].ucPos = P_LEFT;
+					this->v_Linienzug[usSI - 1].ucPos = P_LEFT;
+				}
 
 			}
-			
-			
+			else if (xyCoordDiff.x == -1)
+			{
+				// [ X- ]
 
-			break;
+				if (xyCoordDiff.y == 1)
+				{
+					// [ Y+ ]
 
+					this->v_Linienzug[usSI].ucPos = P_LEFT;
+				}
+				else if (xyCoordDiff.y == -1)
+				{
+					// [ Y- ]
 
-		case LEFT:
+					this->v_Linienzug[usSI].ucPos = P_RIGHT;
+					this->v_Linienzug[usSI - 1].ucPos = P_RIGHT;
 
-			break;
-
-
-		case DOWN:
-
-			break;
-
-
-		case RIGHT:
-
+				}
+			}
 			break;
 
 
