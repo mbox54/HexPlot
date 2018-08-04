@@ -153,18 +153,7 @@ void CSchatze::InitLinienzugPositions()
 
 			break;
 
-
-		case P_LEFT:
-
-			break;
-
-
 		case P_DOWN:
-
-			break;
-
-
-		case P_RIGHT:
 			if (xyCoordDiff.x == 1)
 			{
 				// [ X+ ]
@@ -203,14 +192,71 @@ void CSchatze::InitLinienzugPositions()
 
 				}
 			}
+
+			break;
+
+
+		case P_LEFT:
+
+			if (xyCoordDiff.x == 0)
+			{
+				// [ X0 ]
+				// [ Y+ ][ Y- ]
+
+				this->v_Linienzug[usSI].ucPos = P_LEFT;
+
+			}
+			else if (xyCoordDiff.x == 1)
+			{
+				// [ X+ ]
+				// [ TODO: only Y0 case used now! need to expand]
+
+				this->v_Linienzug[usSI].ucPos = P_DOWN;
+			}
+			else if (xyCoordDiff.x == -1)
+			{
+				// [ X- ]
+				// [ TODO: only Y0 case used now! need to expand]
+
+				this->v_Linienzug[usSI].ucPos = P_UP;
+			}
+
+			break;
+
+
+		case P_RIGHT:
+			if (xyCoordDiff.x == 0)
+			{
+				// [ X0 ]
+				// [ Y+ ][ Y- ]
+
+				this->v_Linienzug[usSI].ucPos = P_RIGHT;
+
+			}
+			else if (xyCoordDiff.x == 1)
+			{
+				// [ X+ ]
+				// [ TODO: only Y0 case used now! need to expand]
+
+				this->v_Linienzug[usSI].ucPos = P_UP;
+			}
+			else if (xyCoordDiff.x == -1)
+			{
+				// [ X- ]
+				// [ TODO: only Y0 case used now! need to expand]
+
+				this->v_Linienzug[usSI].ucPos = P_DOWN;
+			}
+
 			break;
 
 
 		default:
+			// err case
 			break;
-		}
+		}//switch (ucP)
 
-	}
+	}//while (usSI < usCount)
 
 
 
