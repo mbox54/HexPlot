@@ -42,10 +42,9 @@ void CSchatze::AddLinienzugKnot(stLinienzugKnot strucLinienzugKnot)
 
 WORD CSchatze::GetLinienzugSize()
 {
-	WORD usTemp = this->v_Linienzug.size;
+	WORD usTemp = this->v_Linienzug.size();
 
 	return usTemp;
-
 }
 
 
@@ -82,11 +81,11 @@ void CSchatze::InitLinienzugPositions()
 
 	// position direction
 	// init Value = RIGHT
-	BYTE ucP = RIGHT;
+	BYTE ucP = P_RIGHT;
 
 	// set init knot:
 	// SI = 0, P(0) = Right
-	this->v_Linienzug[0].ucPos = RIGHT;
+	this->v_Linienzug[0].ucPos = P_RIGHT;
 
 	// proc knot sequence
 	WORD usCount = this->v_Linienzug.capacity();
@@ -265,5 +264,6 @@ void CSchatze::InitLinienzugPositions()
 
 BYTE CSchatze::DefineLinienzugCrossing()
 {
-
+	//
+	return 0;
 }
