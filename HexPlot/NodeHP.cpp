@@ -200,11 +200,11 @@ void CNodeHP::Load()
 // y: 0 - i - N/2, x: 0 - i - N/2 = NULL, x: N/2 - i - N = VALL
 // y: N/2 - i - N, x: 0 - i - N/2 = VALL, x: N/2 - i - N = NULL
 // so HexFormat Net is Set in Hexagonal form
-//	..###..
-//	.#####.
-//	#######
-//	.#####.
-//	..###..
+//	##+++##
+//	#+++++#
+//	+++++++
+//	#+++++#
+//	##+++##
 void CNodeHP::PlaceNet()
 {
 	// > Set Grid Size

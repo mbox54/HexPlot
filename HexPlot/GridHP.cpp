@@ -92,9 +92,9 @@ void CGridHP::PaintGrid()
 void CGridHP::Test()
 {
 	// test FILE OPs
-	Save();
+	//Save();
 
-	this->v_Nodes[1][2].Save();
+	//this->v_Nodes[1][2].Save();
 
 	// test StraightWeg PROC
 	POINT coorFirs;
@@ -159,6 +159,9 @@ void CGridHP::Init()
 
 	// > Load Grid
 	// XML FILE OP
+	//!debug
+	Save();
+
 	Load();
 
 	// > Place Grid Nodes
@@ -506,37 +509,6 @@ void CGridHP::Save()
 	WDocument.SaveFile("C:\\wast\\WastGrid.xml");
 
 
-/*
-	// !test
-	doc.LoadFile("C:\\wast\\test0.xml");
-
-	tinyxml2::XMLElement* el_root = doc.FirstChildElement("doc1");
-	tinyxml2::XMLElement* titleElement = el_root->FirstChildElement("title");
-	const char* title = titleElement->GetText();
-
-	tinyxml2::XMLElement* bodyElement = doc.NewElement("body");
-	el_root->InsertAfterChild(titleElement, bodyElement);
-
-	tinyxml2::XMLElement* element1 = doc.NewElement("Element");
-	element1->SetText(1);
-	bodyElement->InsertEndChild(element1);
-
-	tinyxml2::XMLElement* element2 = doc.NewElement("Element");
-	element2->SetText(2);
-	bodyElement->InsertEndChild(element2);
-
-
-	for (BYTE k = 0; k < 10; k++)
-	{
-		tinyxml2::XMLElement* element3 = doc.NewElement("Element");
-		element3->SetText(3);
-		bodyElement->InsertEndChild(element3);
-	}
-
-
-	doc.SaveFile("C:\\wast\\test2.xml");
-*/
-
 }
 
 
@@ -556,6 +528,7 @@ void CGridHP::Load()
 	// Nodes
 	tinyxml2::XMLElement* El_Tit_Nodes = El_Title->FirstChildElement("Nodes");
 
+	// - property: size
 	tinyxml2::XMLElement* El_Tit_Nodes_X = El_Tit_Nodes->FirstChildElement("X");
 	int iVal = 0;
 	El_Tit_Nodes_X->QueryIntText(&iVal);
@@ -564,6 +537,7 @@ void CGridHP::Load()
 	tinyxml2::XMLElement* El_Tit_Nodes_Y = El_Tit_Nodes->FirstChildElement("Y");
 	El_Tit_Nodes_Y->QueryIntText(&iVal);
 	m_gridSize.y = iVal;
+
 
 }
 

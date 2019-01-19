@@ -1,4 +1,3 @@
-
 // HexPlot.cpp : Defines the class behaviors for the application.
 //
 
@@ -10,16 +9,15 @@
 #define new DEBUG_NEW
 #endif
 
-
+// ===================================================================
 // CHexPlotApp
-
+// ===================================================================
 BEGIN_MESSAGE_MAP(CHexPlotApp, CWinApp)
 	ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 
 // CHexPlotApp construction
-
 CHexPlotApp::CHexPlotApp()
 {
 	// support Restart Manager
@@ -31,12 +29,10 @@ CHexPlotApp::CHexPlotApp()
 
 
 // The one and only CHexPlotApp object
-
 CHexPlotApp theApp;
 
 
 // CHexPlotApp initialization
-
 BOOL CHexPlotApp::InitInstance()
 {
 	// InitCommonControlsEx() is required on Windows XP if an application

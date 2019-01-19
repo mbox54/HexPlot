@@ -1,9 +1,9 @@
-// NodeHP.h
+// PlotHP.h
 
 // \ INFO
 // *******************************************************************
-// Class for Hex_Plot Node representation
-// define Node common logic
+// Class for Hex_Plot Plot representation
+// define Plot common logic
 // Container Unit
 // CGridHP <- CPlotHP <- CNodeHP <- CSector
 // *******************************************************************
@@ -16,22 +16,15 @@
 //////////////////////////////////////////////////////////////////////
 // Includes
 //////////////////////////////////////////////////////////////////////
-
-#include "Terrain.h"
-#include "Schatze.h"
-
 // container objects
-#include "Sector.h"
-
+#include "NodeHP.h"
 // load/save xml file
 #include "external\tinyxml2.h"
 // std vector container
 #include <vector>
 
 
-//////////////////////////////////////////////////////////////////////
-// Defines
-//////////////////////////////////////////////////////////////////////
+
 // side size Parameter
 #define SIDESIZE 12				// NOTE: HexGrid Size: x12 = dozens
 
@@ -39,57 +32,38 @@
 // -------------------------------------------------------------------
 // class CNodeHP
 // -------------------------------------------------------------------
-class CNodeHP
+class CPlotHP
 {
-
 public:
 	// standard constructor
-	CNodeHP();
-	CNodeHP(POINT gridPos);
+	CPlotHP();
+	CPlotHP(POINT gridPos);
 
+
+	// destructor
+	~CPlotHP();
 
 	// > Properties
 	// > > Net Position
 	POINT m_position;		// graphic /unused
 
+	POINT m_gridSize;
+
+	std::vector < std::vector< CNodeHP > > v_NodesHP;
+
 	// Borders: Allowed directions
 	BYTE v_incidence[6];
-
-	// > > Sector Container
-	// > Properties
-	POINT m_gridSize;
-	std::vector < std::vector< CSector > > v_Sectors;
-
-	// > > Node Logic
-	// Terrain
-	CTerrain m_terrain;
-
-	// Anlage
-	
 
 
 	// > Methods
 	// Init
-	void Init();
-	void SetInit(POINT gridPos);
+	void Init(void);
+	void Load(void);
 
-
-	// Sector
-	void PlaceNet();
-	void FillSectors();
-	void HexToMem(POINT pt_Input, POINT * pt_Output);
-	void MemToHex(POINT pt_Input, POINT * pt_Output);
-
-	// Get Graph output Data
-	void FormGraphInfo(BYTE * ucValue);
-
-
-	// File OPs
-	void Save();
-	void Load();
-
-
-	~CNodeHP();
+	// SW: alias to abstract specisic vector push function
+	void AddNode(POINT gridPos);
+	// HW: need to locate in memory vector container elements
+	void ExpandGrid(void);
 
 };
 
