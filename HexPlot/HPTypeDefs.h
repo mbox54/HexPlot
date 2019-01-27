@@ -9,13 +9,23 @@
 
 #pragma once
 
+#include "minwindef.h"
 #include <vector>
+
+
 //////////////////////////////////////////////////////////////////////
 // TypeDef
 //////////////////////////////////////////////////////////////////////
 
-// service
-typedef unsigned char BYTE;
+#define MAX_INI_FILEPATH				64
+
+// init
+struct stHPFileGlobals
+{
+	char cDirectoryPath[MAX_INI_FILEPATH];
+
+};
+
 
 // Graph
 typedef struct stHPGridParams
@@ -66,4 +76,14 @@ typedef struct stHPNodeGraphInfo
 };
 
 typedef std::vector < std::vector< stHPNodeGraphInfo > > vectGraphGridInfo;
+
+
+// Global externs
+extern struct stHPFileGlobals m_stGlobals;
+
+
+// functions
+BYTE GetStrTag(char * strParse, char * strOutput, char chOpenSymbol, char chCloseSymbol);
+BYTE Read_config(stHPFileGlobals * var_stGlobals);
+
 

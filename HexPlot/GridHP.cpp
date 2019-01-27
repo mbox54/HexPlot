@@ -525,8 +525,8 @@ void CGridHP::Load()
 	tinyxml2::XMLElement* El_Title = El_Root->FirstChildElement("TITLE");
 
 	// > Title Content
-	// Nodes
-	tinyxml2::XMLElement* El_Tit_Nodes = El_Title->FirstChildElement("Nodes");
+	// Plots
+	tinyxml2::XMLElement* El_Tit_Nodes = El_Title->FirstChildElement("Plots");
 
 	// - property: size
 	tinyxml2::XMLElement* El_Tit_Nodes_X = El_Tit_Nodes->FirstChildElement("X");

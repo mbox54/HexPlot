@@ -70,7 +70,29 @@ void CPlotHP::Init(void)
 
 void CPlotHP::Load(void)
 {
+	// > Form Document
+	tinyxml2::XMLDocument WDocument;
 
+	// > Load Document
+	WDocument.LoadFile("C:\\wast\\WastPlot.xml");
+
+	// > Parse Title Part
+	tinyxml2::XMLElement* El_Root = WDocument.FirstChildElement("WAST");
+	tinyxml2::XMLElement* El_Title = El_Root->FirstChildElement("TITLE");
+
+	// > Title Content
+	// Nodes
+	tinyxml2::XMLElement* El_Tit_Nodes = El_Title->FirstChildElement("Nodes");
+
+	// - property: size
+	tinyxml2::XMLElement* El_Tit_Nodes_X = El_Tit_Nodes->FirstChildElement("X");
+	int iVal = 0;
+	El_Tit_Nodes_X->QueryIntText(&iVal);
+	m_gridSize.x = iVal;
+
+	tinyxml2::XMLElement* El_Tit_Nodes_Y = El_Tit_Nodes->FirstChildElement("Y");
+	El_Tit_Nodes_Y->QueryIntText(&iVal);
+	m_gridSize.y = iVal;
 }
 
 

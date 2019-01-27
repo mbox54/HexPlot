@@ -209,6 +209,7 @@
   <ItemGroup>
     <ClCompile Include="Anlage.cpp" />
     <ClCompile Include="external\tinyxml2.cpp" />
+    <ClCompile Include="globals.cpp" />
     <ClCompile Include="GridHP.cpp" />
     <ClCompile Include="HexAlgorithm.cpp" />
     <ClCompile Include="HexPlot.cpp" />
