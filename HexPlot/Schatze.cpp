@@ -42,10 +42,9 @@ void CSchatze::AddLinienzugKnot(stLinienzugKnot strucLinienzugKnot)
 
 WORD CSchatze::GetLinienzugSize()
 {
-	WORD usTemp = this->v_Linienzug.size;
+	WORD usTemp = this->v_Linienzug.size();
 
 	return usTemp;
-
 }
 
 
@@ -82,11 +81,11 @@ void CSchatze::InitLinienzugPositions()
 
 	// position direction
 	// init Value = RIGHT
-	BYTE ucP = RIGHT;
+	BYTE ucP = P_RIGHT;
 
 	// set init knot:
 	// SI = 0, P(0) = Right
-	this->v_Linienzug[0].ucPos = RIGHT;
+	this->v_Linienzug[0].ucPos = P_RIGHT;
 
 	// proc knot sequence
 	WORD usCount = this->v_Linienzug.capacity();
@@ -107,51 +106,156 @@ void CSchatze::InitLinienzugPositions()
 		// knot sequence has adjacent knot with MAX difference = 1
 		switch (ucP)
 		{
-		case NOINIT:
+		case P_NOINIT:
 			// err case
 			break;
 
 
-		case UP:
-			if (xyCoordDiff.x = 1)
+		case P_UP:
+			if (xyCoordDiff.x == 1)
 			{
 				// [ X+ ]
 
+				if (xyCoordDiff.y == 1)
+				{
+					// [ Y+ ]
 
+					this->v_Linienzug[usSI].ucPos = P_LEFT;
+					this->v_Linienzug[usSI - 1].ucPos = P_LEFT;
+				}
+				else if (xyCoordDiff.y == -1)
+				{
+					// [ Y- ]
+
+					this->v_Linienzug[usSI].ucPos = P_RIGHT;
+				}
 
 			}
-			else if (xyCoordDiff.x = -1)
+			else if (xyCoordDiff.x == -1)
 			{
 				// [ X- ]
 
+				if (xyCoordDiff.y == 1)
+				{
+					// [ Y+ ]
+
+					this->v_Linienzug[usSI].ucPos = P_RIGHT;
+					this->v_Linienzug[usSI - 1].ucPos = P_RIGHT;
+				}
+				else if (xyCoordDiff.y == -1)
+				{
+					// [ Y- ]
+
+					this->v_Linienzug[usSI].ucPos = P_LEFT;
+				}
+			}						
+
+			break;
+
+		case P_DOWN:
+			if (xyCoordDiff.x == 1)
+			{
+				// [ X+ ]
+
+				if (xyCoordDiff.y == 1)
+				{
+					// [ Y+ ]
+
+					this->v_Linienzug[usSI].ucPos = P_RIGHT;
+				}
+				else if (xyCoordDiff.y == -1)
+				{
+					// [ Y- ]
+
+					this->v_Linienzug[usSI].ucPos = P_LEFT;
+					this->v_Linienzug[usSI - 1].ucPos = P_LEFT;
+				}
 
 			}
-			
-			
+			else if (xyCoordDiff.x == -1)
+			{
+				// [ X- ]
+
+				if (xyCoordDiff.y == 1)
+				{
+					// [ Y+ ]
+
+					this->v_Linienzug[usSI].ucPos = P_LEFT;
+				}
+				else if (xyCoordDiff.y == -1)
+				{
+					// [ Y- ]
+
+					this->v_Linienzug[usSI].ucPos = P_RIGHT;
+					this->v_Linienzug[usSI - 1].ucPos = P_RIGHT;
+
+				}
+			}
 
 			break;
 
 
-		case LEFT:
+		case P_LEFT:
+
+			if (xyCoordDiff.x == 0)
+			{
+				// [ X0 ]
+				// [ Y+ ][ Y- ]
+
+				this->v_Linienzug[usSI].ucPos = P_LEFT;
+
+			}
+			else if (xyCoordDiff.x == 1)
+			{
+				// [ X+ ]
+				// [ TODO: only Y0 case used now! need to expand]
+
+				this->v_Linienzug[usSI].ucPos = P_DOWN;
+			}
+			else if (xyCoordDiff.x == -1)
+			{
+				// [ X- ]
+				// [ TODO: only Y0 case used now! need to expand]
+
+				this->v_Linienzug[usSI].ucPos = P_UP;
+			}
 
 			break;
 
 
-		case DOWN:
+		case P_RIGHT:
+			if (xyCoordDiff.x == 0)
+			{
+				// [ X0 ]
+				// [ Y+ ][ Y- ]
 
-			break;
+				this->v_Linienzug[usSI].ucPos = P_RIGHT;
 
+			}
+			else if (xyCoordDiff.x == 1)
+			{
+				// [ X+ ]
+				// [ TODO: only Y0 case used now! need to expand]
 
-		case RIGHT:
+				this->v_Linienzug[usSI].ucPos = P_UP;
+			}
+			else if (xyCoordDiff.x == -1)
+			{
+				// [ X- ]
+				// [ TODO: only Y0 case used now! need to expand]
+
+				this->v_Linienzug[usSI].ucPos = P_DOWN;
+			}
 
 			break;
 
 
 		default:
+			// err case
 			break;
-		}
+		}//switch (ucP)
 
-	}
+	}//while (usSI < usCount)
 
 
 
@@ -160,5 +264,6 @@ void CSchatze::InitLinienzugPositions()
 
 BYTE CSchatze::DefineLinienzugCrossing()
 {
-
+	//
+	return 0;
 }

@@ -108,6 +108,9 @@
     <ClInclude Include="Schatze.h">
       <Filter>Header Files\Concept Node</Filter>
     </ClInclude>
+    <ClInclude Include="PlotHP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HexPlot.cpp">
@@ -157,6 +160,12 @@
     </ClCompile>
     <ClCompile Include="Schatze.cpp">
       <Filter>Source Files\Concept Node</Filter>
+    </ClCompile>
+    <ClCompile Include="PlotHP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="globals.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
