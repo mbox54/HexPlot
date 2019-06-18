@@ -29,11 +29,13 @@
 #define FILE_STRUC_ERR			0x12
 
 #define MAX_STR_BUF				256
-#define MAX_STR_TIT				64
-#define MAX_STR_DESCR			512
-#define MAX_STR_VER				10
-#define MAX_STR_TAG				128
+#define MAX_STR_TAG				32			// tag name: [name]
+#define MAX_STR_PARAM			32			// par val: par=val
 #define MAX_STR_LINE			64
+
+
+#define TAG_SYMB_OPEN			'['
+#define TAG_SYMB_CLOSE			']'
 
 
 // ===================================================================
@@ -159,19 +161,64 @@ BYTE GetStrTag(char * strParse, char * strOutput, char chOpenSymbol, char chClos
 
 	strOutput[ucTagLength + 1] = '\0';
 
+
 	return OP_SUCCESS;
 }
 
+// cut param value from string line upon header
+BYTE GetStrParam(char* strParse, char* strHeader, char* strOutput)
+{
+	BYTE ucHeaderLength = strlen(strHeader);
+	if (strncmp(strParse, strHeader, ucHeaderLength) == 0)
+	{
+		// [CORRECT]
+
+		// get param Value
+		strncpy(strOutput, strParse, strlen(strParse) - ucHeaderLength);
+		
+		return 0;
+	}
+	else
+	{
+		// [WRONG]
+
+		return 1;
+	}
+}
+
+// cut root header name from string
+// return 0: if op success
+// return 1: if op failed
+// FORMAT:
+// string of level0 header is: [VALUE]
+BYTE GetLevel0(char* strParse, char* strOutput)
+{
+	// try to parse string
+	char strValue[MAX_STR_TAG];
+	BYTE ucStatus = GetStrTag(strParse, strValue, TAG_SYMB_OPEN, TAG_SYMB_CLOSE);
+
+	// check result
+	if (ucStatus == OP_SUCCESS)
+	{
+		strcpy(strOutput, strValue);
+
+		return 0;
+	}
+	else if (ucStatus == OP_FAILURE) 
+	{
+		return 1;
+	}
+}
 
 // read config file with globak parameters
-BYTE Read_config(stHPFileGlobals * var_stGlobals)
+BYTE Read_config(stHPFileGlobals* var_stGlobals)
 {
 	// > Open File (config)
 	// default name
 	char* file_name = "res/variables.ini";
 
 	// try open
-	FILE *fs = fopen(file_name, "r");
+	FILE* fs = fopen(file_name, "r");
 
 	// check OP result
 	if (fs == NULL)
@@ -194,11 +241,11 @@ BYTE Read_config(stHPFileGlobals * var_stGlobals)
 	while (act)
 	{
 		// get File String Line
-		if (fgets(str_buf, MAX_STR_BUF, fs) == "NULL")
+		if (fgets(str_buf, MAX_STR_BUF, fs) == NULL)
 		{
 			// [STOP]
 
-			act = 1;
+			act = 0;
 
 			// check the Reason
 			if (feof(fs))
@@ -235,17 +282,16 @@ BYTE Read_config(stHPFileGlobals * var_stGlobals)
 			{
 				// [LEVEL 0]
 
-				// try to define [label]
-				if (str_buf[0] == '[')
+				// # try to define [label]
+				if (str_buf[0] == TAG_SYMB_OPEN)
 				{
 					// [STANDARD LABEL]
 
 					char str_tag[MAX_STR_TAG];
-
-					BYTE readFileProc = GetStrTag(str_buf, str_tag, '[', ']');
+					BYTE ucStatus = GetLevel0(str_buf, str_tag);
 
 					// > Safe check
-					if (readFileProc != OP_SUCCESS)
+					if (ucStatus != OP_SUCCESS)
 					{
 						// [OP FAILED]
 
@@ -257,26 +303,22 @@ BYTE Read_config(stHPFileGlobals * var_stGlobals)
 					}
 
 					// define label type
-					if (strcmp(str_tag, "[PATH]") == 0)
+					if (strcmp(str_tag, "PATH") == 0)
 					{
 						// set label type
 						parseFlag = 1;
 					}
-
-					// define label type
-					if (strcmp(str_tag, "[par0]") == 0)
+					else if (strcmp(str_tag, "par0") == 0)
 					{
 						// set label type
 						parseFlag = 2;
 					}
-
-					// define label type
-					if (strcmp(str_tag, "[par1]") == 0)
+					else if (strcmp(str_tag, "par1") == 0)
 					{
 						// set label type
 						parseFlag = 3;
 					}
-				}
+				}//valid tag open
 			}
 			else
 			{
@@ -285,23 +327,20 @@ BYTE Read_config(stHPFileGlobals * var_stGlobals)
 				// > Parse Label Content
 				if (parseFlag == 1)				// [PATH]
 				{
-					char str_value[MAX_INI_FILEPATH];
-					BYTE readFileProc = GetStrTag(str_buf, str_value, '"', '"');
+					char str_param[MAX_STR_PARAM];
 
-					// > Safe check
-					if (readFileProc != OP_SUCCESS)
+					// parse parameters
+					if (GetStrParam(str_buf, "dir", str_param) == 0)
 					{
-						// [OP FAILED]
+						// > Apply config Value
+						strcpy(var_stGlobals->cDirectoryPath, str_param);
 
-						// > Close File (config) 
-						fclose(fs);
-
-						// Exit PROC
-						return FILE_STRUC_ERR;
 					}
-
-					// > Apply config Value
-					strcpy(var_stGlobals->cDirectoryPath, str_value);
+					else if (GetStrParam(str_buf, "etc", str_param) == 0)
+					{
+						// set value
+						// none
+					}
 
 					// reset parseFlag
 					parseFlag = 0;
@@ -309,3 +348,4 @@ BYTE Read_config(stHPFileGlobals * var_stGlobals)
 			}
 		}//else/if (fgets(str_buf, MAX_STR_BUF, fs) == "NULL")
 	}//while (act)
+}
