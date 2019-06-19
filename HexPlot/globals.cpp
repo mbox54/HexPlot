@@ -154,12 +154,12 @@ BYTE GetStrTag(char * strParse, char * strOutput, char chOpenSymbol, char chClos
 	BYTE ucTagLength = ucEndPos - ucFstPos;
 
 	// > Form Output String /tag/
-	for (BYTE kk = 0; kk <= ucTagLength; kk++)
+	for (BYTE kk = 0; kk <= ucTagLength - 2; kk++)			// -2 to skip start+finish delimeter
 	{
-		strOutput[kk] = strParse[ucFstPos + kk];
+		strOutput[kk] = strParse[ucFstPos + kk + 1];		// +1 to skip start delimeter
 	}
 
-	strOutput[ucTagLength + 1] = '\0';
+	strOutput[ucTagLength - 1] = '\0';						// +1 -2 = -1
 
 
 	return OP_SUCCESS;
@@ -173,8 +173,8 @@ BYTE GetStrParam(char* strParse, char* strHeader, char* strOutput)
 	{
 		// [CORRECT]
 
-		// get param Value
-		strncpy(strOutput, strParse, strlen(strParse) - ucHeaderLength);
+		// get param Value									// +1 to skip delimeter
+		strncpy(strOutput, strParse + ucHeaderLength + 1, strlen(strParse) - ucHeaderLength);
 		
 		return 0;
 	}

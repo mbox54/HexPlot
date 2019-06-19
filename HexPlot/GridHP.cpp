@@ -506,7 +506,11 @@ void CGridHP::Save()
 	}
 	
 	// > Save Document
-	WDocument.SaveFile("C:\\wast\\WastGrid.xml");
+	char strFileName[128];
+	strcpy(strFileName, m_stGlobals.cDirectoryPath);
+	strcat(strFileName, "\\WastGrid112.xml");
+
+	WDocument.SaveFile(strFileName);
 
 
 }
