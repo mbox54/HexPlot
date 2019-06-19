@@ -88,6 +88,18 @@ void CGridHP::PaintGrid()
 }
 
 
+void CGridHP::DebugBillet01(void)
+{
+	// Set Grid size work instance
+	//// Set Grid Size
+	POINT Point_temp;
+	Point_temp.x = 1;
+	Point_temp.y = 1;
+	
+	this->m_gridSize = Point_temp;
+
+}
+
 // Test functionality
 void CGridHP::Test()
 {
@@ -147,19 +159,15 @@ void CGridHP::SetGridGraphInfo()
 // Construct & Fill v_Nodes
 void CGridHP::Init()
 {
-	/////////////////////////////////////////////////////
-	// NO FILE INITIATION CASE
-	//// Set Grid Size
-	//POINT Point_temp;
-	//Point_temp.x = 12;
-	//Point_temp.y = 12;
-	//
-	//this->m_gridSize = Point_temp;
-	/////////////////////////////////////////////////////
-
 	// > Load Grid
 	// XML FILE OP
 	//!debug
+	/////////////////////////////////////////////////////
+	// NO FILE INITIATION CASE
+	/////////////////////////////////////////////////////
+	// DEBUG: use test config Billet
+
+	// test Save & Load
 	Save();
 
 	Load();
@@ -438,10 +446,10 @@ void CGridHP::EstimateWegCost(POINT nodeFirst, POINT nodeLast)
 // FILE XML OPs
 void CGridHP::Save()
 {
-	// > Form Document
+	// # Form Document
 	tinyxml2::XMLDocument WDocument;
 
-	// > Form XML Header
+	// # Form XML Header
 	char * str_XMLSpec = "xml version=\"1.0\" encoding=\"windows - 1251\" standalone=\"yes\"";
 	tinyxml2::XMLDeclaration* WDeclaration = WDocument.NewDeclaration(str_XMLSpec);
 	WDocument.LinkEndChild(WDeclaration);
@@ -449,10 +457,11 @@ void CGridHP::Save()
 	tinyxml2::XMLComment* CmntDeclaration = WDocument.NewComment("WAST Grid file structure");
 	WDocument.LinkEndChild(CmntDeclaration);
 
-	// > Form Title Part
+	// # Form Wast root element
 	tinyxml2::XMLElement* El_Root = WDocument.NewElement("WAST");
 	WDocument.LinkEndChild(El_Root);
 
+	// # Form Title Part
 	tinyxml2::XMLComment* CmntTitle = WDocument.NewComment("Part: Title");
 	El_Root->InsertEndChild(CmntTitle);
 
@@ -470,7 +479,7 @@ void CGridHP::Save()
 	El_Tit_Date->SetText("Save PROC Date: 141117 10.00");
 	El_Title->InsertEndChild(El_Tit_Date);
 
-	// Nodes
+	// Node grid size
 	tinyxml2::XMLElement* El_Tit_Nodes = WDocument.NewElement("Nodes");
 	El_Title->InsertEndChild(El_Tit_Nodes);
 
@@ -483,7 +492,7 @@ void CGridHP::Save()
 	El_Tit_Nodes->InsertEndChild(El_Tit_Nodes_Y);
 
 
-	// > Form Body
+	// # Form Body
 	tinyxml2::XMLComment* CmntBody = WDocument.NewComment("Part: Body");
 	El_Root->InsertEndChild(CmntBody);
 
@@ -508,7 +517,7 @@ void CGridHP::Save()
 	// > Save Document
 	char strFileName[128];
 	strcpy(strFileName, m_stGlobals.cDirectoryPath);
-	strcat(strFileName, "\\WastGrid112.xml");
+	strcat(strFileName, "\\System\\WastGrid112.xml");
 
 	WDocument.SaveFile(strFileName);
 

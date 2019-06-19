@@ -90,6 +90,7 @@ public:
 	void Load();
 
 	// Test
+	void DebugBillet01(void);
 	void Test();
 	//........................................................................
 
