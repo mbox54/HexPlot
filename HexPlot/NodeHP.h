@@ -17,6 +17,9 @@
 // Includes
 //////////////////////////////////////////////////////////////////////
 
+// support
+#include "globals.h"
+
 #include "Terrain.h"
 #include "Schatze.h"
 
@@ -29,11 +32,16 @@
 #include <vector>
 
 
+
 //////////////////////////////////////////////////////////////////////
 // Defines
 //////////////////////////////////////////////////////////////////////
 // side size Parameter
 #define SIDESIZE 12				// NOTE: HexGrid Size: x12 = dozens
+
+
+extern struct stHPFileGlobals m_stGlobals;
+
 
 
 // -------------------------------------------------------------------
@@ -87,6 +95,10 @@ public:
 	// File OPs
 	void Save();
 	void Load();
+
+	// test
+	void DebugBillet01(void);
+
 
 
 	~CNodeHP();

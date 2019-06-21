@@ -19,6 +19,18 @@
 // ===================================================================
 // class CNodeHP
 // ===================================================================
+
+//////////////////////////////////////////////////////////////////////
+// Constructor, init section
+//
+// NOTE:
+// Object is part of complex structure:
+// Grid - Plot - [Node] - Sector
+// Construction algorithm:
+// 1) Construct Node instance
+// 2) init property instance with default
+// 3) load properties from file NodeXXXYYY
+// 4) fill sub-element vector: Sectors
 CNodeHP::CNodeHP()
 {
 	// init
@@ -26,36 +38,60 @@ CNodeHP::CNodeHP()
 
 }
 
+// CASE: 
+// create with defined specific net position
 CNodeHP::CNodeHP(POINT gridPos)
 {
 	Init();
-
+	
+	// > Load Values
 	this->m_position = gridPos;
+
+	// > Load Values
+	// XML FILE OP
+	//!debug
+	/////////////////////////////////////////////////////
+	// NO FILE INITIATION CASE
+	/////////////////////////////////////////////////////
+	// DEBUG: use test config Billet
+	DebugBillet01();
+
+	// test Save & Load
+	Save();
+
+	Load();
+	
+	// > Place Net /Sectors
+	PlaceNet();
 }
 
 
 void CNodeHP::Init()
 {
-	// > Default Values
+	// ## Default Values
+	// NOTE: need when load op failed
+	// Init properties	
 
-	// init properties
-	// default
+	// [m_position]
 	POINT initCoord;
 	initCoord.x = 0;
 	initCoord.y = 0;
 
 	m_position = initCoord;
 
-	// [addition]
+	// [m_gridSize]
+	POINT pt_Size;
+	pt_Size.x = SIDESIZE;
+	pt_Size.y = SIDESIZE;
 
-	// incidence /all/
+	this->m_gridSize = pt_Size;
+
+	// [v_incidence]
 	for (BYTE k = 0; k < 6; k++)
 	{
 		this->v_incidence[k] = 1;
 	}
 
-	// > Place Net /Sectors
-	PlaceNet();
 
 }
 
@@ -69,21 +105,26 @@ void CNodeHP::SetInit(POINT gridPos)
 
 void CNodeHP::Save()
 {
-	// > Form Document
+	// # Form Document
 	tinyxml2::XMLDocument WDocument;
 
-	// > Form XML Header
+	// # Form XML Header
 	char * str_XMLSpec = "xml version=\"1.0\" encoding=\"windows - 1251\" standalone=\"yes\"";
 	tinyxml2::XMLDeclaration* WDeclaration = WDocument.NewDeclaration(str_XMLSpec);
 	WDocument.LinkEndChild(WDeclaration);
 
 	tinyxml2::XMLComment* CmntDeclaration = WDocument.NewComment("WAST Node file structure");
 	WDocument.LinkEndChild(CmntDeclaration);
-
-	// > Form Title Part
+	
+	// # Form Wast root element
 	tinyxml2::XMLElement* El_Root = WDocument.NewElement("WAST");
 	WDocument.LinkEndChild(El_Root);
 
+	tinyxml2::XMLElement* WastPart = WDocument.NewElement("Part");
+	WastPart->SetText("NODE");
+	El_Root->InsertEndChild(WastPart);
+
+	// # Form Title Part
 	tinyxml2::XMLComment* CmntTitle = WDocument.NewComment("Part: Title");
 	El_Root->InsertEndChild(CmntTitle);
 
@@ -151,6 +192,10 @@ void CNodeHP::Save()
 
 	// > Save Document
 	// Form specific Filename (NodeY05X08)
+	char strFileName[128];
+	strcpy(strFileName, m_stGlobals.cDirectoryPath);
+	strcat(strFileName, "\\System\\WastGrid112.xml");
+
 	CString str_Filename;
 	str_Filename.Append(_T("C:\\wast\\WastNode"));	
 
@@ -175,12 +220,26 @@ void CNodeHP::Save()
 }
 
 // Load Values from DataBase
+// NOTE:
+// Using [m_position] to define DB Cell to Load
 void CNodeHP::Load()
 {
-	// Using [m_position] to define DB Cell to Load
+	
 
 
 }
+
+
+void CNodeHP::DebugBillet01(void)
+{
+	// > Set Grid Size
+	POINT pt_Size;
+	pt_Size.x = 1;
+	pt_Size.y = 1;
+
+	this->m_gridSize = pt_Size;
+}
+
 
 // Place Defined Node-Unit Net in Memory
 // NOTE:
@@ -207,13 +266,6 @@ void CNodeHP::Load()
 //	##+++##
 void CNodeHP::PlaceNet()
 {
-	// > Set Grid Size
-	POINT pt_Size;
-	pt_Size.x = SIDESIZE;
-	pt_Size.y = SIDESIZE;
-
-	this->m_gridSize = pt_Size;
-
 	// > Fill Rows
 	POINT CoordGrid;
 

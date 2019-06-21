@@ -18,20 +18,66 @@
 #include "GridHP.h"
 
 
-// -------------------------------------------------------------------
+// ===================================================================
 // class CGridHP
-// -------------------------------------------------------------------
+// ===================================================================
+
+//////////////////////////////////////////////////////////////////////
+// Constructor, init section
+//
 CGridHP::CGridHP()
 {
 	// Init
 	Init();
 }
 
+// CASE: 
+// use VS Win Static control as canvas for graphics
 CGridHP::CGridHP(CStaticHP * p_CanvasHP)
 	: p_CanvasHP(p_CanvasHP)
 {
-	// 
+	// Init
 	Init();
+
+	// > Load Values
+	// XML FILE OP
+	//!debug
+	/////////////////////////////////////////////////////
+	// NO FILE INITIATION CASE
+	/////////////////////////////////////////////////////
+	// DEBUG: use test config Billet
+	DebugBillet01();
+
+	// test Save & Load
+	Save();
+
+	Load();
+
+	// > Place Grid Nodes
+	PlaceNet();
+
+	// !debug
+
+	//// create Node path
+	//CWeg nodeWeg;
+
+	//// fill weg
+	//for (BYTE k = 0; k < 5; k++)
+	//{
+	//	// form wegKnot
+	//	stWegKnot wegKnot;
+
+	//	wegKnot.xyCoord.x = k;
+	//	wegKnot.xyCoord.y = k;
+
+	//	wegKnot.uiNumber = k;
+
+	//	// set el
+	//	nodeWeg.Add(wegKnot);
+	//}
+
+	////m_Trasse.Add
+	//m_Trasse.Add(nodeWeg);
 }
 
 
@@ -88,42 +134,6 @@ void CGridHP::PaintGrid()
 }
 
 
-void CGridHP::DebugBillet01(void)
-{
-	// Set Grid size work instance
-	//// Set Grid Size
-	POINT Point_temp;
-	Point_temp.x = 1;
-	Point_temp.y = 1;
-	
-	this->m_gridSize = Point_temp;
-
-}
-
-// Test functionality
-void CGridHP::Test()
-{
-	// test FILE OPs
-	//Save();
-
-	//this->v_Nodes[1][2].Save();
-
-	// test StraightWeg PROC
-	POINT coorFirs;
-	POINT coorLast;
-
-	coorFirs.x = 5;
-	coorFirs.y = 5;
-
-	coorLast.x = 10;
-	coorLast.y = 10;
-
-	CWeg weg_tmp;
-
-	this->StraightWeg(coorFirs, coorLast, &weg_tmp);
-}
-
-
 CGridHP::~CGridHP()
 {
 
@@ -159,44 +169,12 @@ void CGridHP::SetGridGraphInfo()
 // Construct & Fill v_Nodes
 void CGridHP::Init()
 {
-	// > Load Grid
-	// XML FILE OP
-	//!debug
-	/////////////////////////////////////////////////////
-	// NO FILE INITIATION CASE
-	/////////////////////////////////////////////////////
-	// DEBUG: use test config Billet
+	// ## Default Values
+	// NOTE: need when load op failed
+	// Init properties	
 
-	// test Save & Load
-	Save();
 
-	Load();
 
-	// > Place Grid Nodes
-	PlaceNet();
-
-	// !debug
-
-	//// create Node path
-	//CWeg nodeWeg;
-
-	//// fill weg
-	//for (BYTE k = 0; k < 5; k++)
-	//{
-	//	// form wegKnot
-	//	stWegKnot wegKnot;
-
-	//	wegKnot.xyCoord.x = k;
-	//	wegKnot.xyCoord.y = k;
-
-	//	wegKnot.uiNumber = k;
-
-	//	// set el
-	//	nodeWeg.Add(wegKnot);
-	//}
-
-	////m_Trasse.Add
-	//m_Trasse.Add(nodeWeg);
 
 }
 
@@ -242,6 +220,9 @@ void CGridHP::PlaceNet()
 }
  
 
+//////////////////////////////////////////////////////////////////////
+// Common methods section
+//
 void CGridHP::AddNode()
 {
 	CNodeHP NodeHP;
@@ -442,8 +423,9 @@ void CGridHP::EstimateWegCost(POINT nodeFirst, POINT nodeLast)
 
 }
 
-
+//////////////////////////////////////////////////////////////////////
 // FILE XML OPs
+//
 void CGridHP::Save()
 {
 	// # Form Document
@@ -460,6 +442,10 @@ void CGridHP::Save()
 	// # Form Wast root element
 	tinyxml2::XMLElement* El_Root = WDocument.NewElement("WAST");
 	WDocument.LinkEndChild(El_Root);
+
+	tinyxml2::XMLElement* WastPart = WDocument.NewElement("Part");
+	WastPart->SetText("GRID");
+	El_Root->InsertEndChild(WastPart);
 
 	// # Form Title Part
 	tinyxml2::XMLComment* CmntTitle = WDocument.NewComment("Part: Title");
@@ -499,7 +485,7 @@ void CGridHP::Save()
 	tinyxml2::XMLElement* El_Body = WDocument.NewElement("BODY");
 	El_Root->InsertEndChild(El_Body);
 
-	// > Body Content
+	// # Body Content
 	// Node
 	for (BYTE ky = 0; ky < m_gridSize.y; ky++)
 	{
@@ -513,8 +499,8 @@ void CGridHP::Save()
 		}
 		
 	}
-	
-	// > Save Document
+
+	// # Save Document
 	char strFileName[128];
 	strcpy(strFileName, m_stGlobals.cDirectoryPath);
 	strcat(strFileName, "\\System\\WastGrid112.xml");
@@ -554,3 +540,41 @@ void CGridHP::Load()
 
 }
 
+
+//////////////////////////////////////////////////////////////////////
+// Debug, Test section
+//
+void CGridHP::DebugBillet01(void)
+{
+	// Set Grid size work instance
+	//// Set Grid Size
+	POINT Point_temp;
+	Point_temp.x = 1;
+	Point_temp.y = 1;
+
+	this->m_gridSize = Point_temp;
+
+}
+
+// Test functionality
+void CGridHP::Test()
+{
+	// test FILE OPs
+	//Save();
+
+	//this->v_Nodes[1][2].Save();
+
+	// test StraightWeg PROC
+	POINT coorFirs;
+	POINT coorLast;
+
+	coorFirs.x = 5;
+	coorFirs.y = 5;
+
+	coorLast.x = 10;
+	coorLast.y = 10;
+
+	CWeg weg_tmp;
+
+	this->StraightWeg(coorFirs, coorLast, &weg_tmp);
+}
