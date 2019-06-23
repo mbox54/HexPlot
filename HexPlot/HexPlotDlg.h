@@ -44,7 +44,7 @@ protected:
 	CStaticHP m_Canvas;
 
 	// // Hex Plot Object
-	CGridHP m_GridHP; 
+	CGridHP m_GridHP;
 
 
 // Procs

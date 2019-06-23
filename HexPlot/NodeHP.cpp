@@ -56,9 +56,6 @@ CNodeHP::CNodeHP(POINT gridPos)
 	// DEBUG: use test config Billet
 	DebugBillet01();
 
-	// test Save & Load
-	Save();
-
 	Load();
 	
 	// > Place Net /Sectors
@@ -193,30 +190,25 @@ void CNodeHP::Save()
 	// > Save Document
 	// Form specific Filename (NodeY05X08)
 	char strFileName[128];
-	strcpy(strFileName, m_stGlobals.cDirectoryPath);
-	strcat(strFileName, "\\System\\WastGrid112.xml");
+	strcat(strFileName, "\\");
+	strcat(strFileName, m_strWastName);
+	strcat(strFileName, "\\Node");
+	
+	strcat(strFileName, "Y");
+	char str_buf[8];
+	_itoa(m_position.y, str_buf, 10);
+	strcat(strFileName, str_buf);
 
-	CString str_Filename;
-	str_Filename.Append(_T("C:\\wast\\WastNode"));	
+	strcat(strFileName, "X");
+	_itoa(m_position.y, str_buf, 10);
+	strcat(strFileName, str_buf);
 
-	str_Filename.AppendChar('Y');
-	str_Filename.AppendFormat(_T("%03d"), m_position.y);
+	// Create Node directory
+	CreateDirectory((CString)strFileName, NULL);
 
-	str_Filename.AppendChar('X');
-	str_Filename.AppendFormat(_T("%03d"), m_position.x);
+	strcat(strFileName, "\\root.xml");
 
-	str_Filename.Append(_T(".xml"));
-
-	char v_chFilename[64];
-	BYTE str_Length = str_Filename.GetLength();
-	for (BYTE k = 0; k < str_Length; k++)
-	{
-		v_chFilename[k] = str_Filename[k];
-	}
-
-	v_chFilename[str_Length] = '\0';
-	WDocument.SaveFile(v_chFilename);
-
+	WDocument.SaveFile(strFileName);
 }
 
 // Load Values from DataBase
@@ -238,6 +230,9 @@ void CNodeHP::DebugBillet01(void)
 	pt_Size.y = 1;
 
 	this->m_gridSize = pt_Size;
+
+	// > Save
+	Save();
 }
 
 

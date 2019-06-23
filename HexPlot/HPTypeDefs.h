@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "minwindef.h"
+//#include "minwindef.h"
 #include <vector>
 
 
@@ -76,14 +76,5 @@ typedef struct stHPNodeGraphInfo
 };
 
 typedef std::vector < std::vector< stHPNodeGraphInfo > > vectGraphGridInfo;
-
-
-// Global externs
-extern struct stHPFileGlobals m_stGlobals;
-
-
-// functions
-BYTE GetStrTag(char * strParse, char * strOutput, char chOpenSymbol, char chCloseSymbol);
-BYTE Read_config(stHPFileGlobals * var_stGlobals);
 
 

@@ -29,17 +29,7 @@ CGridHP::CGridHP()
 {
 	// Init
 	Init();
-}
 
-// CASE: 
-// use VS Win Static control as canvas for graphics
-CGridHP::CGridHP(CStaticHP * p_CanvasHP)
-	: p_CanvasHP(p_CanvasHP)
-{
-	// Init
-	Init();
-
-	// > Load Values
 	// XML FILE OP
 	//!debug
 	/////////////////////////////////////////////////////
@@ -48,13 +38,10 @@ CGridHP::CGridHP(CStaticHP * p_CanvasHP)
 	// DEBUG: use test config Billet
 	DebugBillet01();
 
-	// test Save & Load
-	Save();
-
 	Load();
 
 	// > Place Grid Nodes
-	PlaceNet();
+//	PlaceNet();
 
 	// !debug
 
@@ -78,6 +65,18 @@ CGridHP::CGridHP(CStaticHP * p_CanvasHP)
 
 	////m_Trasse.Add
 	//m_Trasse.Add(nodeWeg);
+}
+
+// CASE: 
+// use VS Win Static control as canvas for graphics
+// NOTE:
+// this realisation attach Canvas upon OnInit stage!
+CGridHP::CGridHP(CStaticHP * p_CanvasHP)
+	: p_CanvasHP(p_CanvasHP)
+{
+	// Init
+	Init();
+
 }
 
 
@@ -172,9 +171,15 @@ void CGridHP::Init()
 	// ## Default Values
 	// NOTE: need when load op failed
 	// Init properties	
+	// [m_strWastName]
+	strcpy(m_strWastName, "unnamed");
 
+	// [m_gridSize] 
+	POINT pt_Size;
+	pt_Size.x = SIDESIZE;
+	pt_Size.y = SIDESIZE;
 
-
+	m_gridSize = pt_Size;
 
 }
 
@@ -503,11 +508,15 @@ void CGridHP::Save()
 	// # Save Document
 	char strFileName[128];
 	strcpy(strFileName, m_stGlobals.cDirectoryPath);
-	strcat(strFileName, "\\System\\WastGrid112.xml");
+	strcat(strFileName, "\\");
+	strcat(strFileName, m_strWastName);
+
+	// Create Node directory
+	CreateDirectory((CString)strFileName, NULL);
+
+	strcat(strFileName, "\\root.xml");
 
 	WDocument.SaveFile(strFileName);
-
-
 }
 
 
@@ -517,7 +526,13 @@ void CGridHP::Load()
 	tinyxml2::XMLDocument WDocument;
 
 	// > Load Document
-	WDocument.LoadFile("C:\\wast\\WastGrid.xml");
+	char strFileName[128];
+	strcpy(strFileName, m_stGlobals.cDirectoryPath);
+	strcat(strFileName, "\\");
+	strcat(strFileName, m_strWastName);
+	strcat(strFileName, "\\root.xml");
+
+	WDocument.LoadFile(strFileName);
 
 	// > Parse Title Part
 	tinyxml2::XMLElement* El_Root = WDocument.FirstChildElement("WAST");
@@ -525,7 +540,7 @@ void CGridHP::Load()
 
 	// > Title Content
 	// Plots
-	tinyxml2::XMLElement* El_Tit_Nodes = El_Title->FirstChildElement("Plots");
+	tinyxml2::XMLElement* El_Tit_Nodes = El_Title->FirstChildElement("Nodes");
 
 	// - property: size
 	tinyxml2::XMLElement* El_Tit_Nodes_X = El_Tit_Nodes->FirstChildElement("X");
@@ -536,8 +551,6 @@ void CGridHP::Load()
 	tinyxml2::XMLElement* El_Tit_Nodes_Y = El_Tit_Nodes->FirstChildElement("Y");
 	El_Tit_Nodes_Y->QueryIntText(&iVal);
 	m_gridSize.y = iVal;
-
-
 }
 
 
@@ -546,14 +559,21 @@ void CGridHP::Load()
 //
 void CGridHP::DebugBillet01(void)
 {
-	// Set Grid size work instance
-	//// Set Grid Size
+	// > Set Grid size work instance
+	// Set Grid Size
 	POINT Point_temp;
 	Point_temp.x = 1;
 	Point_temp.y = 1;
 
 	this->m_gridSize = Point_temp;
 
+	// 
+
+	// > Save
+	// set instance Name
+	strcpy(m_strWastName, "System1");
+
+	Save();
 }
 
 // Test functionality

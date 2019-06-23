@@ -44,3 +44,8 @@
 // extern
 //////////////////////////////////////////////////////////////////////
 extern struct stHPFileGlobals m_stGlobals;
+extern char m_strWastName[32];
+
+// functions
+BYTE GetStrTag(char * strParse, char * strOutput, char chOpenSymbol, char chCloseSymbol);
+BYTE Read_config(stHPFileGlobals * var_stGlobals);

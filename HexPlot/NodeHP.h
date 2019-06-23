@@ -100,7 +100,6 @@ public:
 	void DebugBillet01(void);
 
 
-
 	~CNodeHP();
 
 };

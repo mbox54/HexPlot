@@ -19,6 +19,9 @@
 // module globals
 struct stHPFileGlobals m_stGlobals;
 
+// This Universe Name
+char m_strWastName[32];
+
 
 //////////////////////////////////////////////////////////////////////
 // service PROCs
