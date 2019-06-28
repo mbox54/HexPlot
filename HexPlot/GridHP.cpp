@@ -539,7 +539,9 @@ void CGridHP::Load()
 	tinyxml2::XMLElement* El_Title = El_Root->FirstChildElement("TITLE");
 
 	// > Title Content
-	// Plots
+	// grid size: Plots
+	// NOTE:
+	// need to perform Node -> Plot
 	tinyxml2::XMLElement* El_Tit_Nodes = El_Title->FirstChildElement("Nodes");
 
 	// - property: size
@@ -551,6 +553,10 @@ void CGridHP::Load()
 	tinyxml2::XMLElement* El_Tit_Nodes_Y = El_Tit_Nodes->FirstChildElement("Y");
 	El_Tit_Nodes_Y->QueryIntText(&iVal);
 	m_gridSize.y = iVal;
+
+	// > Place Net: create Nodes
+	PlaceNet();
+
 }
 
 

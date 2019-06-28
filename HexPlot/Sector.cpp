@@ -34,7 +34,19 @@ CSector::CSector(POINT gridPos)
 {
 	Init();
 
+	// > Load Values
 	m_position = gridPos;
+
+	// > Load Values
+	// XML FILE OP
+	//!debug
+	/////////////////////////////////////////////////////
+	// NO FILE INITIATION CASE
+	/////////////////////////////////////////////////////
+	// DEBUG: use test config Billet
+	DebugBillet01();
+
+	Load();
 }
 
 
@@ -45,17 +57,21 @@ CSector::~CSector()
 
 void CSector::Init()
 {
-	// > Default Values
+	// ## Default Values
+	// NOTE: need when load op failed
+	// Init properties
 
-	// init properties
-	// default
+	// Init properties
+
+	// [m_position]
 	POINT initCoord;
 	initCoord.x = 0;
 	initCoord.y = 0;
 
 	m_position = initCoord;
 
-	// [addition]
+	// [altitude]
+	m_altitude = 0;
 
 }
 
@@ -150,8 +166,7 @@ void CSector::Load()
 
 	// > Title Content
 	// Sector info
-	tinyxml2::XMLElement* El_Tit_Sector = El_Title->FirstChildElement("Sector");
-
+	// none 
 
 	// > Body Content
 	tinyxml2::XMLElement* El_Body = El_Root->FirstChildElement("BODY");
@@ -166,5 +181,9 @@ void CSector::Load()
 
 void CSector::DebugBillet01(void)
 {
+	// > Set  Value
+	m_altitude = 5;
 
+	// > Save
+	Save();
 }

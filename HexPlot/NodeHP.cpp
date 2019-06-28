@@ -144,7 +144,7 @@ void CNodeHP::Save()
 	El_Title->InsertEndChild(El_Tit_Date);
 
 	// Sectors
-	tinyxml2::XMLElement* El_Tit_Sectors = WDocument.NewElement("Nodes");
+	tinyxml2::XMLElement* El_Tit_Sectors = WDocument.NewElement("Sectors");
 	El_Title->InsertEndChild(El_Tit_Sectors);
 
 	tinyxml2::XMLElement* El_Tit_Sectors_X = WDocument.NewElement("X");
@@ -172,24 +172,6 @@ void CNodeHP::Save()
 	El_Body_Terrain_Type->SetText(m_terrain.m_TerrainType);
 	El_Body_Terrain->InsertEndChild(El_Body_Terrain_Type);
 
-	// Sector
-	tinyxml2::XMLElement* El_Body_Sectors = WDocument.NewElement("Sectors");
-	El_Body->InsertEndChild(El_Body_Sectors);
-
-	for (BYTE ky = 0; ky < m_gridSize.y; ky++)
-	{
-		for (BYTE kx = 0; kx < m_gridSize.x; kx++)
-		{
-			tinyxml2::XMLElement* El_Sector = WDocument.NewElement("Sector");
-			El_Sector->SetAttribute("Y", ky);
-			El_Sector->SetAttribute("X", kx);
-			El_Body_Sectors->InsertEndChild(El_Sector);
-
-			tinyxml2::XMLElement* El_Body_Sector_altitude = WDocument.NewElement("altitude");
-			El_Body_Sector_altitude->SetText(this->v_Sectors[ky][kx].m_altitude);
-			El_Sector->InsertEndChild(El_Body_Sector_altitude);	
-		}
-	}
 
 	// > Save Document
 	// Form specific Filename (NodeY05X08)
@@ -220,8 +202,39 @@ void CNodeHP::Save()
 // Using [m_position] to define DB Cell to Load
 void CNodeHP::Load()
 {
-	
+	// > Form Document
+	tinyxml2::XMLDocument WDocument;
 
+	// > Load Document
+	char strFileName[128];
+	strcpy(strFileName, m_stGlobals.cDirectoryPath);
+	strcat(strFileName, "\\");
+	strcat(strFileName, m_strWastName);
+	strcat(strFileName, "\\root.xml");
+
+	WDocument.LoadFile(strFileName);
+
+	// > Parse Title Part
+	tinyxml2::XMLElement* El_Root = WDocument.FirstChildElement("WAST");
+	tinyxml2::XMLElement* El_Title = El_Root->FirstChildElement("TITLE");
+
+	// > Title Content
+	// grid size: Sectors 
+	tinyxml2::XMLElement* El_Tit_Nodes = El_Title->FirstChildElement("Sectors");
+
+	// - property: size
+	tinyxml2::XMLElement* El_Tit_Nodes_X = El_Tit_Nodes->FirstChildElement("X");
+	int iVal = 0;
+	El_Tit_Nodes_X->QueryIntText(&iVal);
+	m_gridSize.x = iVal;
+
+	tinyxml2::XMLElement* El_Tit_Nodes_Y = El_Tit_Nodes->FirstChildElement("Y");
+	El_Tit_Nodes_Y->QueryIntText(&iVal);
+	m_gridSize.y = iVal;
+
+
+	// > Place Net: create Sectors
+	PlaceNet();
 
 }
 
@@ -251,18 +264,6 @@ void CNodeHP::DebugBillet01(void)
 // Allocate Row ---> Allocate Col, Allocate Col, Allocate Col,
 // ...
 // so v_Nodes[Y][X] has (Y, X) placement order
-//
-// NOTE:
-// FORMAT:
-// Hex Grid positioning
-// y: 0 - i - N/2, x: 0 - i - N/2 = NULL, x: N/2 - i - N = VALL
-// y: N/2 - i - N, x: 0 - i - N/2 = VALL, x: N/2 - i - N = NULL
-// so HexFormat Net is Set in Hexagonal form
-//	##+++##
-//	#+++++#
-//	+++++++
-//	#+++++#
-//	##+++##
 void CNodeHP::PlaceNet()
 {
 	// > Fill Rows
@@ -393,6 +394,20 @@ void CNodeHP::FillSectors()
 }
 
 
+// INFO:
+// support methods
+// need for packing hex-performed coords in decard-performed memory matrix
+//
+// FORMAT:
+// Hex Grid positioning
+// y: 0 - i - N/2, x: 0 - i - N/2 = NULL, x: N/2 - i - N = VALL
+// y: N/2 - i - N, x: 0 - i - N/2 = VALL, x: N/2 - i - N = NULL
+// so HexFormat Net is Set in Hexagonal form
+//	##+++##
+//	#+++++#
+//	+++++++
+//	#+++++#
+//	##+++##
 void CNodeHP::HexToMem(POINT pt_Input, POINT * pt_Output)
 {
 	if (pt_Input.y < this->m_gridSize.y / 2)
@@ -409,7 +424,9 @@ void CNodeHP::HexToMem(POINT pt_Input, POINT * pt_Output)
 	pt_Output->y = pt_Input.y;
 }
 
-
+// INFO:
+// support methods
+// need for packing hex-performed coords in decard-performed memory matrix
 void CNodeHP::MemToHex(POINT pt_Input, POINT * pt_Output)
 {
 	if (pt_Input.y < this->m_gridSize.y / 2)
