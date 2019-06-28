@@ -100,6 +100,10 @@ void CNodeHP::SetInit(POINT gridPos)
 	m_position = gridPos;
 }
 
+
+//////////////////////////////////////////////////////////////////////
+// FILE XML OPs
+//
 void CNodeHP::Save()
 {
 	// # Form Document
