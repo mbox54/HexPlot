@@ -30,12 +30,13 @@ CSector::CSector()
 
 }
 
-CSector::CSector(POINT gridPos)
+CSector::CSector(POINT pt_NetPos)
 {
+	// init defaults
 	Init();
 
-	// > Load Values
-	m_position = gridPos;
+	// load Values
+	m_position = pt_NetPos;
 
 	// > Load Values
 	// XML FILE OP

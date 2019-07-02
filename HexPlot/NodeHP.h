@@ -53,30 +53,35 @@ class CNodeHP
 public:
 	// standard constructor
 	CNodeHP();
-	CNodeHP(POINT gridPos);
+	CNodeHP(POINT pt_NetPos);
 
-
-	// > Properties
-	// > > Net Position
-	POINT m_position;		// graphic /unused
+	// +++++++++++++++++++
+	// # Properties
+	// +++++++++++++++++++
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	// # Net Position
+	// NOTE: graphic /user when Save/Load File OP
+	POINT m_position;		
 
 	// Borders: Allowed directions
 	BYTE v_incidence[6];
 
-	// > > Sector Container
-	// > Properties
-	POINT m_gridSize;
+	// # Sector Container
+	POINT m_NetSize;
+	
 	std::vector < std::vector< CSector > > v_Sectors;
 
-	// > > Node Logic
+	// # Internal
 	// Terrain
 	CTerrain m_terrain;
 
 	// Anlage
 	
 
-
-	// > Methods
+	// +++++++++++++++++++
+	// # Methods
+	// +++++++++++++++++++
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	// Init
 	void Init();
 	void SetInit(POINT gridPos);
@@ -98,7 +103,7 @@ public:
 
 	// test
 	void DebugBillet01(void);
-
+	//....................................................................
 
 	~CNodeHP();
 

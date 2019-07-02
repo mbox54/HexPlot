@@ -40,12 +40,12 @@ CNodeHP::CNodeHP()
 
 // CASE: 
 // create with defined specific net position
-CNodeHP::CNodeHP(POINT gridPos)
+CNodeHP::CNodeHP(POINT pt_NetPos)
 {
 	Init();
 	
 	// > Load Values
-	this->m_position = gridPos;
+	this->m_position = pt_NetPos;
 
 	// > Load Values
 	// XML FILE OP
@@ -81,7 +81,7 @@ void CNodeHP::Init()
 	pt_Size.x = SIDESIZE;
 	pt_Size.y = SIDESIZE;
 
-	this->m_gridSize = pt_Size;
+	this->m_NetSize = pt_Size;
 
 	// [v_incidence]
 	for (BYTE k = 0; k < 6; k++)
@@ -148,11 +148,11 @@ void CNodeHP::Save()
 	El_Title->InsertEndChild(El_Tit_Sectors);
 
 	tinyxml2::XMLElement* El_Tit_Sectors_X = WDocument.NewElement("X");
-	El_Tit_Sectors_X->SetText(m_gridSize.x);
+	El_Tit_Sectors_X->SetText(m_NetSize.x);
 	El_Tit_Sectors->InsertEndChild(El_Tit_Sectors_X);
 
 	tinyxml2::XMLElement* El_Tit_Sectors_Y = WDocument.NewElement("Y");
-	El_Tit_Sectors_Y->SetText(m_gridSize.y);
+	El_Tit_Sectors_Y->SetText(m_NetSize.y);
 	El_Tit_Sectors->InsertEndChild(El_Tit_Sectors_Y);
 
 
@@ -192,7 +192,7 @@ void CNodeHP::Save()
 	// Create Node directory
 	CreateDirectory((CString)strFileName, NULL);
 
-	strcat(strFileName, "\\root.xml");
+	strcat(strFileName, "\\Node.xml");
 
 	WDocument.SaveFile(strFileName);
 }
@@ -210,7 +210,7 @@ void CNodeHP::Load()
 	strcpy(strFileName, m_stGlobals.cDirectoryPath);
 	strcat(strFileName, "\\");
 	strcat(strFileName, m_strWastName);
-	strcat(strFileName, "\\root.xml");
+	strcat(strFileName, "\\Node.xml");
 
 	WDocument.LoadFile(strFileName);
 
@@ -226,11 +226,11 @@ void CNodeHP::Load()
 	tinyxml2::XMLElement* El_Tit_Nodes_X = El_Tit_Nodes->FirstChildElement("X");
 	int iVal = 0;
 	El_Tit_Nodes_X->QueryIntText(&iVal);
-	m_gridSize.x = iVal;
+	m_NetSize.x = iVal;
 
 	tinyxml2::XMLElement* El_Tit_Nodes_Y = El_Tit_Nodes->FirstChildElement("Y");
 	El_Tit_Nodes_Y->QueryIntText(&iVal);
-	m_gridSize.y = iVal;
+	m_NetSize.y = iVal;
 
 
 	// > Place Net: create Sectors
@@ -241,12 +241,12 @@ void CNodeHP::Load()
 
 void CNodeHP::DebugBillet01(void)
 {
-	// > Set Grid Size
+	// > Set Sector-Grid Size
 	POINT pt_Size;
 	pt_Size.x = 1;
 	pt_Size.y = 1;
 
-	this->m_gridSize = pt_Size;
+	this->m_NetSize = pt_Size;
 
 	// > Save
 	Save();
@@ -267,34 +267,34 @@ void CNodeHP::DebugBillet01(void)
 void CNodeHP::PlaceNet()
 {
 	// > Fill Rows
-	POINT CoordGrid;
+	POINT pt_NetCoords;
 
-	for (WORD uiCoorY = 0; uiCoorY < this->m_gridSize.y; uiCoorY++)
+	for (WORD usCoorY = 0; usCoorY < this->m_NetSize.y; usCoorY++)
 	{
 		// Allocate memory: Vector for Row /in Sector Vector container
 		this->v_Sectors.push_back(std::vector<CSector>());
 
 		// Fill Cols
-		for (WORD uiCoorX = 0; uiCoorX < this->m_gridSize.x; uiCoorX++)
+		for (WORD usCoorX = 0; usCoorX < this->m_NetSize.x; usCoorX++)
 		{
-			// define Coord to set
-			POINT CoordMem;
-			CoordMem.y = uiCoorY;
-			CoordMem.x = uiCoorX;
+			//// define Coord to set
+			//POINT CoordMem;
+			//CoordMem.y = usCoorY;
+			//CoordMem.x = usCoorX;
 
-			this->MemToHex(CoordMem, &CoordGrid);
+			//this->MemToHex(CoordMem, &pt_NetCoords);
 
 			// create Sector instance
-			CSector Sector(CoordGrid);
+			CSector Sector(pt_NetCoords);
 
 			// allocate memory: Sector in 2x Cell /in Vector container
-			this->v_Sectors[uiCoorY].push_back(Sector);
+			this->v_Sectors[usCoorY].push_back(Sector);
 
 			// Load Node Values
 			//this->LoadNode(CoordGrid);
 
-		}//for (WORD uiCoorX
-	}//for (WORD uiCoorY
+		}//for (WORD usCoorX
+	}//for (WORD usCoorY
 
 }
 
@@ -315,7 +315,7 @@ void CNodeHP::FillSectors()
 	pt_Size.x = SIDESIZE;
 	pt_Size.y = SIDESIZE;
 
-	this->m_gridSize = pt_Size;
+	this->m_NetSize = pt_Size;
 
 	// > Fill
 	// Define HexCoords
@@ -410,11 +410,11 @@ void CNodeHP::FillSectors()
 //	##+++##
 void CNodeHP::HexToMem(POINT pt_Input, POINT * pt_Output)
 {
-	if (pt_Input.y < this->m_gridSize.y / 2)
+	if (pt_Input.y < this->m_NetSize.y / 2)
 	{
 		// [SECTOR 4]
 
-		pt_Output->x = pt_Input.x - (this->m_gridSize.y / 2 - pt_Input.y);
+		pt_Output->x = pt_Input.x - (this->m_NetSize.y / 2 - pt_Input.y);
 	}
 	else
 	{
@@ -429,11 +429,11 @@ void CNodeHP::HexToMem(POINT pt_Input, POINT * pt_Output)
 // need for packing hex-performed coords in decard-performed memory matrix
 void CNodeHP::MemToHex(POINT pt_Input, POINT * pt_Output)
 {
-	if (pt_Input.y < this->m_gridSize.y / 2)
+	if (pt_Input.y < this->m_NetSize.y / 2)
 	{
 		// [SECTOR 4]
 
-		pt_Output->x = pt_Input.x + (this->m_gridSize.y / 2 - pt_Input.y);
+		pt_Output->x = pt_Input.x + (this->m_NetSize.y / 2 - pt_Input.y);
 	}
 	else
 	{
