@@ -277,15 +277,15 @@ void CNodeHP::PlaceNet()
 		// Fill Cols
 		for (WORD usCoorX = 0; usCoorX < this->m_NetSize.x; usCoorX++)
 		{
-			//// define Coord to set
-			//POINT CoordMem;
-			//CoordMem.y = usCoorY;
-			//CoordMem.x = usCoorX;
+			// define Coord to set
+			POINT CoordMem;
+			CoordMem.y = usCoorY;
+			CoordMem.x = usCoorX;
 
 			//this->MemToHex(CoordMem, &pt_NetCoords);
 
 			// create Sector instance
-			CSector Sector(pt_NetCoords);
+			CSector Sector(CoordMem);
 
 			// allocate memory: Sector in 2x Cell /in Vector container
 			this->v_Sectors[usCoorY].push_back(Sector);
