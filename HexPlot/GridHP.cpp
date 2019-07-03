@@ -40,11 +40,11 @@ CGridHP::CGridHP()
 
 	Load();
 
-	// > Place Grid Nodes
-//	PlaceNet();
+	// > Place Net: create Nodes
+	PlaceNet();
+
 
 	// !debug
-
 	//// create Node path
 	//CWeg nodeWeg;
 
@@ -514,7 +514,7 @@ void CGridHP::Save()
 	// Create Node directory
 	CreateDirectory((CString)strFileName, NULL);
 
-	strcat(strFileName, "\\root.xml");
+	strcat(strFileName, "\\Grid.xml");
 
 	WDocument.SaveFile(strFileName);
 }
@@ -553,9 +553,6 @@ void CGridHP::Load()
 	tinyxml2::XMLElement* El_Tit_Nodes_Y = El_Tit_Nodes->FirstChildElement("Y");
 	El_Tit_Nodes_Y->QueryIntText(&iVal);
 	m_gridSize.y = iVal;
-
-	// > Place Net: create Nodes
-	PlaceNet();
 
 }
 

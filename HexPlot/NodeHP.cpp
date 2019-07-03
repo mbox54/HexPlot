@@ -58,7 +58,7 @@ CNodeHP::CNodeHP(POINT pt_NetPos)
 
 	Load();
 	
-	// > Place Net /Sectors
+	// > Place Net: create Sectors
 	PlaceNet();
 }
 
@@ -176,6 +176,7 @@ void CNodeHP::Save()
 	// > Save Document
 	// Form specific Filename (NodeY05X08)
 	char strFileName[128];
+	strcpy(strFileName, m_stGlobals.cDirectoryPath);
 	strcat(strFileName, "\\");
 	strcat(strFileName, m_strWastName);
 	strcat(strFileName, "\\Node");
@@ -210,6 +211,17 @@ void CNodeHP::Load()
 	strcpy(strFileName, m_stGlobals.cDirectoryPath);
 	strcat(strFileName, "\\");
 	strcat(strFileName, m_strWastName);
+	strcat(strFileName, "\\Node");
+
+	strcat(strFileName, "Y");
+	char str_buf[8];
+	_itoa(m_position.y, str_buf, 10);
+	strcat(strFileName, str_buf);
+
+	strcat(strFileName, "X");
+	_itoa(m_position.y, str_buf, 10);
+	strcat(strFileName, str_buf);
+
 	strcat(strFileName, "\\Node.xml");
 
 	WDocument.LoadFile(strFileName);
@@ -231,10 +243,6 @@ void CNodeHP::Load()
 	tinyxml2::XMLElement* El_Tit_Nodes_Y = El_Tit_Nodes->FirstChildElement("Y");
 	El_Tit_Nodes_Y->QueryIntText(&iVal);
 	m_NetSize.y = iVal;
-
-
-	// > Place Net: create Sectors
-	PlaceNet();
 
 }
 
