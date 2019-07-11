@@ -30,13 +30,14 @@ CSector::CSector()
 
 }
 
-CSector::CSector(POINT pt_NetPos)
+CSector::CSector(POINT pt_GridPos, POINT pt_NodePos)
 {
 	// init defaults
 	Init();
 
 	// load Values
-	m_position = pt_NetPos;
+	m_NodePosition = pt_GridPos;
+	m_position = pt_NodePos;
 
 	// > Load Values
 	// XML FILE OP
@@ -133,15 +134,39 @@ void CSector::Save()
 	El_Body->InsertEndChild(Pr_Altitude);
 
 	// # Save Document
+	// Form specific Filename (GridName\\NodeY05X08\\SectorY03X04)
 	char strFileName[128];
 	strcpy(strFileName, m_stGlobals.cDirectoryPath);
 	strcat(strFileName, "\\");
 	strcat(strFileName, m_strWastName);
+	strcat(strFileName, "\\Node");
 
-	// Create Node directory
+	strcat(strFileName, "Y");
+	char str_buf[8];
+	_itoa(m_NodePosition.y, str_buf, 10);
+	strcat(strFileName, str_buf);
+
+	strcat(strFileName, "X");
+	_itoa(m_NodePosition.x, str_buf, 10);
+	strcat(strFileName, str_buf);
+
+	// Create Node directory /is don't exist
 	CreateDirectory((CString)strFileName, NULL);
 
-	strcat(strFileName, "\\sector.xml");
+	strcat(strFileName, "\\Sector");
+
+	strcat(strFileName, "Y");
+	_itoa(m_position.y, str_buf, 10);
+	strcat(strFileName, str_buf);
+
+	strcat(strFileName, "X");
+	_itoa(m_position.x, str_buf, 10);
+	strcat(strFileName, str_buf);
+
+	// Create Sector directory
+	CreateDirectory((CString)strFileName, NULL);
+
+	strcat(strFileName, "\\Sector.xml");
 
 	WDocument.SaveFile(strFileName);
 }
@@ -153,11 +178,33 @@ void CSector::Load()
 	tinyxml2::XMLDocument WDocument;
 
 	// > Load Document
+	// Form specific Filename (GridName\\NodeY05X08\\SectorY03X04)
 	char strFileName[128];
 	strcpy(strFileName, m_stGlobals.cDirectoryPath);
 	strcat(strFileName, "\\");
 	strcat(strFileName, m_strWastName);
-	strcat(strFileName, "\\sector.xml");
+	strcat(strFileName, "\\Node");
+
+	strcat(strFileName, "Y");
+	char str_buf[8];
+	_itoa(m_NodePosition.y, str_buf, 10);
+	strcat(strFileName, str_buf);
+
+	strcat(strFileName, "X");
+	_itoa(m_NodePosition.x, str_buf, 10);
+	strcat(strFileName, str_buf);
+
+	strcat(strFileName, "\\Sector");
+
+	strcat(strFileName, "Y");
+	_itoa(m_position.y, str_buf, 10);
+	strcat(strFileName, str_buf);
+
+	strcat(strFileName, "X");
+	_itoa(m_position.x, str_buf, 10);
+	strcat(strFileName, str_buf);
+
+	strcat(strFileName, "\\Sector.xml");
 
 	WDocument.LoadFile(strFileName);
 

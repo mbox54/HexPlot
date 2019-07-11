@@ -187,7 +187,7 @@ void CNodeHP::Save()
 	strcat(strFileName, str_buf);
 
 	strcat(strFileName, "X");
-	_itoa(m_position.y, str_buf, 10);
+	_itoa(m_position.x, str_buf, 10);
 	strcat(strFileName, str_buf);
 
 	// Create Node directory
@@ -219,7 +219,7 @@ void CNodeHP::Load()
 	strcat(strFileName, str_buf);
 
 	strcat(strFileName, "X");
-	_itoa(m_position.y, str_buf, 10);
+	_itoa(m_position.x, str_buf, 10);
 	strcat(strFileName, str_buf);
 
 	strcat(strFileName, "\\Node.xml");
@@ -293,7 +293,7 @@ void CNodeHP::PlaceNet()
 			//this->MemToHex(CoordMem, &pt_NetCoords);
 
 			// create Sector instance
-			CSector Sector(CoordMem);
+			CSector Sector(m_position, CoordMem);
 
 			// allocate memory: Sector in 2x Cell /in Vector container
 			this->v_Sectors[usCoorY].push_back(Sector);
@@ -383,7 +383,7 @@ void CNodeHP::FillSectors()
 		{
 			// > Proc Coord
 			// Create Sector instance / init with Hex Coord
-			CSector Sector(pt_CoordHex);
+			CSector Sector(m_position, pt_CoordHex);
 
 			// allocate memory: Sector in 2x Cell /in Vector container
 			this->v_Sectors[pt_CoordHex.y].push_back(Sector);

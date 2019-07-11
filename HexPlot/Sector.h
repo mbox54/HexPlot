@@ -22,7 +22,7 @@
 // load/save xml file
 #include "external\tinyxml2.h"
 
-
+//////////////////////////////////////////////////////////////////////
 // ===================================================================
 // class CSector
 // ===================================================================
@@ -31,12 +31,15 @@ class CSector
 public:
 	// standard constructor
 	CSector();
-	CSector(POINT pt_NetPos);
+	CSector(POINT pt_GridPos, POINT pt_NodePos);
 
 
 	// +++++++++++++++++++
 	// # Properties
 	// +++++++++++++++++++
+	// NOTE: need to define directory when Save/Load File OP
+	POINT m_NodePosition;
+
 	// # Net Position
 	// NOTE: graphic /user when Save/Load File OP
 	POINT m_position;

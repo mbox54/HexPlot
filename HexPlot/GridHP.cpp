@@ -530,7 +530,7 @@ void CGridHP::Load()
 	strcpy(strFileName, m_stGlobals.cDirectoryPath);
 	strcat(strFileName, "\\");
 	strcat(strFileName, m_strWastName);
-	strcat(strFileName, "\\root.xml");
+	strcat(strFileName, "\\Grid.xml");
 
 	WDocument.LoadFile(strFileName);
 
