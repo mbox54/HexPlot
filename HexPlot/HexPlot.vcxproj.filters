@@ -107,9 +107,6 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HexAlgorithm.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="NodeHP.cpp">
       <Filter>HexPlot Logic</Filter>
     </ClCompile>
@@ -157,6 +154,9 @@
     </ClCompile>
     <ClCompile Include="HexPlot.cpp">
       <Filter>Header Files\Project</Filter>
+    </ClCompile>
+    <ClCompile Include="HexAlgorithm.cpp">
+      <Filter>Routing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
