@@ -40,12 +40,12 @@ CNodeHP::CNodeHP()
 
 // CASE: 
 // create with defined specific net position
-CNodeHP::CNodeHP(POINT gridPos)
+CNodeHP::CNodeHP(POINT pt_NetPos)
 {
 	Init();
 	
 	// > Load Values
-	this->m_position = gridPos;
+	this->m_position = pt_NetPos;
 
 	// > Load Values
 	// XML FILE OP
@@ -58,7 +58,7 @@ CNodeHP::CNodeHP(POINT gridPos)
 
 	Load();
 	
-	// > Place Net /Sectors
+	// > Place Net: create Sectors
 	PlaceNet();
 }
 
@@ -81,7 +81,7 @@ void CNodeHP::Init()
 	pt_Size.x = SIDESIZE;
 	pt_Size.y = SIDESIZE;
 
-	this->m_gridSize = pt_Size;
+	this->m_NetSize = pt_Size;
 
 	// [v_incidence]
 	for (BYTE k = 0; k < 6; k++)
@@ -100,6 +100,10 @@ void CNodeHP::SetInit(POINT gridPos)
 	m_position = gridPos;
 }
 
+
+//////////////////////////////////////////////////////////////////////
+// FILE XML OPs
+//
 void CNodeHP::Save()
 {
 	// # Form Document
@@ -140,15 +144,15 @@ void CNodeHP::Save()
 	El_Title->InsertEndChild(El_Tit_Date);
 
 	// Sectors
-	tinyxml2::XMLElement* El_Tit_Sectors = WDocument.NewElement("Nodes");
+	tinyxml2::XMLElement* El_Tit_Sectors = WDocument.NewElement("Sectors");
 	El_Title->InsertEndChild(El_Tit_Sectors);
 
 	tinyxml2::XMLElement* El_Tit_Sectors_X = WDocument.NewElement("X");
-	El_Tit_Sectors_X->SetText(m_gridSize.x);
+	El_Tit_Sectors_X->SetText(m_NetSize.x);
 	El_Tit_Sectors->InsertEndChild(El_Tit_Sectors_X);
 
 	tinyxml2::XMLElement* El_Tit_Sectors_Y = WDocument.NewElement("Y");
-	El_Tit_Sectors_Y->SetText(m_gridSize.y);
+	El_Tit_Sectors_Y->SetText(m_NetSize.y);
 	El_Tit_Sectors->InsertEndChild(El_Tit_Sectors_Y);
 
 
@@ -168,28 +172,11 @@ void CNodeHP::Save()
 	El_Body_Terrain_Type->SetText(m_terrain.m_TerrainType);
 	El_Body_Terrain->InsertEndChild(El_Body_Terrain_Type);
 
-	// Sector
-	tinyxml2::XMLElement* El_Body_Sectors = WDocument.NewElement("Sectors");
-	El_Body->InsertEndChild(El_Body_Sectors);
-
-	for (BYTE ky = 0; ky < m_gridSize.y; ky++)
-	{
-		for (BYTE kx = 0; kx < m_gridSize.x; kx++)
-		{
-			tinyxml2::XMLElement* El_Sector = WDocument.NewElement("Sector");
-			El_Sector->SetAttribute("Y", ky);
-			El_Sector->SetAttribute("X", kx);
-			El_Body_Sectors->InsertEndChild(El_Sector);
-
-			tinyxml2::XMLElement* El_Body_Sector_altitude = WDocument.NewElement("altitude");
-			El_Body_Sector_altitude->SetText(this->v_Sectors[ky][kx].m_altitude);
-			El_Sector->InsertEndChild(El_Body_Sector_altitude);	
-		}
-	}
 
 	// > Save Document
 	// Form specific Filename (NodeY05X08)
 	char strFileName[128];
+	strcpy(strFileName, m_stGlobals.cDirectoryPath);
 	strcat(strFileName, "\\");
 	strcat(strFileName, m_strWastName);
 	strcat(strFileName, "\\Node");
@@ -200,13 +187,13 @@ void CNodeHP::Save()
 	strcat(strFileName, str_buf);
 
 	strcat(strFileName, "X");
-	_itoa(m_position.y, str_buf, 10);
+	_itoa(m_position.x, str_buf, 10);
 	strcat(strFileName, str_buf);
 
 	// Create Node directory
 	CreateDirectory((CString)strFileName, NULL);
 
-	strcat(strFileName, "\\root.xml");
+	strcat(strFileName, "\\Node.xml");
 
 	WDocument.SaveFile(strFileName);
 }
@@ -216,20 +203,58 @@ void CNodeHP::Save()
 // Using [m_position] to define DB Cell to Load
 void CNodeHP::Load()
 {
-	
+	// > Form Document
+	tinyxml2::XMLDocument WDocument;
 
+	// > Load Document
+	char strFileName[128];
+	strcpy(strFileName, m_stGlobals.cDirectoryPath);
+	strcat(strFileName, "\\");
+	strcat(strFileName, m_strWastName);
+	strcat(strFileName, "\\Node");
+
+	strcat(strFileName, "Y");
+	char str_buf[8];
+	_itoa(m_position.y, str_buf, 10);
+	strcat(strFileName, str_buf);
+
+	strcat(strFileName, "X");
+	_itoa(m_position.x, str_buf, 10);
+	strcat(strFileName, str_buf);
+
+	strcat(strFileName, "\\Node.xml");
+
+	WDocument.LoadFile(strFileName);
+
+	// > Parse Title Part
+	tinyxml2::XMLElement* El_Root = WDocument.FirstChildElement("WAST");
+	tinyxml2::XMLElement* El_Title = El_Root->FirstChildElement("TITLE");
+
+	// > Title Content
+	// grid size: Sectors 
+	tinyxml2::XMLElement* El_Tit_Nodes = El_Title->FirstChildElement("Sectors");
+
+	// - property: size
+	tinyxml2::XMLElement* El_Tit_Nodes_X = El_Tit_Nodes->FirstChildElement("X");
+	int iVal = 0;
+	El_Tit_Nodes_X->QueryIntText(&iVal);
+	m_NetSize.x = iVal;
+
+	tinyxml2::XMLElement* El_Tit_Nodes_Y = El_Tit_Nodes->FirstChildElement("Y");
+	El_Tit_Nodes_Y->QueryIntText(&iVal);
+	m_NetSize.y = iVal;
 
 }
 
 
 void CNodeHP::DebugBillet01(void)
 {
-	// > Set Grid Size
+	// > Set Sector-Grid Size
 	POINT pt_Size;
 	pt_Size.x = 1;
 	pt_Size.y = 1;
 
-	this->m_gridSize = pt_Size;
+	this->m_NetSize = pt_Size;
 
 	// > Save
 	Save();
@@ -247,49 +272,37 @@ void CNodeHP::DebugBillet01(void)
 // Allocate Row ---> Allocate Col, Allocate Col, Allocate Col,
 // ...
 // so v_Nodes[Y][X] has (Y, X) placement order
-//
-// NOTE:
-// FORMAT:
-// Hex Grid positioning
-// y: 0 - i - N/2, x: 0 - i - N/2 = NULL, x: N/2 - i - N = VALL
-// y: N/2 - i - N, x: 0 - i - N/2 = VALL, x: N/2 - i - N = NULL
-// so HexFormat Net is Set in Hexagonal form
-//	##+++##
-//	#+++++#
-//	+++++++
-//	#+++++#
-//	##+++##
 void CNodeHP::PlaceNet()
 {
 	// > Fill Rows
-	POINT CoordGrid;
+	POINT pt_NetCoords;
 
-	for (WORD uiCoorY = 0; uiCoorY < this->m_gridSize.y; uiCoorY++)
+	for (WORD usCoorY = 0; usCoorY < this->m_NetSize.y; usCoorY++)
 	{
 		// Allocate memory: Vector for Row /in Sector Vector container
 		this->v_Sectors.push_back(std::vector<CSector>());
 
 		// Fill Cols
-		for (WORD uiCoorX = 0; uiCoorX < this->m_gridSize.x; uiCoorX++)
+		for (WORD usCoorX = 0; usCoorX < this->m_NetSize.x; usCoorX++)
 		{
 			// define Coord to set
 			POINT CoordMem;
-			CoordMem.y = uiCoorY;
-			CoordMem.x = uiCoorX;
+			CoordMem.y = usCoorY;
+			CoordMem.x = usCoorX;
 
-			this->MemToHex(CoordMem, &CoordGrid);
+			//this->MemToHex(CoordMem, &pt_NetCoords);
 
 			// create Sector instance
-			CSector Sector(CoordGrid);
+			CSector Sector(m_position, CoordMem);
 
 			// allocate memory: Sector in 2x Cell /in Vector container
-			this->v_Sectors[uiCoorY].push_back(Sector);
+			this->v_Sectors[usCoorY].push_back(Sector);
 
 			// Load Node Values
 			//this->LoadNode(CoordGrid);
 
-		}//for (WORD uiCoorX
-	}//for (WORD uiCoorY
+		}//for (WORD usCoorX
+	}//for (WORD usCoorY
 
 }
 
@@ -310,7 +323,7 @@ void CNodeHP::FillSectors()
 	pt_Size.x = SIDESIZE;
 	pt_Size.y = SIDESIZE;
 
-	this->m_gridSize = pt_Size;
+	this->m_NetSize = pt_Size;
 
 	// > Fill
 	// Define HexCoords
@@ -370,7 +383,7 @@ void CNodeHP::FillSectors()
 		{
 			// > Proc Coord
 			// Create Sector instance / init with Hex Coord
-			CSector Sector(pt_CoordHex);
+			CSector Sector(m_position, pt_CoordHex);
 
 			// allocate memory: Sector in 2x Cell /in Vector container
 			this->v_Sectors[pt_CoordHex.y].push_back(Sector);
@@ -389,13 +402,27 @@ void CNodeHP::FillSectors()
 }
 
 
+// INFO:
+// support methods
+// need for packing hex-performed coords in decard-performed memory matrix
+//
+// FORMAT:
+// Hex Grid positioning
+// y: 0 - i - N/2, x: 0 - i - N/2 = NULL, x: N/2 - i - N = VALL
+// y: N/2 - i - N, x: 0 - i - N/2 = VALL, x: N/2 - i - N = NULL
+// so HexFormat Net is Set in Hexagonal form
+//	##+++##
+//	#+++++#
+//	+++++++
+//	#+++++#
+//	##+++##
 void CNodeHP::HexToMem(POINT pt_Input, POINT * pt_Output)
 {
-	if (pt_Input.y < this->m_gridSize.y / 2)
+	if (pt_Input.y < this->m_NetSize.y / 2)
 	{
 		// [SECTOR 4]
 
-		pt_Output->x = pt_Input.x - (this->m_gridSize.y / 2 - pt_Input.y);
+		pt_Output->x = pt_Input.x - (this->m_NetSize.y / 2 - pt_Input.y);
 	}
 	else
 	{
@@ -405,14 +432,16 @@ void CNodeHP::HexToMem(POINT pt_Input, POINT * pt_Output)
 	pt_Output->y = pt_Input.y;
 }
 
-
+// INFO:
+// support methods
+// need for packing hex-performed coords in decard-performed memory matrix
 void CNodeHP::MemToHex(POINT pt_Input, POINT * pt_Output)
 {
-	if (pt_Input.y < this->m_gridSize.y / 2)
+	if (pt_Input.y < this->m_NetSize.y / 2)
 	{
 		// [SECTOR 4]
 
-		pt_Output->x = pt_Input.x + (this->m_gridSize.y / 2 - pt_Input.y);
+		pt_Output->x = pt_Input.x + (this->m_NetSize.y / 2 - pt_Input.y);
 	}
 	else
 	{

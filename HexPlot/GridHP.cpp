@@ -40,11 +40,11 @@ CGridHP::CGridHP()
 
 	Load();
 
-	// > Place Grid Nodes
-//	PlaceNet();
+	// > Place Net: create Nodes
+	PlaceNet();
+
 
 	// !debug
-
 	//// create Node path
 	//CWeg nodeWeg;
 
@@ -514,7 +514,7 @@ void CGridHP::Save()
 	// Create Node directory
 	CreateDirectory((CString)strFileName, NULL);
 
-	strcat(strFileName, "\\root.xml");
+	strcat(strFileName, "\\Grid.xml");
 
 	WDocument.SaveFile(strFileName);
 }
@@ -530,7 +530,7 @@ void CGridHP::Load()
 	strcpy(strFileName, m_stGlobals.cDirectoryPath);
 	strcat(strFileName, "\\");
 	strcat(strFileName, m_strWastName);
-	strcat(strFileName, "\\root.xml");
+	strcat(strFileName, "\\Grid.xml");
 
 	WDocument.LoadFile(strFileName);
 
@@ -539,7 +539,9 @@ void CGridHP::Load()
 	tinyxml2::XMLElement* El_Title = El_Root->FirstChildElement("TITLE");
 
 	// > Title Content
-	// Plots
+	// grid size: Plots
+	// NOTE:
+	// need to perform Node -> Plot
 	tinyxml2::XMLElement* El_Tit_Nodes = El_Title->FirstChildElement("Nodes");
 
 	// - property: size
@@ -551,6 +553,7 @@ void CGridHP::Load()
 	tinyxml2::XMLElement* El_Tit_Nodes_Y = El_Tit_Nodes->FirstChildElement("Y");
 	El_Tit_Nodes_Y->QueryIntText(&iVal);
 	m_gridSize.y = iVal;
+
 }
 
 
